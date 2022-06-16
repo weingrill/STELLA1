@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_Cover" Id="{ff502a3a-f6c6-4825-b511-65bfb253b557}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Cover
+VAR_INPUT
+	open,
+	close,
+	enable,
+	reset,
+	limit_open,
+	limit_close: 		BOOL;
+END_VAR
+VAR_OUTPUT
+	error,
+	warning: BOOL;
+	Ready_to_enable:	BOOL;
+	Ready:				BOOL;
+	Moving_negative:	BOOL;
+	Moving_positive:	BOOL;
+	Digital_input1:		BOOL;
+	Digital_input2:		BOOL;
+END_VAR
+VAR
+	error_state:	SR;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+error_state(SET1 := limit_open AND limit_close,
+			RESET := reset,
+			Q1 => error);
+
+IF enable THEN
+	Moving_positive := open AND NOT limit_open;
+	Moving_negative := close AND NOT limit_close;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Cover">
+      <LineId Id="31" Count="3" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

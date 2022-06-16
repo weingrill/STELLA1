@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="DerotatorControl" Id="{75f3d994-c6e1-4455-a5dc-0a32056448e8}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM DerotatorControl
+VAR_INPUT
+	// enable the derotator
+	enable:		BOOL;
+	// reset an error
+	reset:		BOOL;
+	// decrease derotator angle
+	left:		BOOL;
+	// increase derotator angle
+	right:		BOOL;
+	// set the absolute position
+	position:	LREAL;
+	// derotator velocity
+	Velocity:	LREAL := 10.0;
+	// move to given position
+	MoveAxis: 	BOOL;
+	// calibrate the axis
+	HomeAxis:	BOOL;
+	// tracking flag
+	Tracking:	BOOL;
+END_VAR
+VAR_OUTPUT
+	// error flag
+	Error:				BOOL;
+	// nc error id
+	ErrorID:			UDINT;
+	// actual position of the derotator
+	actual_position:	LREAL;
+	// calibrated flag
+	Calibrated:			BOOL;
+	// axis ready flag
+	Ready:				BOOL;
+	// position to move the axis to
+	slewtime: 			LREAL;
+END_VAR
+VAR
+	// trigger for the torque error
+	TorqueError:		TON := (PT := T#3S);
+	// axis function block
+	DerotatorAxis:		FB_Axis2;
+	
+	DerotatorEvent:		FB_EventLog;
+	// torque warning event
+	TorqueWarning:		FB_EventLog;
+	// torque calibration event
+	CalibrationEvent:	FB_EventLog;
+	// percentage of the derotator torque
+	derotator_torque:	REAL;
+	ReadParameter:		MC_ReadParameter;
+END_VAR
+VAR CONSTANT
+	// current position of the calibration cam. Apply an offset here if necessary
+	calibration_position:	LREAL := 438.4623; // calibration in positive direction (was 460.0)
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+Selection 6
+Homing in Endlage:
+
+https://infosys.beckhoff.com/index.php?content=../content/1031/ax5000_usermanual/html/ax5000_homing_hardware_end_position.htm&id=12221
+NC-Interface:
+PlcToNc-Achsinterface, Bit 8 namens AcceptBlockedDriveSignal im nDeCtrlDWord
+
+SPS-Interface:
+TcNc-Lib, siehe SPS-Funktion AxisSetAcceptBlockedDriveSignal in der TwinCAT  PLC Library: NC.
+*)
+
+position := LIMIT(calibration_position - 460.0, position, calibration_position);
+
+// WARNING: Homing disables the limit Switches!
+
+MC_SetAcceptBlockedDriveSignal(
+	Axis := GVL_Telescope.DerotatorAxisRef,
+	Enable := HomeAxis);
+
+
+IF DerotatorAxis.Calibrated THEN
+	HomeAxis := FALSE;
+	Calibrated := DerotatorAxis.Calibrated;
+END_IF
+	
+IF HomeAxis THEN
+	position := calibration_position;
+END_IF
+
+IF Tracking THEN
+	IF ABS(actual_position - position) > 1.0 THEN
+		Tracking := FALSE;
+		MoveAxis := TRUE;
+	ELSE
+		MoveAxis := FALSE;
+	END_IF
+END_IF
+
+DeRotatorAxis(
+	enable := 			enable,
+	Reset := 			Reset,
+	MoveAxis :=			MoveAxis,
+	HomeAxis :=			HomeAxis,
+	Position := 		position, 
+	Velocity :=			Velocity,
+	Enable_Positive := 	NOT GVL_Telescope.Derotator_inputs.0 OR HomeAxis,
+	Enable_Negative := 	NOT GVL_Telescope.Derotator_inputs.1,
+	Jog_Forward := 		right,
+	Jog_Backwards := 	left,
+	bCalibrationCam :=	GVL_Telescope.Derotator_inputs.0,
+	isModuloAxis :=		FALSE,
+	Tracking :=			Tracking,
+	ActualPosition => 	actual_position,
+	Error => 			Error,
+	ErrorID => 			ErrorID,
+	AxisRef :=			GVL_Telescope.DerotatorAxisRef);
+	
+IF DeRotatorAxis.MoveDone OR Reset OR Error THEN
+	MoveAxis := FALSE;
+END_IF
+
+IF DeRotatorAxis.HomeDone OR Reset OR Error THEN
+	HomeAxis := FALSE;
+END_IF
+	
+IF DeRotatorAxis.ResetDone THEN
+	reset := FALSE;
+END_IF
+
+Ready := DeRotatorAxis.Ready;
+
+ReadParameter(	Axis := GVL_Telescope.DerotatorAxisRef, 
+				Enable := DeRotatorAxis.InMotion, 
+				ParameterNumber := MC_AxisParameter.AxisRemainingTimeToGo, 
+				ReadMode := E_ReadMode.READMODE_CYCLIC);
+				
+IF ReadParameter.Valid THEN
+	slewtime := ReadParameter.Value;
+END_IF
+
+derotator_torque := GVL_Telescope.Derotator_torque / 10.0;
+
+TorqueError(IN := ABS(derotator_torque) > 16.0);
+
+DerotatorEvent(	
+	Trigger := 		Error, 
+	Level := 		ADSLOG_MSGTYPE_ERROR,
+	FormatString :=	'Derotator Axis Error: %s',
+	OnMessage := 	NCError_TO_STRING(ErrorID),
+	OffMEssage := 	'OK',
+	OffLevel := 	ADSLOG_MSGTYPE_HINT);
+	
+TorqueWarning(	
+	Trigger := 		TorqueError.Q, 
+	Level := 		ADSLOG_MSGTYPE_WARN,
+	FormatString :=	'%s',
+	OnMessage := 	'Derotator torque is high.');
+
+CalibrationEvent(	
+	Trigger := 		Calibrated, 
+	Level := 		ADSLOG_MSGTYPE_HINT,
+	OnMessage := 	'Derotator is calibrated.');
+	]]></ST>
+    </Implementation>
+    <LineIds Name="DerotatorControl">
+      <LineId Id="128" Count="0" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="137" Count="3" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="275" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="156" Count="1" />
+      <LineId Id="436" Count="1" />
+      <LineId Id="442" Count="0" />
+      <LineId Id="438" Count="0" />
+      <LineId Id="440" Count="0" />
+      <LineId Id="443" Count="2" />
+      <LineId Id="439" Count="0" />
+      <LineId Id="424" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="93" Count="2" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="11" Count="3" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="44" Count="10" />
+      <LineId Id="240" Count="1" />
+      <LineId Id="448" Count="0" />
+      <LineId Id="450" Count="6" />
+      <LineId Id="449" Count="0" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="366" Count="1" />
+      <LineId Id="55" Count="6" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="321" Count="3" />
+      <LineId Id="327" Count="0" />
+      <LineId Id="368" Count="3" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="372" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

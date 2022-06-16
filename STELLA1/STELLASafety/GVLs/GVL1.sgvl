@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GlobalVariables Crc="44721247" Id="2f0b9a8f-9da2-43f0-895c-fa50d9fbd3dc" FileFormatVersion="1.0">
+  <Variable Id="b6188a22-31c8-4c1e-996e-d8d8ca9efc9f">
+    <Name>EStop1</Name>
+    <SourceUsages>
+      <AliasDeviceIoUsage Id="0e1f70f3-0d10-46bd-8ef1-62abe668df08">
+        <SdsId>5</SdsId>
+        <ChannelId>1</ChannelId>
+        <FunctionId>1610678529</FunctionId>
+      </AliasDeviceIoUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <FbPortUsage Id="cbd28396-9e9e-4dfe-baad-52a862173635">
+        <ModelElementId>eded13b4-1aba-493b-b1f7-d457aae9b089</ModelElementId>
+      </FbPortUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="b7b09313-fc88-4670-a62e-3b9c58e5aaf6">
+    <Name>EStop2</Name>
+    <SourceUsages>
+      <AliasDeviceIoUsage Id="c57766f2-ea2d-4963-9c2e-f9e2160a35a4">
+        <SdsId>5</SdsId>
+        <ChannelId>2</ChannelId>
+        <FunctionId>1610678785</FunctionId>
+      </AliasDeviceIoUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <FbPortUsage Id="08e4ae38-bc63-4ce7-8b33-4e5e10b73533">
+        <ModelElementId>6f75c50e-5cd5-4b08-bc66-4c7442c1a64b</ModelElementId>
+      </FbPortUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="361accd6-7d10-4915-8e91-a4a603dc6ed4">
+    <Name>MotorEnable1</Name>
+    <SourceUsages>
+      <FbPortUsage Id="bc306885-5b57-43c2-887b-0affe1e1502c">
+        <ModelElementId>4edeae4c-96f6-4c56-a793-cb815873bb1a</ModelElementId>
+      </FbPortUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <AliasDeviceIoUsage Id="f8b71d9f-0295-417d-b6ae-13541babe64a">
+        <SdsId>6</SdsId>
+        <ChannelId>1</ChannelId>
+        <FunctionId>1879113985</FunctionId>
+      </AliasDeviceIoUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="467bd9ac-36ba-4556-b50d-661a9cbc37c7">
+    <Name>HydraulicsEnable</Name>
+    <SourceUsages>
+      <FbPortUsage Id="4eb0adc4-2d33-4e69-a5d5-2d2040d00e02">
+        <ModelElementId>4edeae4c-96f6-4c56-a793-cb815873bb1a</ModelElementId>
+      </FbPortUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <AliasDeviceIoUsage Id="f2c7bb67-ea39-4b28-94ec-b9fb88060cd6">
+        <SdsId>6</SdsId>
+        <ChannelId>3</ChannelId>
+        <FunctionId>1879114497</FunctionId>
+      </AliasDeviceIoUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="df630be2-a4a4-4c0e-9839-36d3a6e176bc">
+    <Name>Restart</Name>
+    <SourceUsages>
+      <AliasDeviceIoUsage Id="51c80adf-15d0-4e0b-accc-e76262ef0595">
+        <SdsId>2</SdsId>
+        <ChannelId>1</ChannelId>
+        <FunctionId>1131179973</FunctionId>
+      </AliasDeviceIoUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <FbPortUsage Id="db14e899-a0eb-4637-a424-601aa4d07670">
+        <ModelElementId>a0662c9c-a810-4447-9602-154ad06cae1c</ModelElementId>
+      </FbPortUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="52b237b5-05bd-4c01-927e-8571af48742a">
+    <Name>Run</Name>
+    <SourceUsages>
+      <AliasDeviceIoUsage Id="72e51b31-8bed-4f60-83fb-06197ac98d68">
+        <SdsId>3</SdsId>
+        <ChannelId>1</ChannelId>
+        <FunctionId>1131179973</FunctionId>
+      </AliasDeviceIoUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <GroupPortUsage Id="10c57071-fccd-4684-8976-07e40fb571b7">
+        <ModelElementId>795f1fda-6edb-46f4-9b1a-c7f8107a09f9</ModelElementId>
+      </GroupPortUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="661d23b9-accc-41d7-9192-82a9cae11438">
+    <Name>Error</Name>
+    <SourceUsages>
+      <FbPortUsage Id="f6e6b496-ee3d-4e1a-ab3f-7b109533d19e">
+        <ModelElementId>2054623c-670d-4c58-a244-6bc100fb7ecc</ModelElementId>
+      </FbPortUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <AliasDeviceIoUsage Id="b80aac20-b10e-42ab-bf79-c8d12945f127">
+        <SdsId>4</SdsId>
+        <ChannelId>1</ChannelId>
+        <FunctionId>1131179972</FunctionId>
+      </AliasDeviceIoUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="621fd0e6-9e72-4ec1-a206-d8cd2419e5cd">
+    <Name>MotorFeedback</Name>
+    <SourceUsages>
+      <AliasDeviceIoUsage Id="0ff80492-ff1f-43ad-a846-00130f2c692c">
+        <SdsId>5</SdsId>
+        <ChannelId>3</ChannelId>
+        <FunctionId>1610679041</FunctionId>
+      </AliasDeviceIoUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <FbPortUsage Id="02c3bc89-d0ce-4b7b-ba8f-58461d9dd0f4">
+        <ModelElementId>d60c0b06-5d06-4513-b43f-b57a724d29e2</ModelElementId>
+      </FbPortUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="20582569-b753-442a-9552-fc47276252b1">
+    <Name>HydraulicsFeedback</Name>
+    <SourceUsages>
+      <AliasDeviceIoUsage Id="4a387531-8e22-4c24-9414-768db7315604">
+        <SdsId>5</SdsId>
+        <ChannelId>4</ChannelId>
+        <FunctionId>1610679297</FunctionId>
+      </AliasDeviceIoUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <FbPortUsage Id="e6b2d987-1093-42fc-adca-8d09271d3ef1">
+        <ModelElementId>2d9ce9a2-a7b9-4ba6-93c5-f7e1e08db8c5</ModelElementId>
+      </FbPortUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="22d4058e-e71f-4d75-bf29-5a5097eafb6f">
+    <Name>MoterEnable2</Name>
+    <SourceUsages>
+      <FbPortUsage Id="3bb7d977-3391-406d-9058-5b129153c004">
+        <ModelElementId>4edeae4c-96f6-4c56-a793-cb815873bb1a</ModelElementId>
+      </FbPortUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <AliasDeviceIoUsage Id="a184a1cb-36d0-4e47-904f-61f4a04d9b49">
+        <SdsId>6</SdsId>
+        <ChannelId>2</ChannelId>
+        <FunctionId>1879114241</FunctionId>
+      </AliasDeviceIoUsage>
+    </TargetUsages>
+  </Variable>
+  <Variable Id="4ddd12a0-8a32-4cef-9412-192393791e06">
+    <Name>Stop</Name>
+    <SourceUsages>
+      <FbPortUsage Id="287f5200-abb7-47f5-ab9e-6e2b2e6c341c">
+        <ModelElementId>d8938c0e-6237-4445-bf55-39d9e2821dd5</ModelElementId>
+      </FbPortUsage>
+    </SourceUsages>
+    <TargetUsages>
+      <AliasDeviceIoUsage Id="7fa28522-73db-4248-9290-3dee5259a7a1">
+        <SdsId>7</SdsId>
+        <ChannelId>1</ChannelId>
+        <FunctionId>1131179972</FunctionId>
+      </AliasDeviceIoUsage>
+    </TargetUsages>
+  </Variable>
+</GlobalVariables>

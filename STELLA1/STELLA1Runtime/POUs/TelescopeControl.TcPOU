@@ -1,0 +1,844 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="TelescopeControl" Id="{6a4f2e3a-c9ee-4352-b4f6-4f9d94b2c472}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TelescopeControl
+VAR_INPUT
+(*
+TCS interface section
+see https://gitlab.aip.de/bmk10k/telescope_firmware/snippets/5
+*)
+	
+	// boolean, true: Power on, false: power off
+	power: BOOL;
+	// boolean, true: go to home position, unset track/goto if active
+	gohome: BOOL;
+	// boolean, true: go into park position, ready to stow telescope, unset track/goto
+	park: BOOL;
+	// apparent right ascension, degrees, double
+	ra:	LREAL := (00.0 + 08.0/60.0 + 23.17/3600.0) *15.0;	
+	// apparent declination, degrees, double
+	de: LREAL := 29.0 + 05.0/60.0 + 26.99/3600.0;
+	// boolean, TRUE: MOVE telescope TO last ra/de AND start tracking. Set 'goto' TO FALSE, IF TRUE. FALSE: Stop tracking as soon as possible
+	track: BOOL;
+	// apparent hour angle, degrees, double, south=zero, west>0)
+//	tau: LREAL := 0.0;
+	// boolean, TRUE: MOVE telescope TO tau/de AND stop there. Set track TO FALSE, IF TRUE. FALSE: no effect.)
+	goto: BOOL;	
+	// move the telescope to a given az-alt position
+	slew: BOOL;
+	// boolean, TRUE: Stop motion OF telescope immediately, set goto AND track TO FALSE. FALSE: Allow motion OF telescope again via track/goto).
+	stop: BOOL;	
+	// internal command: telescope is moved to pumping position
+	pumping: BOOL;
+	//	offset TO current tracking point on axis tau, degrees, double
+//	tauoffset: LREAL;
+	// 	offset TO current tracking point on axis dec, degrees, double 
+	//deoffset: LREAL;
+	// initiates hard-reset on all axis
+	reset:		BOOL;
+	// absolute offset for elevation
+	elevation_offset:	LREAL := 0.0;
+	// absolute offset for azimuth
+	azimuth_offset : 	LREAL := 0.0;
+	// absolute offset for time
+	time_offset: 		LREAL := 0.0;
+	// offset for the de-rotator
+	derotator_offset:	LREAL := 180.0;
+	// Nasmyth port 1 or 2
+	Nasmyth_port: USINT;
+	// Focus position in mm
+	focus_position: LREAL := 77.000;
+END_VAR
+VAR
+	// manual or automatic operation of the telescope
+	telescope_mode : E_TelescopeMode;	
+	// actual command from the TCS
+	TCS_command: 	E_TCSCommand;
+	// current Julian Date calculated from system time
+	jd:	LREAL;
+	// desired elevation of the telescope pointing 
+	elevation:	LREAL := 45.0;
+	// desired azimut of the telescope pointing 
+	azimuth:	LREAL := 320.0;
+	// image derotation
+	derotation_calc:	LREAL;
+	// local siderial time calculated from Julian date
+	lst:	LREAL;
+	// values calulated when ra and dec are set by TCS
+	elevation_calc:	LREAL; 
+	azimuth_calc:	LREAL;
+	
+	rightascension_calc:	LREAL;
+	declination_calc:	LREAL;
+	
+	
+	(* Hour Angle part *)
+	Hourangle_calc: LREAL;
+	
+	fbTime: FB_AstroClock;
+	
+	eq2hor2:	FB_EQ2HOR2;
+	hor2eq:		FB_HOR2EQ;
+	
+	// initiates hard-reset on all axis
+	softreset:		BOOL;
+	// triggers power-failure event
+	powerfailure: 	BOOL;
+	poweron:		R_TRIG;
+	poweroff:		F_TRIG;
+	poweronwarning:	TP;
+	poweron_reset:	TP;
+	power_timeout:	TON;
+	
+	
+	TCSpowerEvent,
+	TCSgohomeEvent,
+	TCSparkEvent,
+	TCSgotoEvent,
+	TCStrackEvent,
+	TCSstopEvent,
+	AltitudeEvent,
+	TCSreadyEvent: FB_Eventlog;
+	FocusDelay: TON := (PT:=T#5S);
+	MQTTTimer : TON := (PT:=T#5S);
+	// MQTT Message
+	sPayloadPub: STRING(255);
+	// rotational velocity of the derotator
+	DerotatorVelocity: LREAL;
+END_VAR
+VAR_OUTPUT
+	//		TRUE, IF telescope can be operated
+	ready:	BOOL; 
+	// indicates an error on one of the components
+	error:	BOOL;	
+	//number OF errors encountered
+	//errnr:	UINT;	
+	//TRUE, IF telescope is in fast-MOVE phase (includes pole-swap)
+	sliding: BOOL;	
+	//TRUE, IF telescope is on tracking position AND currently tracking.
+	tracking: BOOL;	
+	//TRUE, IF telescope is AT rest.
+	stopped: BOOL;	
+	// Current tau/dec. in degrees.
+	//decurrent, taucurrent: LREAL; 
+	// (all degrees, azimuth 0=S, W>0)
+	//racurrent: LREAL; 
+	elevation_current:	LREAL;
+	azimuth_current:	LREAL;
+	//	(time in sec. to reach the goto/track position)
+	slewtime: LREAL; 
+	// 	(TIME in sec. available UNTIL pole-swap necessary).
+	//tracktime: LREAL;	
+	// True: telescope is calibrated
+	homed: BOOL;
+END_VAR
+VAR CONSTANT
+(* Potsdam:
+	longitude: LREAL := 13.104589;
+	latitude: LREAL := 52.404977;
+*)
+(* RoboTel site : *)
+	// telescope site longitude, source: Google 
+	longitude: LREAL := 13.101867;
+	// telescope site latitude, source: Google
+	latitude: LREAL := 52.404940;
+	// telescope site height above sea level: estimated
+	altitude: LREAL := 33.0;
+	//siderial_velocity: LREAL := 360.0 / 86164.099;
+	//position_velocity: LREAL := 1.0;
+	elevation_park: LREAL := 70.0;
+	azimuth_park: LREAL := 190.0;
+
+	elevation_home: LREAL := 45.0;
+	azimuth_home: LREAL := 180.0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TelescopeAuxiliary();
+
+// get the system time
+fbTime();
+jd := DateTime2JD(fbTime.time_RTCEX2);
+lst := CT2LST(longitude, jd);
+// set reset state either by hardware (key pressed) or by software (set by e.g. tcs)
+reset := softreset OR GVL_Main.reset_switch;
+IF softreset THEN
+	// unset the softreset, after reset has been set
+	softreset := FALSE;
+END_IF
+
+IF ElevationControl.error THEN
+	ElevationControl.reset := reset;
+ELSIF AzimuthElevationControl.error THEN
+	AzimuthElevationControl.Reset := reset;
+ELSIF FilterWheelControl.Error THEN
+	FilterWheelControl.Reset := reset;
+ELSIF Focuscontrol.Error THEN
+	FocusControl.reset := reset;
+ELSIF DerotatorControl.Error THEN
+	DerotatorControl.reset := reset;
+END_IF
+
+error := ElevationControl.error OR 
+		 AzimuthElevationControl.error OR
+		 FilterWheelControl.Error OR
+		 // DomeControl.Error OR
+		 Focuscontrol.Error OR
+		 DerotatorControl.Error;
+
+ready := 	ElevationControl.Calibrated AND
+			AzimuthElevationControl.calibrated AND
+			FilterWheelControl.Calibrated AND
+			FocusControl.Calibrated AND
+			DerotatorControl.Calibrated;
+
+slewtime := MAX(MAX(ElevationControl.slewtime, AzimuthElevationControl.slewtime), DerotatorControl.slewtime);
+			
+IF error THEN
+	gohome := 	FALSE;
+	park  := 	FALSE;
+	track := 	FALSE;
+	goto := 	FALSE;
+	slew := 	FALSE;
+	pumping :=	FALSE;
+END_IF
+		 
+IF ElevationControl.error THEN
+	ElevationControl.enable := FALSE;
+	AzimuthElevationControl.enable := FALSE;
+	HydraulicsControl.close_brake := TRUE;
+	power := FALSE;
+END_IF
+
+(*
+IF AzimuthElevationControl.error THEN
+	AzimuthElevationControl.enable := FALSE;
+END_IF
+*)
+
+// determine the operation of the telescope based on the switch set
+IF GVL_pendant_control.key_switch THEN
+	telescope_mode := E_TelescopeMode.manual;
+ELSE
+	telescope_mode := E_TelescopeMode.automatic;
+END_IF
+
+eq2hor2(alpha := ra,
+	delta := de,
+	lon := longitude,
+	lat := latitude,
+	JD := jd + time_offset,
+	alt => elevation_calc,
+	az => azimuth_calc,
+	ha => hourangle_calc);
+
+azimuth_current := AzimuthElevationControl.act_position;
+elevation_current := ElevationControl.act_position;
+
+hor2eq(alt := elevation_current, 
+		az := azimuth_current,
+		jd := jd,
+		lat := latitude,
+		lon := longitude,
+		altitude := altitude,
+		ra => rightascension_calc,
+		dec => declination_calc);		
+
+// TODO check sign; offset is applied later
+derotation_calc := F_DerotatorPosition2(azimuth_calc, elevation_calc, declination_calc, latitude);
+IF Tracking THEN
+	DerotatorVelocity := F_Derotatorvelocity(elevation_calc, azimuth_calc, latitude);
+ELSE
+	DerotatorVelocity := 10.0;
+END_IF
+		
+poweronwarning(IN := power OR (NOT ElevationControl.enable AND HydraulicsControl.brake_open), PT := T#250MS);
+poweron(CLK := power);
+poweroff(CLK := power);
+poweron_reset(IN := power AND NOT PendantControl.manual, PT := T#50MS);
+// park the telescope after 12 hours
+power_timeout(IN := power, PT := T#12H);
+IF power_timeout.Q THEN
+	park := TRUE;
+END_IF
+// reset fan
+CoverControl.reset := poweron_reset.Q OR reset;
+
+
+	
+IF power THEN
+	IF NOT Main.brake_clearing THEN
+		powerfailure := TRUE;
+		TCSpowerEvent.OnMessage := 'failure: brake clearing not set';
+		power := FALSE;
+	ELSIF NOT Main.power_OK THEN
+		powerfailure := TRUE;
+		TCSpowerEvent.OnMessage := 'failure: main power failure';
+		power := FALSE;
+	ELSIF NOT Main.phase_available THEN
+		powerfailure := TRUE;
+		TCSpowerEvent.OnMessage := 'failure: hydraulics power failure';
+		power := FALSE;
+	ELSE
+		powerfailure := FALSE;		
+	END_IF
+	// enable hydraulics
+	HydraulicsControl.start := TRUE;
+	// open cover
+	// COVER MUST BE OPENED FOR A SUCCESSFUL WAKE & SHAKE COMMAND!
+	CoverControl.enable := TRUE;
+	//CoverControl.reset := poweron_reset.Q;
+	Covercontrol.open := TRUE;
+	IF Covercontrol.isopen THEN
+		Covercontrol.open := FALSE;
+	END_IF
+	// enable elevation enable azimuth
+	IF MAIN.ready AND CoverControl.isopen THEN
+		ElevationControl.enable := TRUE;
+	    // wait until azimuth comes to rest
+		IF GVL_Telescope.AzimuthAxisRef.NcToPlc.ActVelo < 0.1 THEN
+			AzimuthElevationControl.enable := TRUE;
+		END_IF	
+	END_IF
+	
+	IF ElevationControl.Ready AND NOT ElevationControl.Calibrated THEN
+		ElevationControl.HomeAxis := TRUE;
+	END_IF
+	
+	IF AzimuthElevationControl.ready AND NOT AzimuthElevationControl.calibrated THEN
+		AzimuthElevationControl.HomeAxis := TRUE;
+	END_IF
+
+	// enable derotator
+	IF ElevationControl.Ready THEN
+		DerotatorControl.enable := TRUE;
+		DerotatorControl.HomeAxis := DerotatorControl.Ready AND NOT DerotatorControl.Calibrated;
+	END_IF
+	
+	// enable filterwheel after Derotator Axis to avoid additional torque
+	IF DerotatorControl.Calibrated THEN
+		FilterWheelControl.Enable := TRUE;
+		FilterWheelControl.HomeAxis := NOT FilterWheelControl.Calibrated;
+	END_IF
+	
+	// enable focus
+	FocusControl.enable := TRUE;
+	IF FocusControl.ready AND NOT FocusControl.Calibrated THEN
+		FocusControl.HomeAxis := TRUE;
+	END_IF
+	FocusDelay(IN := FocusControl.Calibrated AND FocusControl.Ready);
+	IF FocusDelay.Q THEN
+		FocusControl.position := focus_position;
+		FocusControl.MoveAxis := ABS(FocusControl.actual_position - focus_position) > 0.005;
+	END_IF
+ELSIF poweroff.Q THEN
+	gohome := 	FALSE;
+	park  := 	FALSE;
+	track := 	FALSE;
+	goto := 	FALSE;
+	slew := 	FALSE;
+	pumping :=	FALSE;
+	// disable azimuth
+	AzimuthElevationControl.enable := FALSE;
+	// disbale elevation (closes brake)
+	ElevationControl.enable := FALSE;
+	// disable focus
+	FocusControl.enable := FALSE;
+	// disable filterwheel
+	FilterWheelControl.Enable := FALSE;
+	// disable derotator
+	DerotatorControl.enable := FALSE;
+	// close cover
+	CoverControl.close := TRUE;
+	// disable hydraulics
+	HydraulicsControl.close_brake := TRUE;
+	HydraulicsControl.stop := TRUE;
+	// SimpleLog(Message := 'shutdown');
+END_IF
+
+IF NOT power AND NOT PendantControl.manual THEN
+	// if the power is deactivatied and we are on automatic, ...
+	IF CoverControl.isclosed THEN
+		// if the covers are closed, disable them
+		CoverControl.close := FALSE;
+		CoverControl.enable := FALSE;
+(*	ELSIF Environment.WeatherBad THEN
+		// if the covers are not closed and the weather is bad, close them
+		CoverControl.enable := TRUE;
+		CoverControl.close := TRUE; *)
+	END_IF
+END_IF
+		
+// set TCS_command according to state variables ordered by precedence
+IF track THEN
+	TCS_command := E_TCSCommand.track;
+	goto := FALSE;
+	slew := FALSE;
+ELSIF goto THEN
+	TCS_command := E_TCSCommand.goto;
+	track := FALSE;
+	slew := FALSE;
+ELSIF gohome THEN
+	TCS_command := E_TCSCommand.gohome;
+	goto := FALSE;
+	track := FALSE;
+	slew := FALSE;
+ELSIF slew THEN
+	TCS_command := E_TCSCommand.slew;
+	goto := FALSE;
+	track := FALSE;
+ELSIF park THEN
+	TCS_command := E_TCSCommand.park;
+	goto := FALSE;
+	track := FALSE;
+	slew := FALSE;
+ELSIF pumping THEN
+	TCS_command := E_TCSCommand.pumping;
+ELSIF stop THEN
+	TCS_command := E_TCSCommand.stop;
+	goto := FALSE;
+	track := FALSE;
+	slew := FALSE;
+	gohome := FALSE;
+	park := FALSE;
+ELSE
+	TCS_command := E_TCSCommand.no_command;
+	ElevationControl.MoveAxis := FALSE;
+	AzimuthElevationControl.MoveAxis := FALSE;
+END_IF
+
+IF NOT track THEN
+	ElevationControl.Tracking := FALSE;
+	AzimuthElevationControl.Tracking := FALSE;
+	DerotatorControl.Tracking := FALSE;
+END_IF
+
+IF TCS_command = E_TCSCommand.park THEN
+	ElevationControl.position := elevation_park;
+	AzimuthElevationControl.position := azimuth_park;
+	ElevationControl.MoveAxis := TRUE;
+	AzimuthElevationControl.MoveAxis := TRUE;
+	IF ElevationControl.ElevationAxis.StopDone AND AzimuthElevationControl.AzimuthAxis.StopDone THEN
+		park := FALSE;
+		power := FALSE;
+	END_IF
+
+ELSIF TCS_command = E_TCSCommand.gohome THEN
+	ElevationControl.position := elevation_home;
+	ElevationControl.MoveAxis := TRUE;
+	AzimuthElevationControl.position := azimuth_home;
+	AzimuthElevationControl.MoveAxis := TRUE;
+	IF ElevationControl.ElevationAxis.StopDone AND AzimuthElevationControl.AzimuthAxis.StopDone THEN
+		gohome := FALSE;
+	END_IF
+	
+ELSIF TCS_command = E_TCSCommand.track THEN
+	ElevationControl.position := elevation_calc + elevation_offset;
+	AzimuthElevationControl.position := azimuth_calc + azimuth_offset;
+	DerotatorControl.position := derotation_calc + derotator_offset;
+	DerotatorControl.Velocity := DerotatorVelocity;
+	ElevationControl.Tracking := TRUE;
+	AzimuthElevationControl.Tracking := TRUE;
+	DerotatorControl.Tracking := TRUE;
+	
+ELSIF TCS_command = E_TCSCommand.goto THEN
+	ElevationControl.position := elevation_calc + elevation_offset;
+	ElevationControl.MoveAxis := TRUE;
+	AzimuthElevationControl.position := azimuth_calc + azimuth_offset;
+	AzimuthElevationControl.MoveAxis := TRUE;
+	DerotatorControl.position := derotation_calc + derotator_offset;
+	DerotatorControl.MoveAxis := TRUE;
+	IF ElevationControl.ElevationAxis.MoveDone AND 
+		AzimuthElevationControl.AzimuthAxis.MoveDone AND
+		DerotatorControl.DerotatorAxis.MoveDone THEN
+		ElevationControl.MoveAxis := FALSE;
+		AzimuthElevationControl.MoveAxis := FALSE;
+		DerotatorControl.MoveAxis := FALSE;
+		goto := FALSE;
+	END_IF
+
+ELSIF TCS_command = E_TCSCommand.slew THEN
+	ElevationControl.position := elevation;
+	ElevationControl.MoveAxis := TRUE;
+	AzimuthElevationControl.position := azimuth;
+	AzimuthElevationControl.MoveAxis := TRUE;
+	DerotatorControl.position := derotator_offset;
+	DerotatorControl.MoveAxis := TRUE;
+	IF ElevationControl.ElevationAxis.MoveDone 
+		AND AzimuthElevationControl.AzimuthAxis.MoveDone 
+		AND DerotatorControl.DerotatorAxis.MoveDone THEN
+		ElevationControl.MoveAxis := FALSE;
+		AzimuthElevationControl.MoveAxis := FALSE;
+		DerotatorControl.MoveAxis := FALSE;
+		slew := FALSE;
+	END_IF
+	
+ELSIF TCS_command = E_TCSCommand.pumping THEN
+	ElevationControl.position := elevation;
+	ElevationControl.MoveAxis := TRUE;
+	AzimuthElevationControl.position := azimuth;
+	AzimuthElevationControl.MoveAxis := TRUE;
+	DerotatorControl.position := 90.0;
+	DerotatorControl.MoveAxis := TRUE;
+	
+	IF ElevationControl.ElevationAxis.StopDone AND 
+		AzimuthElevationControl.AzimuthAxis.StopDone AND 
+		DerotatorControl.DerotatorAxis.StopDone THEN
+		ElevationControl.MoveAxis := FALSE;
+		AzimuthElevationControl.MoveAxis := FALSE;
+		DerotatorControl.MoveAxis := FALSE;
+		pumping := FALSE;
+	END_IF
+	
+END_IF
+ 
+sliding := ElevationControl.MoveAxis OR AzimuthElevationControl.MoveAxis;
+tracking := ElevationControl.Tracking AND AzimuthElevationControl.Tracking;
+stopped :=  ElevationControl.ElevationAxis.StandStill AND AzimuthElevationControl.AzimuthAxis.StandStill;
+homed := ElevationControl.Calibrated AND AzimuthElevationControl.calibrated AND DerotatorControl.Calibrated;
+
+GVL_Telescope.horn := poweronwarning.Q OR Pendantcontrol.horn;
+
+MQTTTimer(IN:=TRUE);
+IF MQTTTimer.Q THEN // publish new payload every second
+	MQTTTimer(IN:=FALSE);
+
+	sPayloadPub := 'telescope,location=dome,host=CX-22747A,module=TelescopeControl ';
+	sPayloadPub := APPEND(sPayloadPub, 'Azimuth=', LREAL_TO_FMTSTR(azimuth_current, 5, TRUE));
+	sPayloadPub := APPEND(sPayloadPub, ',Elevation=', LREAL_TO_FMTSTR(elevation_current, 5, TRUE));
+	sPayloadPub := APPEND(sPayloadPub, ',HourAngle=', LREAL_TO_FMTSTR(hourangle_calc, 5, TRUE));
+	sPayloadPub := APPEND(sPayloadPub, ',RightAscension=', LREAL_TO_FMTSTR(rightascension_calc, 5, TRUE));
+	sPayloadPub := APPEND(sPayloadPub, ',Declination=', LREAL_TO_FMTSTR(declination_calc, 5, TRUE));
+	sPayloadPub := APPEND(sPayloadPub, ',Derotator=', LREAL_TO_FMTSTR(derotation_calc, 5, TRUE));
+	
+	MQTTCommunication.fbMqttClient.Publish(	
+					sTopic:= 'STELLA1/Telemetry', 
+					pPayload:= ADR(sPayloadPub), 
+					nPayloadSize:= LEN2(ADR(sPayloadPub)),
+					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
+					bRetain:= FALSE, 
+					bQueue:= FALSE );
+END_IF
+
+(* Event function blocks start here. *)
+TCSpowerEvent(	Trigger := powerfailure, 
+				Level := ADSLOG_MSGTYPE_ERROR,
+				FormatString := 'power %s',
+				OnMessage := 'Failure',
+				OffMessage := 'OK');
+
+TCSgohomeEvent(	Trigger := gohome, 
+				Level := ADSLOG_MSGTYPE_HINT,
+				FormatString := 'GOHOME %s',
+				OnMessage := 'commencing',
+				OffMEssage := 'completed');
+TCSparkEvent(	Trigger := park, 
+				Level := ADSLOG_MSGTYPE_HINT,
+				FormatString := 'PARK %s',
+				OnMessage := 'commencing',
+				OffMEssage := 'completed');
+TCSgotoEvent(	Trigger := goto, 
+				Level := ADSLOG_MSGTYPE_HINT,
+				FormatString := 'GOTO %s',
+				OnMessage := 'commencing',
+				OffMEssage := 'completed');
+TCStrackEvent(	Trigger := track, 
+				Level := ADSLOG_MSGTYPE_HINT,
+				FormatString := 'TRACK %s',
+				OnMessage := 'commencing',
+				OffMEssage := 'completed');
+TCSstopEvent(	Trigger := stop, 
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := 'STOP %s',
+				OnMessage := 'commencing',
+				OffMEssage := 'completed',
+				OffLevel := ADSLOG_MSGTYPE_HINT);
+AltitudeEvent(	Trigger := power AND elevation_calc<0.0, 
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := '%s',
+				OnMessage := 'Target below horizon',
+				OffMEssage := '');
+TCSreadyEvent(	Trigger := power AND ready, 
+				Level := ADSLOG_MSGTYPE_HINT,
+				FormatString := '%s',
+				OnMessage := 'RoboTel startup finished');]]></ST>
+    </Implementation>
+    <LineIds Name="TelescopeControl">
+      <LineId Id="5012" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="3290" Count="1" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="628" Count="1" />
+      <LineId Id="643" Count="0" />
+      <LineId Id="646" Count="0" />
+      <LineId Id="644" Count="1" />
+      <LineId Id="4249" Count="2" />
+      <LineId Id="4301" Count="0" />
+      <LineId Id="4253" Count="0" />
+      <LineId Id="4302" Count="0" />
+      <LineId Id="4312" Count="0" />
+      <LineId Id="4315" Count="3" />
+      <LineId Id="4252" Count="0" />
+      <LineId Id="6575" Count="6" />
+      <LineId Id="6593" Count="0" />
+      <LineId Id="6583" Count="0" />
+      <LineId Id="6594" Count="3" />
+      <LineId Id="6601" Count="0" />
+      <LineId Id="6600" Count="0" />
+      <LineId Id="6598" Count="0" />
+      <LineId Id="4330" Count="0" />
+      <LineId Id="6587" Count="5" />
+      <LineId Id="6586" Count="0" />
+      <LineId Id="6584" Count="0" />
+      <LineId Id="4246" Count="1" />
+      <LineId Id="5528" Count="1" />
+      <LineId Id="6602" Count="0" />
+      <LineId Id="4248" Count="0" />
+      <LineId Id="6779" Count="0" />
+      <LineId Id="6402" Count="0" />
+      <LineId Id="6404" Count="1" />
+      <LineId Id="6409" Count="0" />
+      <LineId Id="6403" Count="0" />
+      <LineId Id="1116" Count="0" />
+      <LineId Id="647" Count="0" />
+      <LineId Id="635" Count="1" />
+      <LineId Id="640" Count="0" />
+      <LineId Id="3084" Count="0" />
+      <LineId Id="637" Count="0" />
+      <LineId Id="1794" Count="0" />
+      <LineId Id="1282" Count="0" />
+      <LineId Id="1795" Count="3" />
+      <LineId Id="2008" Count="2" />
+      <LineId Id="3301" Count="2" />
+      <LineId Id="3520" Count="0" />
+      <LineId Id="2011" Count="0" />
+      <LineId Id="3521" Count="4" />
+      <LineId Id="3528" Count="1" />
+      <LineId Id="6202" Count="0" />
+      <LineId Id="6200" Count="0" />
+      <LineId Id="4243" Count="0" />
+      <LineId Id="6570" Count="4" />
+      <LineId Id="6201" Count="0" />
+      <LineId Id="4075" Count="0" />
+      <LineId Id="5185" Count="0" />
+      <LineId Id="4076" Count="0" />
+      <LineId Id="4242" Count="0" />
+      <LineId Id="6610" Count="0" />
+      <LineId Id="6608" Count="1" />
+      <LineId Id="6611" Count="1" />
+      <LineId Id="4347" Count="0" />
+      <LineId Id="4835" Count="0" />
+      <LineId Id="6606" Count="1" />
+      <LineId Id="3591" Count="0" />
+      <LineId Id="3547" Count="0" />
+      <LineId Id="3592" Count="0" />
+      <LineId Id="3548" Count="0" />
+      <LineId Id="3594" Count="0" />
+      <LineId Id="3608" Count="0" />
+      <LineId Id="3596" Count="0" />
+      <LineId Id="3602" Count="1" />
+      <LineId Id="3612" Count="0" />
+      <LineId Id="3605" Count="2" />
+      <LineId Id="3613" Count="0" />
+      <LineId Id="3604" Count="0" />
+      <LineId Id="3609" Count="0" />
+      <LineId Id="3593" Count="0" />
+      <LineId Id="3768" Count="0" />
+      <LineId Id="3764" Count="0" />
+      <LineId Id="3749" Count="0" />
+      <LineId Id="4319" Count="0" />
+      <LineId Id="4492" Count="0" />
+      <LineId Id="4328" Count="0" />
+      <LineId Id="3769" Count="0" />
+      <LineId Id="4320" Count="2" />
+      <LineId Id="3750" Count="0" />
+      <LineId Id="3922" Count="0" />
+      <LineId Id="3770" Count="0" />
+      <LineId Id="5531" Count="2" />
+      <LineId Id="4300" Count="0" />
+      <LineId Id="3923" Count="0" />
+      <LineId Id="5525" Count="0" />
+      <LineId Id="3924" Count="2" />
+      <LineId Id="3932" Count="0" />
+      <LineId Id="4088" Count="2" />
+      <LineId Id="4244" Count="0" />
+      <LineId Id="3752" Count="0" />
+      <LineId Id="5690" Count="1" />
+      <LineId Id="5705" Count="0" />
+      <LineId Id="5692" Count="0" />
+      <LineId Id="3773" Count="0" />
+      <LineId Id="5696" Count="0" />
+      <LineId Id="5694" Count="0" />
+      <LineId Id="3775" Count="0" />
+      <LineId Id="5704" Count="0" />
+      <LineId Id="3754" Count="0" />
+      <LineId Id="5697" Count="0" />
+      <LineId Id="5695" Count="0" />
+      <LineId Id="3776" Count="0" />
+      <LineId Id="4499" Count="2" />
+      <LineId Id="5193" Count="0" />
+      <LineId Id="4502" Count="1" />
+      <LineId Id="4506" Count="0" />
+      <LineId Id="4504" Count="0" />
+      <LineId Id="3755" Count="0" />
+      <LineId Id="4261" Count="3" />
+      <LineId Id="6373" Count="0" />
+      <LineId Id="6582" Count="0" />
+      <LineId Id="3757" Count="0" />
+      <LineId Id="3774" Count="0" />
+      <LineId Id="3758" Count="0" />
+      <LineId Id="3771" Count="0" />
+      <LineId Id="3759" Count="0" />
+      <LineId Id="3777" Count="0" />
+      <LineId Id="3760" Count="0" />
+      <LineId Id="3778" Count="0" />
+      <LineId Id="3761" Count="0" />
+      <LineId Id="3779" Count="0" />
+      <LineId Id="3762" Count="0" />
+      <LineId Id="3767" Count="0" />
+      <LineId Id="3763" Count="0" />
+      <LineId Id="3766" Count="0" />
+      <LineId Id="3765" Count="0" />
+      <LineId Id="4096" Count="0" />
+      <LineId Id="3549" Count="0" />
+      <LineId Id="5191" Count="0" />
+      <LineId Id="3519" Count="0" />
+      <LineId Id="6367" Count="0" />
+      <LineId Id="4323" Count="0" />
+      <LineId Id="6368" Count="0" />
+      <LineId Id="4325" Count="0" />
+      <LineId Id="4493" Count="0" />
+      <LineId Id="6363" Count="0" />
+      <LineId Id="6369" Count="0" />
+      <LineId Id="6366" Count="0" />
+      <LineId Id="6365" Count="0" />
+      <LineId Id="4326" Count="0" />
+      <LineId Id="4324" Count="0" />
+      <LineId Id="3784" Count="0" />
+      <LineId Id="1499" Count="0" />
+      <LineId Id="1501" Count="0" />
+      <LineId Id="1527" Count="0" />
+      <LineId Id="4283" Count="0" />
+      <LineId Id="6377" Count="0" />
+      <LineId Id="1528" Count="1" />
+      <LineId Id="4282" Count="0" />
+      <LineId Id="6378" Count="0" />
+      <LineId Id="1513" Count="0" />
+      <LineId Id="1526" Count="0" />
+      <LineId Id="4275" Count="1" />
+      <LineId Id="6379" Count="0" />
+      <LineId Id="6374" Count="2" />
+      <LineId Id="6380" Count="0" />
+      <LineId Id="1547" Count="1" />
+      <LineId Id="4272" Count="1" />
+      <LineId Id="6381" Count="0" />
+      <LineId Id="2867" Count="1" />
+      <LineId Id="1524" Count="1" />
+      <LineId Id="4284" Count="1" />
+      <LineId Id="6382" Count="0" />
+      <LineId Id="4286" Count="1" />
+      <LineId Id="1511" Count="0" />
+      <LineId Id="1519" Count="0" />
+      <LineId Id="4290" Count="1" />
+      <LineId Id="1509" Count="0" />
+      <LineId Id="4294" Count="0" />
+      <LineId Id="3532" Count="0" />
+      <LineId Id="4297" Count="1" />
+      <LineId Id="6205" Count="0" />
+      <LineId Id="4296" Count="0" />
+      <LineId Id="4299" Count="0" />
+      <LineId Id="3533" Count="1" />
+      <LineId Id="3538" Count="0" />
+      <LineId Id="4078" Count="0" />
+      <LineId Id="4081" Count="0" />
+      <LineId Id="4236" Count="1" />
+      <LineId Id="6021" Count="0" />
+      <LineId Id="4238" Count="0" />
+      <LineId Id="4235" Count="0" />
+      <LineId Id="3541" Count="0" />
+      <LineId Id="3543" Count="0" />
+      <LineId Id="4079" Count="0" />
+      <LineId Id="3544" Count="0" />
+      <LineId Id="4080" Count="0" />
+      <LineId Id="4232" Count="2" />
+      <LineId Id="4239" Count="0" />
+      <LineId Id="3920" Count="0" />
+      <LineId Id="5364" Count="1" />
+      <LineId Id="6203" Count="0" />
+      <LineId Id="6567" Count="0" />
+      <LineId Id="5357" Count="0" />
+      <LineId Id="5367" Count="0" />
+      <LineId Id="6197" Count="0" />
+      <LineId Id="4240" Count="0" />
+      <LineId Id="3928" Count="1" />
+      <LineId Id="3927" Count="0" />
+      <LineId Id="4083" Count="1" />
+      <LineId Id="6204" Count="0" />
+      <LineId Id="4278" Count="0" />
+      <LineId Id="4259" Count="0" />
+      <LineId Id="6399" Count="1" />
+      <LineId Id="4288" Count="1" />
+      <LineId Id="6401" Count="0" />
+      <LineId Id="4260" Count="0" />
+      <LineId Id="4258" Count="0" />
+      <LineId Id="6383" Count="8" />
+      <LineId Id="6396" Count="1" />
+      <LineId Id="6392" Count="1" />
+      <LineId Id="6398" Count="0" />
+      <LineId Id="6394" Count="1" />
+      <LineId Id="6023" Count="0" />
+      <LineId Id="6022" Count="0" />
+      <LineId Id="6025" Count="3" />
+      <LineId Id="6035" Count="1" />
+      <LineId Id="6029" Count="1" />
+      <LineId Id="6038" Count="1" />
+      <LineId Id="6031" Count="1" />
+      <LineId Id="6037" Count="0" />
+      <LineId Id="6033" Count="1" />
+      <LineId Id="6024" Count="0" />
+      <LineId Id="3535" Count="0" />
+      <LineId Id="3540" Count="0" />
+      <LineId Id="3539" Count="0" />
+      <LineId Id="4256" Count="0" />
+      <LineId Id="4255" Count="0" />
+      <LineId Id="4257" Count="0" />
+      <LineId Id="6942" Count="0" />
+      <LineId Id="5167" Count="0" />
+      <LineId Id="4662" Count="3" />
+      <LineId Id="4837" Count="2" />
+      <LineId Id="4841" Count="0" />
+      <LineId Id="4853" Count="0" />
+      <LineId Id="4855" Count="0" />
+      <LineId Id="4857" Count="0" />
+      <LineId Id="6780" Count="1" />
+      <LineId Id="4844" Count="6" />
+      <LineId Id="4656" Count="0" />
+      <LineId Id="3530" Count="1" />
+      <LineId Id="3583" Count="2" />
+      <LineId Id="6778" Count="0" />
+      <LineId Id="5530" Count="0" />
+      <LineId Id="3085" Count="0" />
+      <LineId Id="931" Count="1" />
+      <LineId Id="1179" Count="0" />
+      <LineId Id="933" Count="3" />
+      <LineId Id="1180" Count="0" />
+      <LineId Id="937" Count="0" />
+      <LineId Id="1183" Count="0" />
+      <LineId Id="939" Count="1" />
+      <LineId Id="1181" Count="0" />
+      <LineId Id="941" Count="0" />
+      <LineId Id="1184" Count="0" />
+      <LineId Id="943" Count="1" />
+      <LineId Id="1182" Count="0" />
+      <LineId Id="945" Count="0" />
+      <LineId Id="1185" Count="0" />
+      <LineId Id="947" Count="2" />
+      <LineId Id="1187" Count="0" />
+      <LineId Id="1186" Count="0" />
+      <LineId Id="1209" Count="0" />
+      <LineId Id="1491" Count="4" />
+      <LineId Id="6773" Count="2" />
+      <LineId Id="3293" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="AuxiliaryControl" Id="{30a3eb2e-ebab-4f9f-a38d-cee5e71b2e38}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM AuxiliaryControl
+VAR
+	// start delay for the dehumidifier to prevent overcurrent
+	DeHumidifierDelay:	TON;
+	DeHumidifier:		BOOL;
+	pressure_voltage,
+	pressure_Dewar,
+	temperature_Dewar: REAL;
+END_VAR
+VAR CONSTANT
+	humidity_high:	REAL := 75.0;
+	humidity_low:	REAL := 65.0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// turn off dehumidifier if dome is open
+pressure_voltage := F_YREAL(GVL_Auxiliary.pressure_Dewar, 0, 32767, 0.0, 10.0);
+pressure_Dewar := LREAL_TO_REAL(EXPT(10.0, (1.5*pressure_voltage - 12.0)));
+temperature_Dewar := GVL_Auxiliary.temperature_Dewar / 100.0;
+]]></ST>
+    </Implementation>
+    <LineIds Name="AuxiliaryControl">
+      <LineId Id="7" Count="0" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="GVL_Hydraulics" Id="{6c305df7-17d1-4acb-a553-c870f87116d0}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	// 2.1
+	oil_low				AT%I*: BOOL;
+	// ?
+	oil_high			AT%I*: BOOL;
+	// 2.3
+	oil_pressure_OK		AT%I*: BOOL;
+	// 2.4
+	oil_overtemperature		AT%I*: BOOL;
+	// 2.5
+	oil_undertemperature	AT%I*: BOOL;
+	// 2.6
+	oilfilter_dirty		AT%I*: BOOL;
+	// 2.7
+	pump_running		AT%I*: BOOL;
+	// 2.8
+	suction_running		AT%I*: BOOL;
+	//BT2
+	//oil_temperature			AT%I*: INT;
+	
+	//DIN39 4.6
+	oilpan_maximum		AT%I*: BOOL;
+	//DIN40 4.7
+	oil_reserve			AT%I*: BOOL;
+	
+		
+	//DOUT4 0.3
+	oil_pump_enable		AT%Q*: BOOL;
+	//DOUT5 0.4
+	oil_suction_enable		AT%Q*: BOOL;	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

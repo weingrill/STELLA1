@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="GVL_Main" Id="{4c62cafc-6725-448b-aa29-7cf19ff00316}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+//TODO update to current RoboTel IOs
+VAR_GLOBAL
+	//DIN1 0.0
+	phase_available		AT%I*: BOOL;
+	power_available		AT%I*: BOOL;
+	//DIN2 0.1
+	//key_switch			AT%I*: BOOL;
+	//DIN3 0.2
+	key_switch_remote	AT%I*: BOOL;
+	//DIN4 0.3
+	start_switch		AT%I*: BOOL;
+	//DIN5 0.4
+	stop_switch			AT%I*: BOOL;
+	//DIN8 0.7
+	reset_switch		AT%I*: BOOL;
+	
+	//BT1
+	main_cabinet_temperature	AT%I*: INT;
+	//DIN15 1.6
+	brake_clearing		AT%I*: BOOL;
+	
+	//DOUT1 0.0
+	lamp_power			AT%Q*: BOOL;
+	//DOUT2 0.1
+	lamp_ready			AT%Q*: BOOL;
+	//DOUT3 0.2
+	lamp_error			AT%Q*: BOOL;
+	
+	//DOUT7 0.6
+	softstart_trafo		AT%Q*:BOOL;
+
+	
+	ups_input_voltage		AT%I*: UINT;
+	ups_input_current		AT%I*: UINT;
+	ups_temperature			AT%I*: UINT;
+	ups_battery_temperature AT%I*: UINT;
+	ups_output_voltage		AT%I*: UINT;
+	ups_output_current		AT%I*: UINT;
+	
+	isRoboTel:		BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

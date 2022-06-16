@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="ElevationControl" Id="{c0371b19-3d1d-4f20-bd19-ce60539d69cd}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ElevationControl
+VAR_INPUT
+	// increase the eleveation
+	up:			BOOL;
+	// decrease the elevation
+	down:		BOOL;
+	// reset an error
+	reset:		BOOL;
+	// enable the axis
+	enable: 	BOOL;
+	// set position of the axis in degrees
+	position:	LREAL;
+	// move axis command
+	MoveAxis:	BOOL;
+	// calibrate the focus axis
+	HomeAxis:	BOOL;
+	// enable tracking
+	Tracking:	BOOL;
+END_VAR
+VAR_OUTPUT
+	// axis is ready to operate
+	Ready:			BOOL;
+	// drive error condition
+	error: 			BOOL;
+	// warning condition
+	warning:		BOOL;
+	// actual position of the elevation axis
+	act_position: 	LREAL;
+	// error ID of the elevation axis
+	ErrorID: 		UDINT;
+	// axis is calibrated
+	Calibrated:		BOOL;
+	// time to reach target position
+	slewtime:		LREAL;
+END_VAR
+VAR
+	ElevationAxis:			FB_Axis2;
+	ElevationCalibration: 	MC_SetPosition;
+	fbSoEReset: 			FB_SoEReset;
+	bSoEReset : BOOL;
+	// delay until commutator angle is measured
+	readydelay:				TON;
+	getlastposition:		BOOL := TRUE;
+	ElevationAxisEvent: 	FB_Eventlog;
+	ElevationBrakeEvent: 	FB_Eventlog;
+	HighElevationEvent: 	FB_Eventlog;
+	LowElevationEvent:		FB_Eventlog;
+	TorqueWarning:			FB_EventLog;
+	CalibrationEvent:		FB_Eventlog;
+	elevation_torque: REAL;
+	ReadParameter:		MC_ReadParameter;
+END_VAR
+VAR CONSTANT
+	// current position of the calibration cam. Apply an offset here if necessary
+	calibration_position:	LREAL := 45.0;
+END_VAR
+VAR PERSISTENT
+	last_position:	LREAL := -1.0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// limit the position input to a sane value
+position := LIMIT(0.0, position, 90.0);
+
+//if we enable the axis, we have to open the brake first
+IF Enable THEN
+	HydraulicsControl.open_brake := TRUE;
+END_IF
+
+// if an error occurs on te enabled axis we close the brake
+IF Enable AND error THEN
+	Enable := FALSE;
+	HydraulicsControl.close_brake := TRUE;
+END_IF
+
+IF ElevationAxis.Calibrated OR Error THEN
+	HomeAxis := FALSE;
+END_IF
+
+Calibrated := ElevationAxis.Calibrated;
+
+IF HomeAxis THEN
+//	position := homing_position;
+	position := calibration_position;
+	MoveAxis := FALSE;
+	Tracking := FALSE;
+END_IF
+
+IF MoveAxis THEN
+	Tracking := FALSE;
+END_IF
+
+// if NOT Enabled and ActVelo>1 then issue a warning
+warning := NOT enable AND GVL_Telescope.ElevationAxisRef.NcToPlc.ActVelo>2.0;
+
+// deactivate limit switches on homing
+MC_SetAcceptBlockedDriveSignal(
+	Axis := GVL_Telescope.ElevationAxisRef, 
+	Enable := HomeAxis);
+
+IF Tracking AND ABS(position - act_position) > 1.0 THEN
+	MoveAxis := TRUE;
+END_IF
+
+	
+ElevationAxis(
+	Enable := 			enable AND HydraulicsControl.brake_open,
+	Reset := 			reset,
+	MoveAxis :=			MoveAxis,
+	HomeAxis :=			HomeAxis,
+	Tracking :=			Tracking,
+	Position := 		position, 
+	Enable_Positive :=  GVL_Telescope.Elevation_inputs.0 OR HomeAxis,
+	Enable_Negative := 	GVL_Telescope.Elevation_inputs.1,
+	Jog_Forward :=		up,
+	Jog_Backwards := 	down,
+	bCalibrationCam :=	NOT GVL_Telescope.Elevation_inputs.0,
+	ActualPosition => 	act_position,
+	Error => 			error,
+	ErrorID => 			ErrorID,
+	AxisRef :=			GVL_Telescope.ElevationAxisRef);
+
+IF ElevationAxis.MoveDone THEN
+	MoveAxis := FALSE;
+END_IF
+
+IF ElevationAxis.HomeDone THEN
+	HomeAxis := FALSE;
+END_IF
+	
+IF ElevationAxis.ResetDone THEN
+	reset := FALSE;
+END_IF
+
+ElevationCalibration(Axis := GVL_Telescope.ElevationAxisRef,
+	Execute := getlastposition AND last_position>=0.0 AND NOT Calibrated,
+	Position := last_position);
+
+IF ElevationCalibration.Done THEN
+	getlastposition := FALSE;
+END_IF
+
+IF Calibrated THEN
+	last_position := act_position;
+END_IF
+	
+bSoEReset := GVL_Telescope.Elevation_diagnostic = 16#0000F10B OR GVL_Telescope.Elevation_diagnostic = 16#0000F601;
+
+IF bSoEReset THEN
+	fbSoEReset(
+		Axis := GVL_Telescope.ElevationAxisRef,
+		Execute := TRUE,
+		Timeout := DEFAULT_ADS_TIMEOUT);
+ 	IF NOT fbSoEReset.Busy THEN
+		fbSoEReset(Axis := GVL_Telescope.ElevationAxisRef, Execute := FALSE);
+		bSoEReset := FALSE;
+	END_IF
+END_IF 
+
+readydelay(IN :=  HydraulicsControl.brake_open, PT := T#6000MS, Q=> ready);
+
+ReadParameter(	Axis := GVL_Telescope.ElevationAxisRef, 
+				Enable := ElevationAxis.InMotion, 
+				ParameterNumber := MC_AxisParameter.AxisRemainingTimeToGo, 
+				ReadMode := E_ReadMode.READMODE_CYCLIC);
+				
+IF ReadParameter.Valid THEN
+	slewtime := ReadParameter.Value;
+END_IF
+
+elevation_torque := GVL_Telescope.Elevation_torque / 10.0;
+
+		
+ElevationAxisEvent(	Trigger := Error, 
+				Level := ADSLOG_MSGTYPE_ERROR,
+				FormatString := 'Elevation Axis Error: %s',
+				OnMessage := NCError_TO_STRING(ErrorID));
+
+HighElevationEvent(	Trigger := Calibrated AND act_position > 80.0, 
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := 'High Elevation: %s',
+				OnMessage := LREAL_TO_FMTSTR(act_position, 2, TRUE));
+
+LowElevationEvent(	Trigger := Calibrated AND act_position < 15.0, 
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := 'Low Elevation: %s',
+				OnMessage := LREAL_TO_FMTSTR(act_position, 2, TRUE));
+				
+ElevationBrakeEvent( Trigger := NOT enable AND HydraulicsControl.brake_open, 
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := '%s',
+				OnMessage := 'Brake was opened without elevation axis enabled!'); 
+
+TorqueWarning(	
+	Trigger := 		ABS(elevation_torque) > 60.0, 
+	Level := 		ADSLOG_MSGTYPE_WARN,
+	FormatString :=	'%s',
+	OnMessage := 	'Elevation torque is high.');
+	
+CalibrationEvent(
+	Trigger :=	Calibrated,
+	Level :=	ADSLOG_MSGTYPE_HINT,
+	OnMessage := 'Elevation is calibrated.'
+	);
+]]></ST>
+    </Implementation>
+    <LineIds Name="ElevationControl">
+      <LineId Id="379" Count="0" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="706" Count="0" />
+      <LineId Id="451" Count="0" />
+      <LineId Id="234" Count="1" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="707" Count="0" />
+      <LineId Id="702" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="708" Count="0" />
+      <LineId Id="703" Count="2" />
+      <LineId Id="252" Count="0" />
+      <LineId Id="254" Count="1" />
+      <LineId Id="558" Count="1" />
+      <LineId Id="626" Count="0" />
+      <LineId Id="257" Count="0" />
+      <LineId Id="1036" Count="1" />
+      <LineId Id="769" Count="1" />
+      <LineId Id="259" Count="0" />
+      <LineId Id="772" Count="0" />
+      <LineId Id="630" Count="0" />
+      <LineId Id="773" Count="1" />
+      <LineId Id="637" Count="0" />
+      <LineId Id="636" Count="0" />
+      <LineId Id="394" Count="0" />
+      <LineId Id="499" Count="0" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="291" Count="1" />
+      <LineId Id="381" Count="0" />
+      <LineId Id="763" Count="2" />
+      <LineId Id="762" Count="0" />
+      <LineId Id="615" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="184" Count="2" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="562" Count="0" />
+      <LineId Id="187" Count="4" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="192" Count="2" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="214" Count="11" />
+      <LineId Id="1098" Count="0" />
+      <LineId Id="1100" Count="1" />
+      <LineId Id="1099" Count="0" />
+      <LineId Id="1103" Count="0" />
+      <LineId Id="612" Count="0" />
+      <LineId Id="1105" Count="1" />
+      <LineId Id="1108" Count="3" />
+      <LineId Id="1104" Count="0" />
+      <LineId Id="1115" Count="0" />
+      <LineId Id="1119" Count="5" />
+      <LineId Id="1126" Count="3" />
+      <LineId Id="1118" Count="0" />
+      <LineId Id="1112" Count="0" />
+      <LineId Id="386" Count="0" />
+      <LineId Id="969" Count="0" />
+      <LineId Id="971" Count="0" />
+      <LineId Id="976" Count="0" />
+      <LineId Id="972" Count="1" />
+      <LineId Id="975" Count="0" />
+      <LineId Id="974" Count="0" />
+      <LineId Id="970" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="977" Count="0" />
+      <LineId Id="829" Count="0" />
+      <LineId Id="828" Count="0" />
+      <LineId Id="827" Count="0" />
+      <LineId Id="156" Count="2" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="697" Count="0" />
+      <LineId Id="693" Count="3" />
+      <LineId Id="692" Count="0" />
+      <LineId Id="698" Count="3" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="396" Count="3" />
+      <LineId Id="837" Count="0" />
+      <LineId Id="843" Count="3" />
+      <LineId Id="842" Count="0" />
+      <LineId Id="902" Count="0" />
+      <LineId Id="904" Count="3" />
+      <LineId Id="903" Count="0" />
+      <LineId Id="908" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
