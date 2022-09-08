@@ -1406,246 +1406,6 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 		<DataType>
-			<Name GUID="{82A298F0-2577-5424-093E-34DBB389355E}" AutoDeleteType="true" ForceIecDecl="true">Status_53870A22_Plc</Name>
-			<BitSize>16</BitSize>
-			<SubItem>
-				<Name>Latch_extern_valid</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>1</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Set_counter_done</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>2</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Counter_underflow</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>3</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Counter_overflow</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>4</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Extrapolation_stall</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>7</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Status_of_input_A</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>8</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Status_of_input_B</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>9</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Status_of_extern_latch</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>12</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Sync_error</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>13</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>TxPDO_Toggle</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>15</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{D4B7E62B-7F67-904F-E102-4099680AD138}" AutoDeleteType="true" ForceIecDecl="true">Status_E56991C4_Plc</Name>
-			<BitSize>16</BitSize>
-			<SubItem>
-				<Name>Ready_to_enable</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Ready</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>1</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Warning</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>2</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Error</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>3</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Moving_positive</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>4</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Moving_negative</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>5</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Torque_reduced</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>6</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Digital_input_1</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>11</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Digital_input_2</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>12</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Sync_error</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>13</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>TxPDO_Toggle</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>15</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{1FBBF2EC-6560-6D84-6D14-31C076F4DD99}" AutoDeleteType="true" ForceIecDecl="true">MDP5001_511_733_I_2BD37790</Name>
-			<BitSize>64</BitSize>
-			<SubItem>
-				<Name>MDP5001_511_Status</Name>
-				<Type GUID="{82A298F0-2577-5424-093E-34DBB389355E}">Status_53870A22_Plc</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>MDP5001_511_Counter_value</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>16</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>MDP5001_511_Latch_value</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>32</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>MDP5001_733_Status_1</Name>
-				<Type GUID="{D4B7E62B-7F67-904F-E102-4099680AD138}">Status_E56991C4_Plc</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>48</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{0F1ADE13-A983-1987-9733-CB596A477A42}" AutoDeleteType="true" ForceIecDecl="true">Control_0D2C036C_Plc</Name>
-			<BitSize>16</BitSize>
-			<SubItem>
-				<Name>Enable_latch_extern_on_positive_edge</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>1</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Set_counter</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>2</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Enable_latch_extern_on_negative_edge</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>3</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{8F266338-240C-9AA5-EF5F-11BFB5693D9C}" AutoDeleteType="true" ForceIecDecl="true">Control_36AF7161_Plc</Name>
-			<BitSize>16</BitSize>
-			<SubItem>
-				<Name>Enable</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Reset</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>1</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Reduce_torque</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>2</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Threshold_active</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
-				<BitSize>1</BitSize>
-				<BitOffs>3</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{1FBBF2ED-6560-6D84-6D14-31C076F4DD99}" AutoDeleteType="true" ForceIecDecl="true">MDP5001_511_733_O_2BD37790</Name>
-			<BitSize>64</BitSize>
-			<SubItem>
-				<Name>MDP5001_511_Control</Name>
-				<Type GUID="{0F1ADE13-A983-1987-9733-CB596A477A42}">Control_0D2C036C_Plc</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>MDP5001_511_Set_counter_value</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>16</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>MDP5001_733_Control_1</Name>
-				<Type GUID="{8F266338-240C-9AA5-EF5F-11BFB5693D9C}">Control_36AF7161_Plc</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>32</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>MDP5001_733_Velocity</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>48</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
 			<Name GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety" TcBaseType="true">FSOE_6</Name>
 			<BitSize>48</BitSize>
 			<SubItem>
@@ -2709,11 +2469,12 @@ DIN39 4.6]]></Comment>
 						</Var>
 						<Var>
 							<Name>GVL_Main.power_available</Name>
+							<Comment><![CDATA[ not implemented on stella]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Main.key_switch_remote</Name>
-							<Comment><![CDATA[DIN2 0.1
+							<Comment><![CDATA[not implemented on RoboTel
 key_switch			AT%I*: BOOL;
 DIN3 0.2]]></Comment>
 							<Type>BOOL</Type>
@@ -2979,20 +2740,16 @@ DIN3 0.2]]></Comment>
 							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Nasmyth_axis.MDP5001_511_733_Input</Name>
-							<Type GUID="{1FBBF2EC-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_I_2BD37790</Type>
+							<Name>GVL_Main.L1L2_voltage</Name>
+							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Cover1_axis.MDP5001_511_733_Input</Name>
-							<Type GUID="{1FBBF2EC-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_I_2BD37790</Type>
+							<Name>GVL_Main.L2L3_voltage</Name>
+							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Cover2_axis.MDP5001_511_733_Input</Name>
-							<Type GUID="{1FBBF2EC-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_I_2BD37790</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.Cover3_axis.MDP5001_511_733_Input</Name>
-							<Type GUID="{1FBBF2EC-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_I_2BD37790</Type>
+							<Name>GVL_Main.L3L1_voltage</Name>
+							<Type>REAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -3109,20 +2866,36 @@ DOUT9 1.0]]></Comment>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Nasmyth_axis.MDP5001_511_733_Output</Name>
-							<Type GUID="{1FBBF2ED-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_O_2BD37790</Type>
+							<Name>GVL_Telescope.nasmyth_left</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Cover1_axis.MDP5001_511_733_Output</Name>
-							<Type GUID="{1FBBF2ED-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_O_2BD37790</Type>
+							<Name>GVL_Telescope.nasmyth_right</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Cover2_axis.MDP5001_511_733_Output</Name>
-							<Type GUID="{1FBBF2ED-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_O_2BD37790</Type>
+							<Name>GVL_Telescope.open_cover1</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.Cover3_axis.MDP5001_511_733_Output</Name>
-							<Type GUID="{1FBBF2ED-6560-6D84-6D14-31C076F4DD99}">MDP5001_511_733_O_2BD37790</Type>
+							<Name>GVL_Telescope.close_cover1</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.open_cover2</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.close_cover2</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.open_cover3</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.close_cover3</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Contexts>
@@ -4089,13 +3862,13 @@ DOUT9 1.0]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Total L-L Voltage" Index="#x1a24" Flags="#x0010" SyncMan="3">
-								<Entry Name="L1-L2 Voltage" Index="#xf609" Sub="#x11">
+								<Entry Name="GVL_Main.L1L2_voltage" Index="#xf609" Sub="#x11">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="L2-L3 Voltage" Index="#xf609" Sub="#x12">
+								<Entry Name="GVL_Main.L2L3_voltage" Index="#xf609" Sub="#x12">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="L3-L1 Voltage" Index="#xf609" Sub="#x13">
+								<Entry Name="GVL_Main.L3L1_voltage" Index="#xf609" Sub="#x13">
 									<Type>REAL</Type>
 								</Entry>
 							</Pdo>
@@ -4361,22 +4134,22 @@ DOUT9 1.0]]></Comment>
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_Main.key_switch_remote" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_Main.start_switch" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="GVL_Main.stop_switch" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="GVL_Main.reset_switch" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4409,32 +4182,32 @@ DOUT9 1.0]]></Comment>
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_low" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_high" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_pressure_OK" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_overtemperature" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6040" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_undertemperature" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6050" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oilfilter_dirty" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4457,12 +4230,12 @@ DOUT9 1.0]]></Comment>
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_Main.power_available" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_Main.brake_clearing" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4487,12 +4260,12 @@ DOUT9 1.0]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6060" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.pump_running" Index="#x6060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6070" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.suction_running" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4505,17 +4278,17 @@ DOUT9 1.0]]></Comment>
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="GVL_Main.lamp_power" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="GVL_Main.lamp_ready" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="GVL_Main.lamp_error" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4553,17 +4326,17 @@ DOUT9 1.0]]></Comment>
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_pump_enable" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_suction_enable" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="GVL_Telescope.brake_azimuth_eve" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4588,7 +4361,7 @@ DOUT9 1.0]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1607" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7070" Sub="#x01">
+								<Entry Name="GVL_Main.softstart_trafo" Index="#x7070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4700,71 +4473,71 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="24" BoxType="9099">
-						<Name>Klemme 24 (EL1008)</Name>
+						<Name>Pendant Control (EL1008)</Name>
 						<ImageId>7</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000017">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_pendant_control.BCD1" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_pendant_control.BCD2" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="GVL_pendant_control.BCD4" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="GVL_pendant_control.BCD8" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6040" Sub="#x01">
+								<Entry Name="GVL_pendant_control.reset_switch" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6050" Sub="#x01">
+								<Entry Name="GVL_pendant_control.direction_up" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6060" Sub="#x01">
+								<Entry Name="GVL_pendant_control.direction_down" Index="#x6060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6070" Sub="#x01">
+								<Entry Name="GVL_pendant_control.key_switch" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 						</EtherCAT>
 					</Box>
 					<Box Id="25" BoxType="9099">
-						<Name>Klemme 25 (EL1008)</Name>
+						<Name>Pendant Control2 (EL1008)</Name>
 						<ImageId>7</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000018">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_pendant_control.start_switch" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_pendant_control.direction_left" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="GVL_pendant_control.direction_right" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4796,28 +4569,28 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="26" BoxType="9099">
-						<Name>Klemme 26 (EL1008)</Name>
+						<Name>M2 M3 Limit switches (EL1008)</Name>
 						<ImageId>7</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000019">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_Telescope.focus_limit_near" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_Telescope.focus_limit_far" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="GVL_Telescope.nasmyth_limit_left" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="GVL_Telescope.nasmyth_limit_right" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4844,38 +4617,38 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="27" BoxType="9099">
-						<Name>Klemme 27 (EL1008)</Name>
+						<Name>Cover Limit Switches (EL1008)</Name>
 						<ImageId>7</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x0100001a">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_Telescope.cover1_open" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_Telescope.cover1_closed" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="GVL_Telescope.cover2_open" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="GVL_Telescope.cover2_closed" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6040" Sub="#x01">
+								<Entry Name="GVL_Telescope.cover3_open" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6050" Sub="#x01">
+								<Entry Name="GVL_Telescope.cover3_closed" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4892,18 +4665,18 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="28" BoxType="9099">
-						<Name>Klemme 28 (EL1008)</Name>
+						<Name>Telescope Hydraulics IN (EL1008)</Name>
 						<ImageId>7</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x0100001b">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oilpan_maximum" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="GVL_Hydraulics.oil_reserve" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4933,40 +4706,40 @@ DOUT9 1.0]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6070" Sub="#x01">
+								<Entry Name="GVL_Telescope.azimut_limit_switch" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 						</EtherCAT>
 					</Box>
 					<Box Id="29" BoxType="9099">
-						<Name>Klemme 29 (EL2008)</Name>
+						<Name>Pendant Lights (EL2008)</Name>
 						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x0100001c">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="GVL_pendant_control.lamp_up" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="GVL_pendant_control.lamp_down" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="GVL_pendant_control.lamp_right" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7030" Sub="#x01">
+								<Entry Name="GVL_pendant_control.lamp_left" Index="#x7030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1604" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7040" Sub="#x01">
+								<Entry Name="GVL_pendant_control.lamp_error" Index="#x7040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4988,18 +4761,18 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="30" BoxType="9099">
-						<Name>Klemme 30 (EL2008)</Name>
+						<Name>Lock and Horn (EL2008)</Name>
 						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x0100001d">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="GVL_Telescope.focus_lock" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="GVL_Telescope.nasmyth_lock" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -5029,14 +4802,14 @@ DOUT9 1.0]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1607" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7070" Sub="#x01">
+								<Entry Name="GVL_Telescope.horn" Index="#x7070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 						</EtherCAT>
 					</Box>
 					<Box Id="31" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Klemme 31 (EL3064)</Name>
+						<Name>Temperature M2 M1 (EL3064)</Name>
 						<ImageId>1005</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0bf83052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3064 4K.Ana. Eingang 0-10V" Desc="EL3064" PortABoxInfo="#x0100001e">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
@@ -6213,48 +5986,48 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="53" BoxType="9099">
-						<Name>Klemme 53 (EL2008)</Name>
+						<Name>Cover Motors (EL2008)</Name>
 						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000034">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="GVL_Telescope.nasmyth_left" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="GVL_Telescope.nasmyth_right" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="GVL_Telescope.open_cover1" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7030" Sub="#x01">
+								<Entry Name="GVL_Telescope.close_cover1" Index="#x7030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1604" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7040" Sub="#x01">
+								<Entry Name="GVL_Telescope.open_cover2" Index="#x7040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1605" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7050" Sub="#x01">
+								<Entry Name="GVL_Telescope.close_cover2" Index="#x7050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1606" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7060" Sub="#x01">
+								<Entry Name="GVL_Telescope.open_cover3" Index="#x7060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1607" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7070" Sub="#x01">
+								<Entry Name="GVL_Telescope.close_cover3" Index="#x7070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -8736,26 +8509,80 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIPC^STELLA1Runtime^STELLA1Runtime Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Cover Limit Switches (EL1008)">
+				<Link VarA="PlcTask Inputs^GVL_Telescope.cover1_closed" VarB="Channel 2^GVL_Telescope.cover1_closed"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.cover1_open" VarB="Channel 1^GVL_Telescope.cover1_open"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.cover2_closed" VarB="Channel 4^GVL_Telescope.cover2_closed"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.cover2_open" VarB="Channel 3^GVL_Telescope.cover2_open"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.cover3_closed" VarB="Channel 6^GVL_Telescope.cover3_closed"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.cover3_open" VarB="Channel 5^GVL_Telescope.cover3_open"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Cover Motors (EL2008)">
+				<Link VarA="PlcTask Outputs^GVL_Telescope.close_cover1" VarB="Channel 4^GVL_Telescope.close_cover1"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.close_cover2" VarB="Channel 6^GVL_Telescope.close_cover2"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.close_cover3" VarB="Channel 8^GVL_Telescope.close_cover3"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.nasmyth_left" VarB="Channel 1^GVL_Telescope.nasmyth_left"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.nasmyth_right" VarB="Channel 2^GVL_Telescope.nasmyth_right"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.open_cover1" VarB="Channel 3^GVL_Telescope.open_cover1"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.open_cover2" VarB="Channel 5^GVL_Telescope.open_cover2"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.open_cover3" VarB="Channel 7^GVL_Telescope.open_cover3"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Hydraulics IN (EL1008)">
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_high" VarB="Channel 2^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_low" VarB="Channel 1^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_overtemperature" VarB="Channel 4^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_pressure_OK" VarB="Channel 3^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_undertemperature" VarB="Channel 5^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oilfilter_dirty" VarB="Channel 6^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_high" VarB="Channel 2^GVL_Hydraulics.oil_high"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_low" VarB="Channel 1^GVL_Hydraulics.oil_low"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_overtemperature" VarB="Channel 4^GVL_Hydraulics.oil_overtemperature"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_pressure_OK" VarB="Channel 3^GVL_Hydraulics.oil_pressure_OK"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_undertemperature" VarB="Channel 5^GVL_Hydraulics.oil_undertemperature"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oilfilter_dirty" VarB="Channel 6^GVL_Hydraulics.oilfilter_dirty"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Lock and Horn (EL2008)">
+				<Link VarA="PlcTask Outputs^GVL_Telescope.focus_lock" VarB="Channel 1^GVL_Telescope.focus_lock"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.horn" VarB="Channel 8^GVL_Telescope.horn"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.nasmyth_lock" VarB="Channel 2^GVL_Telescope.nasmyth_lock"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^M2 M3 Limit switches (EL1008)">
+				<Link VarA="PlcTask Inputs^GVL_Telescope.focus_limit_far" VarB="Channel 2^GVL_Telescope.focus_limit_far"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.focus_limit_near" VarB="Channel 1^GVL_Telescope.focus_limit_near"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.nasmyth_limit_left" VarB="Channel 3^GVL_Telescope.nasmyth_limit_left"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.nasmyth_limit_right" VarB="Channel 4^GVL_Telescope.nasmyth_limit_right"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Main Panel IN (EL1008)">
-				<Link VarA="PlcTask Inputs^GVL_Main.key_switch_remote" VarB="Channel 1^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.reset_switch" VarB="Channel 4^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.start_switch" VarB="Channel 2^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.stop_switch" VarB="Channel 3^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.key_switch_remote" VarB="Channel 1^GVL_Main.key_switch_remote"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.reset_switch" VarB="Channel 4^GVL_Main.reset_switch"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.start_switch" VarB="Channel 2^GVL_Main.start_switch"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.stop_switch" VarB="Channel 3^GVL_Main.stop_switch"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Main Panel Out (EL2008)">
-				<Link VarA="PlcTask Outputs^GVL_Main.lamp_error" VarB="Channel 3^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_Main.lamp_power" VarB="Channel 1^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_Main.lamp_ready" VarB="Channel 2^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_Main.lamp_error" VarB="Channel 3^GVL_Main.lamp_error"/>
+				<Link VarA="PlcTask Outputs^GVL_Main.lamp_power" VarB="Channel 1^GVL_Main.lamp_power"/>
+				<Link VarA="PlcTask Outputs^GVL_Main.lamp_ready" VarB="Channel 2^GVL_Main.lamp_ready"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Control (EL1008)">
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD1" VarB="Channel 1^GVL_pendant_control.BCD1"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD2" VarB="Channel 2^GVL_pendant_control.BCD2"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD4" VarB="Channel 3^GVL_pendant_control.BCD4"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD8" VarB="Channel 4^GVL_pendant_control.BCD8"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_down" VarB="Channel 7^GVL_pendant_control.direction_down"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_up" VarB="Channel 6^GVL_pendant_control.direction_up"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.key_switch" VarB="Channel 8^GVL_pendant_control.key_switch"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.reset_switch" VarB="Channel 5^GVL_pendant_control.reset_switch"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Control2 (EL1008)">
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_left" VarB="Channel 2^GVL_pendant_control.direction_left"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_right" VarB="Channel 3^GVL_pendant_control.direction_right"/>
+				<Link VarA="PlcTask Inputs^GVL_pendant_control.start_switch" VarB="Channel 1^GVL_pendant_control.start_switch"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Lights (EL2008)">
+				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_down" VarB="Channel 2^GVL_pendant_control.lamp_down"/>
+				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_error" VarB="Channel 5^GVL_pendant_control.lamp_error"/>
+				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_left" VarB="Channel 4^GVL_pendant_control.lamp_left"/>
+				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_right" VarB="Channel 3^GVL_pendant_control.lamp_right"/>
+				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_up" VarB="Channel 1^GVL_pendant_control.lamp_up"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Power Monitoring IN (EL3443)">
+				<Link VarA="PlcTask Inputs^GVL_Main.L1L2_voltage" VarB="Total L-L Voltage^GVL_Main.L1L2_voltage"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.L2L3_voltage" VarB="Total L-L Voltage^GVL_Main.L2L3_voltage"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.L3L1_voltage" VarB="Total L-L Voltage^GVL_Main.L3L1_voltage"/>
 				<Link VarA="PlcTask Inputs^GVL_Main.phase_available" VarB="Total Status^System State"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
@@ -8765,17 +8592,29 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_Safety.Restart" VarB="StandardOutputs^TwinSafeGroup1.RestartSafety_2"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.Run" VarB="StandardOutputs^TwinSafeGroup1.RunSafety_3"/>
 			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Telescope Hydraulics IN (EL1008)">
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_reserve" VarB="Channel 2^GVL_Hydraulics.oil_reserve"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oilpan_maximum" VarB="Channel 1^GVL_Hydraulics.oilpan_maximum"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.azimut_limit_switch" VarB="Channel 8^GVL_Telescope.azimut_limit_switch"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature IN (EL3202)">
+				<Link VarA="PlcTask Inputs^GVL_Main.main_cabinet_temperature" VarB="RTD Inputs Channel 1^Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature M2 M1 (EL3064)">
+				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror1" VarB="AI Standard Channel 2^Value"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror2" VarB="AI Standard Channel 1^Value"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics IN (EL1008)">
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.pump_running" VarB="Channel 7^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Hydraulics.suction_running" VarB="Channel 8^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.brake_clearing" VarB="Channel 2^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.power_available" VarB="Channel 1^Input"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.pump_running" VarB="Channel 7^GVL_Hydraulics.pump_running"/>
+				<Link VarA="PlcTask Inputs^GVL_Hydraulics.suction_running" VarB="Channel 8^GVL_Hydraulics.suction_running"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.brake_clearing" VarB="Channel 2^GVL_Main.brake_clearing"/>
+				<Link VarA="PlcTask Inputs^GVL_Main.power_available" VarB="Channel 1^GVL_Main.power_available"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics OUT (EL2008)">
-				<Link VarA="PlcTask Outputs^GVL_Hydraulics.oil_pump_enable" VarB="Channel 1^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_Hydraulics.oil_suction_enable" VarB="Channel 2^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_Main.softstart_trafo" VarB="Channel 8^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_Telescope.brake_azimuth_eve" VarB="Channel 3^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_Hydraulics.oil_pump_enable" VarB="Channel 1^GVL_Hydraulics.oil_pump_enable"/>
+				<Link VarA="PlcTask Outputs^GVL_Hydraulics.oil_suction_enable" VarB="Channel 2^GVL_Hydraulics.oil_suction_enable"/>
+				<Link VarA="PlcTask Outputs^GVL_Main.softstart_trafo" VarB="Channel 8^GVL_Main.softstart_trafo"/>
+				<Link VarA="PlcTask Outputs^GVL_Telescope.brake_azimuth_eve" VarB="Channel 3^GVL_Telescope.brake_azimuth_eve"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Azimuth">
 				<Link VarA="PlcTask Inputs^GVL_Telescope.AzimuthAxisRef.NcToPlc" VarB="Outputs^ToPlc"/>

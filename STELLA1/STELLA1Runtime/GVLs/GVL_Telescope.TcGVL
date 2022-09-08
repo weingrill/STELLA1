@@ -77,15 +77,17 @@ VAR_GLOBAL
 	DerotatorAxisRef: 	AXIS_REF;
  	// Motor1 Channel 1
 	FocusAxisRef:		AXIS_REF;
-	// Motor1 Channel 2 
-	Nasmyth_axis:		MDP5001_511_733_2BD37790;
-
-	// Motor2 Channel 1; MDP5001_511_733_2BD37790
-	Cover1_axis: 		MDP5001_511_733_2BD37790;
-	// Motor2 Channel 2: MDP5001_511_733_2BD37790
-	Cover2_axis: 		MDP5001_511_733_2BD37790;
-	// Motor3 Channel 1: MDP5001_511_733_BA4AEFF1
-	Cover3_axis: 		MDP5001_511_733_2BD37790;
+	
+	nasmyth_left	AT%Q*: BOOL;
+	nasmyth_right	AT%Q*: BOOL;
+	open_cover1		AT%Q*: BOOL;
+	close_cover1	AT%Q*: BOOL;
+	open_cover2		AT%Q*: BOOL;
+	close_cover2	AT%Q*: BOOL;
+	open_cover3		AT%Q*: BOOL;
+	close_cover3	AT%Q*: BOOL;
+	
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

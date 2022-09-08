@@ -110,7 +110,7 @@ oil_pump_state(SET := start,
 						suction_failure OR 
 						hydraulics_failure OR
 						oil_low OR
-						NOT MAIN.phase_available);
+						NOT Transformer.phase_available);
 
 GVL_Hydraulics.oil_pump_enable := oil_pump_state.Q1;
 
@@ -158,7 +158,7 @@ error := pressure_failure OR suction_failure OR oil_low;
 suction_timer(	bStart := suction_running AND NOT suction_pump_timer.Q, 
 				bStop := GVL_Hydraulics.oilpan_maximum);  
 
-suction_pump_timer(IN := MAIN.phase_available AND 
+suction_pump_timer(IN := Transformer.phase_available AND 
 						GVL_Hydraulics.oilpan_maximum,
 					PT := T#28S,
 					Q => GVL_Hydraulics.oil_suction_enable);

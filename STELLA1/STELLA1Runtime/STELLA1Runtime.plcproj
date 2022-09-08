@@ -212,6 +212,9 @@
     <Compile Include="POUs\TelescopeControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Transformer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />

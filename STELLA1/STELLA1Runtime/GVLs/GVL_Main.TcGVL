@@ -6,8 +6,9 @@
 VAR_GLOBAL
 	//DIN1 0.0
 	phase_available		AT%I*: BOOL;
+	// not implemented on stella
 	power_available		AT%I*: BOOL;
-	//DIN2 0.1
+	//not implemented on RoboTel
 	//key_switch			AT%I*: BOOL;
 	//DIN3 0.2
 	key_switch_remote	AT%I*: BOOL;
@@ -40,7 +41,9 @@ VAR_GLOBAL
 	ups_battery_temperature AT%I*: UINT;
 	ups_output_voltage		AT%I*: UINT;
 	ups_output_current		AT%I*: UINT;
-	
+	L1L2_voltage			AT%I*: REAL;
+	L2L3_voltage			AT%I*: REAL;
+	L3L1_voltage			AT%I*: REAL;
 	isRoboTel:		BOOL;
 END_VAR]]></Declaration>
   </GVL>

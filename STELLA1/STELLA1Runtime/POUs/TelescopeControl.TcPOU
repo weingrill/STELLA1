@@ -271,11 +271,11 @@ IF power THEN
 		powerfailure := TRUE;
 		TCSpowerEvent.OnMessage := 'failure: brake clearing not set';
 		power := FALSE;
-	ELSIF NOT Main.power_OK THEN
+	ELSIF NOT Transformer.power_OK THEN
 		powerfailure := TRUE;
 		TCSpowerEvent.OnMessage := 'failure: main power failure';
 		power := FALSE;
-	ELSIF NOT Main.phase_available THEN
+	ELSIF NOT Transformer.phase_available THEN
 		powerfailure := TRUE;
 		TCSpowerEvent.OnMessage := 'failure: hydraulics power failure';
 		power := FALSE;
