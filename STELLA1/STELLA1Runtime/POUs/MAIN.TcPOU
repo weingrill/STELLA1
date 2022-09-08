@@ -19,6 +19,12 @@ VAR
 	key_switch:			BOOL;
 	//	open brake
 	brake_clearing:		BOOL := FALSE;
+	
+	remote_start:		BOOL;
+	remote_stop: 		BOOL;
+	remote_reset:		BOOL;
+	remote_keyswitch:	BOOL;
+	remote_brake_clearing:	BOOL;
 	// blink error lamp on warning
 	warn_blink: 		FB_BLINK;
 	// watchdog for trafo softstarter
@@ -58,8 +64,8 @@ Main control loop
 GetHostName(bExecute := bExecute, sHostName => HostName);
 bExecute := FALSE;
 GVL_Main.isRoboTel := HostName = 'CX-4E6032';
-start := GVL_Main.start_switch;
-stop := GVL_Main.stop_switch;
+start := GVL_Main.start_switch OR remote_start;
+stop := GVL_Main.stop_switch OR remote_stop;
 
 IF GVL_Main.start_switch THEN
 	HydraulicsControl.start := TRUE;
@@ -69,9 +75,9 @@ IF GVL_Main.stop_switch THEN
 	HydraulicsControl.stop := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
-reset := GVL_Main.reset_switch OR GVL_pendant_control.reset_switch;		
-key_switch := GVL_Main.key_switch_remote;
-brake_clearing := GVL_Main.brake_clearing;
+reset := GVL_Main.reset_switch OR GVL_pendant_control.reset_switch OR remote_reset;		
+key_switch := GVL_Main.key_switch_remote OR remote_keyswitch;
+brake_clearing := GVL_Main.brake_clearing OR remote_brake_clearing;
 cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 100.0;
 
 // telescope is ready when power available and hydraulics ok
