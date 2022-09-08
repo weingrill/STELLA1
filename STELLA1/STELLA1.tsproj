@@ -1825,15 +1825,18 @@ External Setpoint Generation:
 				<LBound>0</LBound>
 				<Elements>10</Elements>
 			</ArrayInfo>
+			<Hides>
+				<Hide GUID="{0D9E782F-3778-A474-E51F-4F5C8E7FF3F2}"/>
+			</Hides>
 		</DataType>
 	</DataTypes>
 	<ImageDatas>
 		<ImageData Id="1000">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ff808080808080808080808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1001">424dd6020000000000003600000028000000100000000e0000000100180000000000a002000000000000000000000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff008066008099008066008099008066ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00000000ffff000000008099ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00ffff00ffff00ffff008066ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00000000ffff000000008066ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffffff000000ffffff0000008099ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00ffff00ffff00ffff008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00000000ffff000000008099ff00ffff00ffff00ffff00ffff00ff99006666009999006666009999006666009900ffff0000ff00ffff0000ff008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ff99006666009999006666009999006666009900ffff00000000ffff000000008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ff99006666009999006666009999006666009900ffff00800000ffff008000008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1002">424dd6020000000000003600000028000000100000000e0000000100180000000000a002000000000000000000000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
-		<ImageData Id="1003">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000120b0000120b00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
-		<ImageData Id="1004">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
-		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
+		<ImageData Id="1003">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
+		<ImageData Id="1004">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000120b0000120b00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
+		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff00ff0000ff0000ff0000ff0000ff0000ff00c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ff808080808080808080808080808080808080808080808080808080808080808080808080ff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0000000c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffc0c0c0c0c0c0000000000000000000000000000000000000000000c0c0c0c0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c00000000000000000000000000000000000000000000000ffc0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c0000000000000000000000000000000000000000000c0c0c0c0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0000000c0c0c0c0c0c0000000c0c0c0c0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c0000000000000000000000000c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080</ImageData>
 		<ImageData Id="1007">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000000000ff00ffff00ffff00ff000000ff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ff000000ff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ff000000ff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ff000000ff00ff000000ff00ff000000ff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff000000000000ff00ff000000000000ff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ff000000ff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1008">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000120b0000120b00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0808080808080c0c0c0c0c0c080808000bfffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c080808080808000bfff00bfff00bfff00bfff00bfffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0808080808080c0c0c000000000000000bfff000000ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c080808080808000bfff00bfff00bfff00bfff00bfff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0808080808080c0c0c0c0c0c080808000bfffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0bbc2bbc0c0c0c0c0c0c0c0c0808080ff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0bac2ba0bfc0bc0c0c0c0c0c0c0c0c0808080ff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ff</ImageData>
@@ -2625,142 +2628,27 @@ External Setpoint Generation:
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>GVL_Safety.Error</Name>
-							<Comment><![CDATA[ Safety Error Condition]]></Comment>
+							<Name>GVL_Auxiliary.Dewar_temperature_error</Name>
+							<Comment><![CDATA[ Dewar Temperature sensor error]]></Comment>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Safety.Stop</Name>
-							<Comment><![CDATA[ Stop signal coming from Safety]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.phase_available</Name>
-							<Comment><![CDATA[DIN1 0.0]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.power_available</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.key_switch_remote</Name>
-							<Comment><![CDATA[DIN2 0.1
-key_switch			AT%I*: BOOL;
-DIN3 0.2]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.start_switch</Name>
-							<Comment><![CDATA[DIN4 0.3]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.stop_switch</Name>
-							<Comment><![CDATA[DIN5 0.4]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.reset_switch</Name>
-							<Comment><![CDATA[DIN8 0.7]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.brake_clearing</Name>
-							<Comment><![CDATA[DIN15 1.6]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.main_cabinet_temperature</Name>
-							<Comment><![CDATA[BT1]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ups_input_voltage</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ups_input_current</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ups_temperature</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ups_battery_temperature</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ups_output_voltage</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ups_output_current</Name>
-							<Type>UINT</Type>
 						</Var>
 						<Var>
 							<Name>GVL_FilterWheel.bCalibrationCam</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_pendant_control.BCD1</Name>
-							<Comment><![CDATA[DIN17 2.0]]></Comment>
-							<Type>BOOL</Type>
+							<Name>GVL_Auxiliary.pressure_Dewar</Name>
+							<Comment><![CDATA[ dewar pressure 0..10V Pfeiffer ]]></Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>GVL_pendant_control.BCD2</Name>
-							<Comment><![CDATA[DIN18 2.1]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.BCD4</Name>
-							<Comment><![CDATA[DIN19 2.2]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.BCD8</Name>
-							<Comment><![CDATA[DIN20 2.3]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.reset_switch</Name>
-							<Comment><![CDATA[DIN21 2.4]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.direction_up</Name>
-							<Comment><![CDATA[DIN22 2.5]]></Comment>
-							<Type>BOOL</Type>
+							<Name>GVL_Auxiliary.temperature_Dewar</Name>
+							<Comment><![CDATA[ dewar raw temperature]]></Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc</Name>
 							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.direction_down</Name>
-							<Comment><![CDATA[DIN23 2.6]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.key_switch</Name>
-							<Comment><![CDATA[DIN24 2.7]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.start_switch</Name>
-							<Comment><![CDATA[DIN25 3.0 (enable)]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.direction_left</Name>
-							<Comment><![CDATA[DIN26 3.1]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_pendant_control.direction_right</Name>
-							<Comment><![CDATA[DIN27 3.2]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Hydraulics.oil_low</Name>
@@ -2815,19 +2703,134 @@ DIN39 4.6]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Auxiliary.Dewar_temperature_error</Name>
-							<Comment><![CDATA[ Dewar Temperature sensor error]]></Comment>
+							<Name>GVL_Main.phase_available</Name>
+							<Comment><![CDATA[DIN1 0.0]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Auxiliary.pressure_Dewar</Name>
-							<Comment><![CDATA[ dewar pressure 0..10V Pfeiffer ]]></Comment>
+							<Name>GVL_Main.power_available</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.key_switch_remote</Name>
+							<Comment><![CDATA[DIN2 0.1
+key_switch			AT%I*: BOOL;
+DIN3 0.2]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.start_switch</Name>
+							<Comment><![CDATA[DIN4 0.3]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.stop_switch</Name>
+							<Comment><![CDATA[DIN5 0.4]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.reset_switch</Name>
+							<Comment><![CDATA[DIN8 0.7]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.main_cabinet_temperature</Name>
+							<Comment><![CDATA[BT1]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Auxiliary.temperature_Dewar</Name>
-							<Comment><![CDATA[ dewar raw temperature]]></Comment>
-							<Type>INT</Type>
+							<Name>GVL_Main.brake_clearing</Name>
+							<Comment><![CDATA[DIN15 1.6]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ups_input_voltage</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ups_input_current</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ups_temperature</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ups_battery_temperature</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ups_output_voltage</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ups_output_current</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.BCD1</Name>
+							<Comment><![CDATA[DIN17 2.0]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.BCD2</Name>
+							<Comment><![CDATA[DIN18 2.1]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.BCD4</Name>
+							<Comment><![CDATA[DIN19 2.2]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.BCD8</Name>
+							<Comment><![CDATA[DIN20 2.3]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.reset_switch</Name>
+							<Comment><![CDATA[DIN21 2.4]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.direction_up</Name>
+							<Comment><![CDATA[DIN22 2.5]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.direction_down</Name>
+							<Comment><![CDATA[DIN23 2.6]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.key_switch</Name>
+							<Comment><![CDATA[DIN24 2.7]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.start_switch</Name>
+							<Comment><![CDATA[DIN25 3.0 (enable)]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.direction_left</Name>
+							<Comment><![CDATA[DIN26 3.1]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_pendant_control.direction_right</Name>
+							<Comment><![CDATA[DIN27 3.2]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.Error</Name>
+							<Comment><![CDATA[ Safety Error Condition]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.Stop</Name>
+							<Comment><![CDATA[ Stop signal coming from Safety]]></Comment>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Telescope.temperature_mirror2</Name>
@@ -2995,18 +2998,17 @@ DIN39 4.6]]></Comment>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
 						<Var>
-							<Name>GVL_Safety.Run</Name>
-							<Comment><![CDATA[ Run/Stop Safety]]></Comment>
+							<Name>GVL_FilterWheel.FilterWheel_AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Hydraulics.oil_pump_enable</Name>
+							<Comment><![CDATA[DOUT4 0.3]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Safety.Restart</Name>
-							<Comment><![CDATA[ Restart Safety]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Safety.ErrAck</Name>
-							<Comment><![CDATA[ Error Acknowledgement ]]></Comment>
+							<Name>GVL_Hydraulics.oil_suction_enable</Name>
+							<Comment><![CDATA[DOUT5 0.4]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -3028,10 +3030,6 @@ DIN39 4.6]]></Comment>
 							<Name>GVL_Main.softstart_trafo</Name>
 							<Comment><![CDATA[DOUT7 0.6]]></Comment>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_FilterWheel.FilterWheel_AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>GVL_pendant_control.lamp_up</Name>
@@ -3060,13 +3058,18 @@ DOUT9 1.0]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Hydraulics.oil_pump_enable</Name>
-							<Comment><![CDATA[DOUT4 0.3]]></Comment>
+							<Name>GVL_Safety.Run</Name>
+							<Comment><![CDATA[ Run/Stop Safety]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Hydraulics.oil_suction_enable</Name>
-							<Comment><![CDATA[DOUT5 0.4]]></Comment>
+							<Name>GVL_Safety.Restart</Name>
+							<Comment><![CDATA[ Restart Safety]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.ErrAck</Name>
+							<Comment><![CDATA[ Error Acknowledgement ]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -4333,10 +4336,28 @@ DOUT9 1.0]]></Comment>
 							<CoeProfile ProfileNo="22352777" DisplayName="Power Measuring Ext"/>
 						</EtherCAT>
 					</Box>
+					<Box Id="6" BoxType="9099">
+						<Name>Klemme 6 (EL9410)</Name>
+						<ImageId>1003</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x24c23052" RevisionNo="#x00110000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9410 E-Bus Netzteilklemme (Diagnose)" Desc="EL9410" PortABoxInfo="#x01000010">
+							<SyncMan>001001000000010004000000000000000000001000000000</SyncMan>
+							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
+							<Pdo Name="Status Us" Index="#x1a00" Flags="#x0011" SyncMan="0">
+								<Entry Name="Undervoltage" Index="#x6000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Status Up" Index="#x1a01" Flags="#x0011" SyncMan="0">
+								<Entry Name="Undervoltage" Index="#x6010" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
 					<Box Id="17" BoxType="9099">
 						<Name>Main Panel IN (EL1008)</Name>
 						<ImageId>7</ImageId>
-						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000010">
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000006">
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
@@ -4479,7 +4500,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="20" BoxType="9099">
 						<Name>Main Panel Out (EL2008)</Name>
-						<ImageId>1003</ImageId>
+						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000013">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
@@ -4527,7 +4548,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="21" BoxType="9099">
 						<Name>Trafo Hydraulics OUT (EL2008)</Name>
-						<ImageId>1003</ImageId>
+						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000014">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
@@ -4575,7 +4596,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="22" BoxType="9099" BoxFlags="#x00000020">
 						<Name>Temperature IN (EL3202)</Name>
-						<ImageId>1004</ImageId>
+						<ImageId>1005</ImageId>
 						<Xml>
 							<BeckhoffEcatSlavePlugIn>
 								<Channel>
@@ -4662,7 +4683,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="23" BoxType="9099">
 						<Name>Power1 (EL9410)</Name>
-						<ImageId>1005</ImageId>
+						<ImageId>1003</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x24c23052" RevisionNo="#x00110000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9410 E-Bus Netzteilklemme (Diagnose)" Desc="EL9410" PortABoxInfo="#x01000016">
 							<SyncMan>001001000000010004000000000000000000001000000000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
@@ -4920,7 +4941,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="29" BoxType="9099">
 						<Name>Klemme 29 (EL2008)</Name>
-						<ImageId>1003</ImageId>
+						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x0100001c">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
@@ -4968,7 +4989,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="30" BoxType="9099">
 						<Name>Klemme 30 (EL2008)</Name>
-						<ImageId>1003</ImageId>
+						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x0100001d">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
@@ -5016,7 +5037,7 @@ DOUT9 1.0]]></Comment>
 					</Box>
 					<Box Id="31" BoxType="9099" BoxFlags="#x00000020">
 						<Name>Klemme 31 (EL3064)</Name>
-						<ImageId>1004</ImageId>
+						<ImageId>1005</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0bf83052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3064 4K.Ana. Eingang 0-10V" Desc="EL3064" PortABoxInfo="#x0100001e">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
@@ -5225,7 +5246,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 					</Box>
 					<Box Id="32" BoxType="9099">
 						<Name>Power2 (EL9410)</Name>
-						<ImageId>1005</ImageId>
+						<ImageId>1003</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x24c23052" RevisionNo="#x00110000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9410 E-Bus Netzteilklemme (Diagnose)" Desc="EL9410" PortABoxInfo="#x0100001f">
 							<SyncMan>001001000000010004000000000000000000001000000000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
@@ -6193,7 +6214,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 					</Box>
 					<Box Id="53" BoxType="9099">
 						<Name>Klemme 53 (EL2008)</Name>
-						<ImageId>1003</ImageId>
+						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000034">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
@@ -6941,7 +6962,7 @@ Bit 8 - 15 : reserved]]></Comment>
 							</Box>
 							<Box Id="58" BoxType="9099">
 								<Name>Klemme 58 (EL2008)</Name>
-								<ImageId>1003</ImageId>
+								<ImageId>1004</ImageId>
 								<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000039">
 									<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 									<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
@@ -7785,7 +7806,7 @@ Bit 8 - 15 : reserved]]></Comment>
 							</Box>
 							<Box Id="60" BoxType="9099" BoxFlags="#x00000020">
 								<Name>Klemme 60 (EL3064)</Name>
-								<ImageId>1004</ImageId>
+								<ImageId>1005</ImageId>
 								<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0bf83052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3064 4K.Ana. Eingang 0-10V" Desc="EL3064" PortABoxInfo="#x0100003b">
 									<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 									<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
@@ -7992,10 +8013,83 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<CoeProfile ProfileNo="19665801"/>
 								</EtherCAT>
 							</Box>
+							<Box Id="69" BoxType="9099" BoxFlags="#x00000020">
+								<Name>Klemme 69 (EL3202-0010)</Name>
+								<ImageId>1005</ImageId>
+								<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x0c823052" RevisionNo="#x0016000a" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3202-0010 2K. Ana. Eingang PT100 (RTD), hochgenau" Desc="EL3202-0010" PortABoxInfo="#x0100003c">
+									<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
+									<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
+									<SyncMan>001100000400000003000000000000000000001104000000</SyncMan>
+									<SyncMan>801108002000010004000000000000000800801120010000</SyncMan>
+									<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+									<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+									<BootStrapData>0010f400f410f400</BootStrapData>
+									<Pdo Name="RTD Inputs Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="3">
+										<Entry Name="Status__Underrange" Index="#x6000" Sub="#x01">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Status__Overrange" Index="#x6000" Sub="#x02">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Status__Limit 1" Index="#x6000" Sub="#x03">
+											<Type>BIT2</Type>
+										</Entry>
+										<Entry Name="Status__Limit 2" Index="#x6000" Sub="#x05">
+											<Type>BIT2</Type>
+										</Entry>
+										<Entry Name="Status__Error" Index="#x6000" Sub="#x07">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry>
+											<Type GUID="{18071995-0000-0000-0000-002000000007}">ARRAY [0..6] OF BIT</Type>
+										</Entry>
+										<Entry Name="Status__TxPDO State" Index="#x1800" Sub="#x07">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Status__TxPDO Toggle" Index="#x1800" Sub="#x09">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Value" Index="#x6000" Sub="#x11" Flags="#x00050000">
+											<Type>INT</Type>
+										</Entry>
+									</Pdo>
+									<Pdo Name="RTD Inputs Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="3">
+										<Entry Name="Status__Underrange" Index="#x6010" Sub="#x01">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Status__Overrange" Index="#x6010" Sub="#x02">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Status__Limit 1" Index="#x6010" Sub="#x03">
+											<Type>BIT2</Type>
+										</Entry>
+										<Entry Name="Status__Limit 2" Index="#x6010" Sub="#x05">
+											<Type>BIT2</Type>
+										</Entry>
+										<Entry Name="Status__Error" Index="#x6010" Sub="#x07">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry>
+											<Type GUID="{18071995-0000-0000-0000-002000000007}">ARRAY [0..6] OF BIT</Type>
+										</Entry>
+										<Entry Name="Status__TxPDO State" Index="#x1801" Sub="#x07">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Status__TxPDO Toggle" Index="#x1801" Sub="#x09">
+											<Type>BIT</Type>
+										</Entry>
+										<Entry Name="Value" Index="#x6010" Sub="#x11" Flags="#x00050000">
+											<Type>INT</Type>
+										</Entry>
+									</Pdo>
+									<CoeProfile ProfileNo="20976521"/>
+									<CoeProfile ProfileNo="20976521"/>
+								</EtherCAT>
+							</Box>
 							<Box Id="65" BoxType="9099">
 								<Name>Klemme 65 (EL9011)</Name>
 								<ImageId>1011</ImageId>
-								<EtherCAT CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x23333050" InfoDataState="false" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9011 Endklemme" Desc="EL9011" PortABoxInfo="#x0100003c"/>
+								<EtherCAT CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x23333050" InfoDataState="false" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9011 Endklemme" Desc="EL9011" PortABoxInfo="#x01000045"/>
 							</Box>
 						</Box>
 					</Box>
@@ -8431,6 +8525,82 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							</Entry>
 							<Entry Name="Position command value" Index="#x002f">
 								<Type>DINT</Type>
+							</Entry>
+						</Pdo>
+					</EtherCAT>
+				</Box>
+				<Box Id="74" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Box 74 (Uninterruptible Power Supply)</Name>
+					<ImageId>65</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c08" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="35" FoeType="1" VendorId="#x00000084" ProductCode="#x002c5bc9" RevisionNo="#x00000001" InfoDataAddr="true" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="QUINT4-UPS/24DC/24DC/40/EC" Desc="Uninterruptible Power Supply" PortABoxInfo="#x01000040">
+						<SyncMan>0018f60026000100010000002800ce05f600001826010000</SyncMan>
+						<SyncMan>f618f60022000100020000002800ce05f600f61822010000</SyncMan>
+						<SyncMan>00103e006000010004000000000000003e00001060010000</SyncMan>
+						<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
+						<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+						<Pdo Name="TxPDO 1" Index="#x1a00" Flags="#x0010" SyncMan="2">
+							<Entry Name="STATUS FUNCTIONS" Index="#x4000">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="STATUS INTERFACE" Index="#x4002">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="STATUS ACTUAL INPUT VOLTAGE" Index="#x4004">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS ACTUAL INPUT CURRENT" Index="#x4005">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS ACTUAL OUTPUT VOLTAGE 1" Index="#x4006">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS ACTUAL OUTPUT CURRENT 1" Index="#x4007">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS BATTERY ACTUAL VOLTAGE" Index="#x400a">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS BATTERY CHARGE CURRENT" Index="#x400b">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS BATTERY TEMPERATURE" Index="#x400d">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS DEVICE TEMPERATURE" Index="#x400e">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS SOC REMAINING TIME" Index="#x4010">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="STATUS SOC REMAINING TIME PC SHUTDOWN" Index="#x4012">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="STATUS SOH REMAINING LIFETIME" Index="#x4014">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="UPS PROCESS ALARMS" Index="#x7000">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="UPS DIAGNOSIS ALARMS" Index="#x7001">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="BATTERY 1 ALARMS" Index="#x7002">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="BATTERY 2 ALARMS" Index="#x7003">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="BATTERY 3 ALARMS" Index="#x7004">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="BATTERY 4 ALARMS" Index="#x7005">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="BATTERY 5 ALARMS" Index="#x7006">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="QUINT CHARGER ALARMS" Index="#x7007">
+								<Type>UDINT</Type>
 							</Entry>
 						</Pdo>
 					</EtherCAT>
