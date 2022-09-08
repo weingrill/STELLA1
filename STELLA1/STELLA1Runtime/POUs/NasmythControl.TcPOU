@@ -39,7 +39,6 @@ VAR
 	NasmythEvent: 		FB_Eventlog;
 	NasmythLeftEvent:	FB_Eventlog;
 	NasmythRightEvent:	FB_Eventlog;
-	Nasmyth_Timeout:	TON := (PT := T#10S);
 	//MQTTTimer: 			TON := (PT:=T#10S);
 	// MQTT String
 	sPayloadPub: STRING(255);
@@ -63,7 +62,7 @@ Nasmyth_status.0 := Nasmyth_unlocked;
 Nasmyth_status.1 := error;
 Nasmyth_status.2 := Nasmyth_left;
 Nasmyth_status.3 := Nasmyth_right;
-Nasmyth_status.4 := Nasmyth_Timeout.Q;
+Nasmyth_status.4 := Nasmyth_control.Timeout;
 
 Nasmyth_unlock := enable AND (left OR right);
 // report Nasmyth unlocked after n milliseconds										
@@ -85,7 +84,6 @@ Nasmyth_control(
 	error => error,
 	Ready => ready);
 
-Nasmyth_Timeout(IN := (left AND NOT Nasmyth_left) OR (right AND NOT Nasmyth_right));
 
 IF Nasmyth_status <> LastStatus THEN
 	LastStatus := Nasmyth_status;
@@ -145,7 +143,7 @@ NasmythRightEvent(	Trigger := Nasmyth_right,
       <LineId Id="16" Count="5" />
       <LineId Id="23" Count="0" />
       <LineId Id="43" Count="0" />
-      <LineId Id="92" Count="5" />
+      <LineId Id="93" Count="4" />
       <LineId Id="124" Count="0" />
       <LineId Id="128" Count="1" />
       <LineId Id="103" Count="9" />

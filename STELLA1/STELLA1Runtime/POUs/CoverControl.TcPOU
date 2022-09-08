@@ -54,10 +54,7 @@ VAR
 	Cover1_control:	FB_Cover;
 	
 	//Cover3_state: 	RS;
-	//triggers for timeout event for cover1
-	Cover1_timeout,
-	Cover2_timeout,
-	Cover3_timeout:	TON;
+	
 	//error event for cover1
 	Cover1_Event,
 	Cover2_Event,
@@ -164,15 +161,21 @@ END_CASE
 Cover1_control(
 	limit_open := 	NOT Cover1_opened,
 	limit_close :=  NOT Cover1_closed,
+	Moving_positive => GVL_Telescope.open_cover1,
+	Moving_negative => GVL_Telescope.close_cover1,	
 	error => 		Cover1_error);
 // Cover 2 can only be moved in manual operation if cover 3 is not closed to protect the lid.
 Cover2_control(
 	limit_open := 	NOT Cover2_opened,
 	limit_close := 	NOT Cover2_closed,
+	Moving_positive => GVL_Telescope.open_cover2,
+	Moving_negative => GVL_Telescope.close_cover2,
 	error => 		Cover2_error);
 Cover3_control(
 	limit_open := 	NOT Cover3_opened,
 	limit_close := 	NOT Cover3_closed,
+	Moving_positive => GVL_Telescope.open_cover3,
+	Moving_negative => GVL_Telescope.close_cover3,
 	error => 		Cover3_error);
 
 // we are open, if all covers are open
@@ -184,13 +187,6 @@ Error := (Cover1_error AND NOT GVL_Main.isRoboTel) OR Cover2_error OR Cover3_err
 Warning := Cover1_control.Warning OR Cover2_control.Warning OR Cover3_control.Warning;
 
 
-// A timeout occurs, when we open the cover, and the opened signal does not activate within n seconds.
-// The same holds for closing the cover. This should not take longer then 10 seconds
-Cover1_timeout(IN := NOT (Cover1_opened XOR Cover1_closed), PT := T#20S);
-
-Cover2_timeout(IN := NOT (Cover2_opened XOR Cover2_closed), PT := T#20S);
-				
-Cover3_timeout(IN := NOT (Cover3_opened XOR Cover3_closed), PT := T#20S);
 
 Covers_Error_Event.OnMessage := 'Cover drive error';
 IF Error THEN
@@ -240,15 +236,15 @@ Cover3_Event(Trigger := cover3_opened AND cover3_closed,
 //trigger an event, if we encounter a timeout
 // handle RoboTel differently
 
-Cover1_Timeout_Event(Trigger := Cover1_timeout.Q AND NOT GVL_Main.isRoboTel,
+Cover1_Timeout_Event(Trigger := Cover1_control.timeout,
 				Level := ADSLOG_MSGTYPE_ERROR, 
 				OnMessage := 'Cover1: Timeout');
 
-Cover2_Timeout_Event(Trigger := Cover2_timeout.Q,
+Cover2_Timeout_Event(Trigger := Cover2_control.timeout,
 				Level := ADSLOG_MSGTYPE_ERROR, 
 				OnMessage := 'Cover2: Timeout');
 
-Cover3_Timeout_Event(Trigger := Cover3_timeout.Q,
+Cover3_Timeout_Event(Trigger := Cover3_control.timeout,
 				Level := ADSLOG_MSGTYPE_ERROR, 
 				OnMessage := 'Cover3: Timeout');
 // Log if we are opened
@@ -319,13 +315,20 @@ Covers_closed_event(Trigger := isclosed,
       <LineId Id="438" Count="0" />
       <LineId Id="160" Count="0" />
       <LineId Id="163" Count="0" />
-      <LineId Id="166" Count="1" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="1006" Count="0" />
+      <LineId Id="1008" Count="0" />
+      <LineId Id="167" Count="0" />
       <LineId Id="209" Count="0" />
       <LineId Id="168" Count="0" />
       <LineId Id="171" Count="0" />
-      <LineId Id="174" Count="2" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="1009" Count="1" />
+      <LineId Id="175" Count="1" />
       <LineId Id="179" Count="0" />
-      <LineId Id="182" Count="1" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="1011" Count="1" />
+      <LineId Id="183" Count="0" />
       <LineId Id="159" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="139" Count="0" />
@@ -336,13 +339,6 @@ Covers_closed_event(Trigger := isclosed,
       <LineId Id="628" Count="0" />
       <LineId Id="627" Count="0" />
       <LineId Id="373" Count="0" />
-      <LineId Id="353" Count="0" />
-      <LineId Id="374" Count="0" />
-      <LineId Id="354" Count="0" />
-      <LineId Id="351" Count="0" />
-      <LineId Id="350" Count="0" />
-      <LineId Id="359" Count="0" />
-      <LineId Id="357" Count="0" />
       <LineId Id="623" Count="0" />
       <LineId Id="620" Count="0" />
       <LineId Id="624" Count="0" />

@@ -13,27 +13,40 @@ END_VAR
 VAR_OUTPUT
 	error,
 	warning: BOOL;
-	Ready_to_enable:	BOOL;
+//	Ready_to_enable:	BOOL;
 	Ready:				BOOL;
 	Moving_negative:	BOOL;
 	Moving_positive:	BOOL;
-	Digital_input1:		BOOL;
-	Digital_input2:		BOOL;
+//	Digital_input1:		BOOL;
+//	Digital_input2:		BOOL;
+	timeout:			BOOL;
 END_VAR
 VAR
 	error_state:	SR;
+	//triggers for timeout event for cover
+	Cover_timeout:	TON;
+	open_timeout: TON := (PT := T#3S);
+	close_timeout: TON := (PT := T#3S);
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
-error_state(SET1 := limit_open AND limit_close,
+error_state(SET1 := limit_open AND limit_close OR timeout,
 			RESET := reset,
 			Q1 => error);
 
 IF enable THEN
 	Moving_positive := open AND NOT limit_open;
 	Moving_negative := close AND NOT limit_close;
-END_IF]]></ST>
+END_IF
+// A timeout occurs, when we open the cover, and the opened signal does not activate within n seconds.
+// The same holds for closing the cover. This should not take longer then 10 seconds
+Cover_timeout(IN := NOT (limit_open XOR limit_close) AND (open OR close), PT := T#20S);
+open_timeout(IN := open AND limit_open, PT := T#3S);
+close_timeout(IN := close AND limit_close, PT := T#3S);
+timeout := Cover_timeout.Q OR open_timeout.Q OR close_timeout.Q;
+
+Ready := NOT error;]]></ST>
     </Implementation>
     <LineIds Name="FB_Cover">
       <LineId Id="31" Count="3" />
@@ -42,6 +55,13 @@ END_IF]]></ST>
       <LineId Id="26" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="61" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
