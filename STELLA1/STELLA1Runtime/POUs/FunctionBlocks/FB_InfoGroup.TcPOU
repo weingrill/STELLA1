@@ -1,0 +1,29 @@
+﻿<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.20">
+  <POU Name="FB_InfoGroup" Id="{ef27a35d-b6db-405e-b1c2-4a47bc669586}">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_InfoGroup
+VAR_INPUT
+	stInfoData:ST_InfoDataGroup;
+END_VAR
+VAR_OUTPUT
+	sState:STRING;
+END_VAR
+VAR
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF stInfoData.usiMapState= 1 THEN
+	sState:='RUN';
+ELSIF stInfoData.usiMapState= 2 THEN
+	sState:='STOP';
+ELSIF stInfoData.usiMapState= 3 THEN
+	sState:='SAFE';
+ELSIF stInfoData.usiMapState= 4 THEN
+	sState:='ERROR';
+ELSIF stInfoData.usiMapState= 5 THEN
+	sState:='RESET';
+ELSE
+	sState:='Unknown';
+END_IF]]></ST>
+    </Implementation>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>
