@@ -7,7 +7,7 @@ VAR_GLOBAL
 	//DIN1 0.0
 	phase_available		AT%I*: BOOL;
 	// not implemented on stella
-	power_available		AT%I*: BOOL;
+	trafo_bypassed		AT%I*: BOOL;
 	//not implemented on RoboTel
 	//key_switch			AT%I*: BOOL;
 	//DIN3 0.2
