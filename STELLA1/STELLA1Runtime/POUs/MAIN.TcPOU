@@ -67,6 +67,14 @@ GVL_Main.isRoboTel := HostName = 'CX-4E6032';
 start := GVL_Main.start_switch OR remote_start;
 stop := GVL_Main.stop_switch OR remote_stop;
 
+IF start THEN
+	Transformer.start();
+END_IF
+IF stop THEN
+	Transformer.stop();
+END_IF
+
+
 IF GVL_Main.start_switch THEN
 	HydraulicsControl.start := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics start');
@@ -98,7 +106,7 @@ FilterWheelControl();	//
 FocusControl();
 AuxiliaryControl(); //
 MQTTCommunication();
-
+Transformer();
 
 warn_blink(ENABLE := HydraulicsControl.oil_warning OR HydraulicsControl.oil_hot, 
 	Q => warning);
@@ -170,7 +178,12 @@ TemperatureEvent(
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="57" Count="14" />
+      <LineId Id="57" Count="13" />
+      <LineId Id="256" Count="3" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="264" Count="1" />
+      <LineId Id="263" Count="0" />
+      <LineId Id="71" Count="0" />
       <LineId Id="74" Count="19" />
       <LineId Id="95" Count="3" />
       <LineId Id="101" Count="4" />
