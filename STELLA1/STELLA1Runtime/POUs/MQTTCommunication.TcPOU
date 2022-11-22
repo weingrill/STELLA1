@@ -36,7 +36,7 @@ https://infosys.beckhoff.com/english.php?content=../content/1033/tf6701_tc3_iot_
 // set the parameters once
 IF bSetParameter THEN
     bSetParameter               := FALSE;
-    fbMqttClient.sHostName      := 'primitivo.aip.de';
+    fbMqttClient.sHostName      := 'sky.stella.iac.es';
     fbMqttClient.nHostPort      := 1883;
     fbMqttClient.sClientId      := 'STELLA1PLC'; 
     fbMqttClient.sTopicPrefix   := ''; 
