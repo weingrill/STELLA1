@@ -65,21 +65,23 @@ GetHostName(bExecute := bExecute, sHostName => HostName);
 bExecute := FALSE;
 GVL_Main.isRoboTel := HostName = 'CX-4E6032';
 start := GVL_Main.start_switch OR remote_start;
-stop := GVL_Main.stop_switch OR remote_stop;
+stop := NOT (GVL_Main.stop_switch) OR remote_stop;
 
-IF start THEN
+IF key_switch THEN
 	Transformer.start();
-END_IF
-IF stop THEN
+ELSE
 	Transformer.stop();
 END_IF
 
+IF GVL_Main.reset_switch THEN
+	Transformer.reset();
+END_IF
 
-IF GVL_Main.start_switch THEN
+IF start THEN
 	HydraulicsControl.start := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics start');
 END_IF
-IF GVL_Main.stop_switch THEN
+IF stop THEN
 	HydraulicsControl.stop := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
@@ -179,11 +181,14 @@ TemperatureEvent(
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="57" Count="13" />
-      <LineId Id="256" Count="3" />
+      <LineId Id="256" Count="2" />
       <LineId Id="262" Count="0" />
       <LineId Id="264" Count="1" />
+      <LineId Id="316" Count="0" />
       <LineId Id="263" Count="0" />
       <LineId Id="71" Count="0" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="315" Count="0" />
       <LineId Id="74" Count="19" />
       <LineId Id="95" Count="3" />
       <LineId Id="101" Count="4" />
