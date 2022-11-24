@@ -38,6 +38,8 @@ VAR
 	FilterWheelEvent:	FB_EventLog;
 	CalibratedEvent:	FB_EventLog;
 	FilterReadyEvent:	FB_Eventlog;
+	// last known filter position
+	last_filter_position:	WORD;
 END_VAR
 VAR CONSTANT
 	// total number of filters in the filter wheel
@@ -68,7 +70,7 @@ IF Enable THEN
 		MoveAxis := filter_position <> actual_filter AND FilterWheelAxis.Standstill;
 	ELSE
 		position := calibration_position;
-		IF FilterWheelAxis.Ready THEN
+		IF FilterWheelAxis.Ready AND NOT Pendantcontrol.manual THEN
 			HomeAxis := TRUE;
 		END_IF
 	END_IF
@@ -104,6 +106,11 @@ END_IF
 	
 IF FilterWheelAxis.ResetDone THEN
 	reset := FALSE;
+END_IF
+
+IF actual_filter <> last_filter_position THEN
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'FilterPosition', WORD_TO_STRING(actual_filter));
+	last_filter_position := actual_filter;
 END_IF
 
 FilterWheelEvent(	
@@ -169,6 +176,9 @@ FilterReadyEvent(
       <LineId Id="134" Count="1" />
       <LineId Id="129" Count="0" />
       <LineId Id="137" Count="2" />
+      <LineId Id="488" Count="2" />
+      <LineId Id="494" Count="0" />
+      <LineId Id="491" Count="0" />
       <LineId Id="136" Count="0" />
       <LineId Id="123" Count="4" />
       <LineId Id="5" Count="0" />

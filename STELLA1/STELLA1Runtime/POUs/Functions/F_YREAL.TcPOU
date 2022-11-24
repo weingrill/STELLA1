@@ -6,10 +6,11 @@ VAR_INPUT
 	fX:		LREAL;
 	fXmin:	REAL := 0.0;
 	fXmax:	REAL := 32767.0;
-	fYmin, fYmax:	REAL;
+	fYmin:	REAL := 0.0;
+	fYmax:	REAL := 1.0;
 END_VAR
 VAR
-	fgain,
+	fgain:		LREAL;
 	foffset:	LREAL;
 END_VAR
 ]]></Declaration>

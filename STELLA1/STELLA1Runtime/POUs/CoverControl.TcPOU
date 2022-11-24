@@ -126,7 +126,7 @@ CASE active_cover OF
 		Cover2_Control.enable := enable;
 		Cover2_Control.reset := reset;
 		Cover2_control.open :=	open;
-		Cover2_control.close :=	close AND NOT cover3_closed;
+		Cover2_control.close :=	close; // AND NOT cover3_closed;
 		Ready := Cover2_control.Ready;
 	3:
 		Cover3_Control.enable := enable;

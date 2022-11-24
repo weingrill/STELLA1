@@ -49,12 +49,14 @@ VAR
 	ReadParameter:		MC_ReadParameter;
 	getlastposition:	BOOL := TRUE;
 	bSoEReset:			BOOL;
+	azimuth_rest_timer:	TON;
+	azimuth_at_rest:	BOOL;
 END_VAR
 VAR CONSTANT
 	// reference position for homing
 	// homing_position:		LREAL := 439.0; // was 442 - -21.21 = 463.21; 463 + 24 = 439
 	// current position of the calibration cam encoder zero index. Apply an offset here if necessary
-	calibration_position:	LREAL := 393.0; // was 156.1195; // 180.0 - 24.0;
+	calibration_position:	LREAL := 156.1195; // 393.0; 
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -64,12 +66,8 @@ END_VAR]]></Declaration>
 Power must be on and brake must be open for the axis to operate
 *)
 
-IF Enable THEN
-	ElevationControl.enable := TRUE;
-END_IF
-
 // generate the ready signal after enabling the drive
-readydelay(IN :=  AzimuthAxis.Enable, PT := T#6000MS, Q=> ready);
+readydelay(IN :=  AzimuthAxis.Enable, PT := T#3000MS, Q=> ready);
 
 // limit the input position angle
 position := LIMIT(0.0, position, 450.0);
@@ -95,7 +93,7 @@ IF HomeDelay.Q THEN
 	MoveAxis := TRUE;
 END_IF
 
-// perform a recalibration, if we pass the reference mark on the encoder
+// perform a recalibration on the last known position
 AzimuthCalibration(
 	Axis := GVL_Telescope.AzimuthAxisRef,
 	Execute := getlastposition AND last_position>=0.0 AND NOT Calibrated,
@@ -108,6 +106,15 @@ END_IF
 IF Calibrated THEN
 	last_position := act_position;
 END_IF
+
+// enable the azimuth if not moved by the power chain. Sorry for the hack
+azimuth_rest_timer(IN := HydraulicsControl.brake_open AND 
+				(ABS(GVL_Telescope.AzimuthAxisRef.NcToPlc.ActVelo) < 0.01), PT := T#2S);
+IF azimuth_rest_timer.Q THEN
+	azimuth_at_rest := TRUE;
+ELSIF HydraulicsControl.brake_closed THEN
+	azimuth_at_rest := FALSE;
+END_IF
 	
 // deactivate limit switches on homing
 MC_SetAcceptBlockedDriveSignal(
@@ -115,7 +122,7 @@ MC_SetAcceptBlockedDriveSignal(
 	Enable := HomeAxis);
 
 AzimuthAxis(	
-	Enable := 			enable AND HydraulicsControl.brake_open,
+	Enable := 			enable AND azimuth_at_rest,
 	Reset := 			reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis := 		HomeAxis,
@@ -131,23 +138,21 @@ AzimuthAxis(
 	ErrorID => 			ErrorID,
 	AxisRef :=			GVL_Telescope.AzimuthAxisRef);
 
-IF Error THEN
-	HydraulicsControl.close_brake := TRUE;
-END_IF
-
 bSoEReset := GVL_Telescope.Azimuth_diagnostic = 16#0000F10B OR GVL_Telescope.Azimuth_diagnostic = 16#0000F601;
 
 IF bSoEReset THEN
+	last_position := -1.0;
 	fbSoEReset(
 		Axis := GVL_Telescope.AzimuthAxisRef,
 		Execute := TRUE,
 		Timeout := DEFAULT_ADS_TIMEOUT);
- 	IF NOT fbSoEReset.Busy THEN
+ 	IF fbSoEReset.Busy THEN
 		fbSoEReset(Axis := GVL_Telescope.AzimuthAxisRef, Execute := FALSE);
+	ELSE
 		bSoEReset := FALSE;
+		Reset := TRUE;
 	END_IF
 END_IF 
-
 	
 IF AzimuthAxis.MoveDone THEN
 	MoveAxis := FALSE;
@@ -196,10 +201,7 @@ CalibrationEvent(
       <LineId Id="174" Count="0" />
       <LineId Id="173" Count="0" />
       <LineId Id="251" Count="0" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="229" Count="0" />
-      <LineId Id="153" Count="0" />
-      <LineId Id="340" Count="1" />
+      <LineId Id="341" Count="0" />
       <LineId Id="284" Count="0" />
       <LineId Id="345" Count="0" />
       <LineId Id="344" Count="0" />
@@ -219,6 +221,13 @@ CalibrationEvent(
       <LineId Id="701" Count="0" />
       <LineId Id="700" Count="0" />
       <LineId Id="702" Count="5" />
+      <LineId Id="893" Count="0" />
+      <LineId Id="885" Count="0" />
+      <LineId Id="887" Count="0" />
+      <LineId Id="892" Count="0" />
+      <LineId Id="895" Count="1" />
+      <LineId Id="898" Count="1" />
+      <LineId Id="897" Count="0" />
       <LineId Id="680" Count="0" />
       <LineId Id="239" Count="3" />
       <LineId Id="115" Count="0" />
@@ -236,11 +245,14 @@ CalibrationEvent(
       <LineId Id="85" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="175" Count="0" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="177" Count="1" />
-      <LineId Id="684" Count="0" />
-      <LineId Id="686" Count="11" />
-      <LineId Id="685" Count="0" />
+      <LineId Id="686" Count="2" />
+      <LineId Id="825" Count="0" />
+      <LineId Id="689" Count="4" />
+      <LineId Id="767" Count="0" />
+      <LineId Id="765" Count="0" />
+      <LineId Id="695" Count="0" />
+      <LineId Id="826" Count="0" />
+      <LineId Id="696" Count="1" />
       <LineId Id="176" Count="0" />
       <LineId Id="158" Count="10" />
       <LineId Id="564" Count="0" />

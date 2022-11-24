@@ -35,20 +35,21 @@ VAR
 	ups_input_voltage:		REAL;
 	ups_input_current:		REAL;
 	ups_temperature:		REAL;
-	ups_battery_temperature:		REAL;
+	ups_battery_temperature:	REAL;
 	ups_output_voltage:		REAL;
 	ups_output_current:		REAL;
-
+	ups_input_power:		REAL;
+	ups_output_power:		REAL;
+	PhaseLog:				FB_EventLog;
 	TemperatureEvent:	FB_EventLog;
-	//MQTTPublisher:		FB_MQTTPublisher;
-	//MQTTTelegraf:		FB_MQTTTelegraf;
 	MQTTTimer : 		TON := (PT:=T#5S);
-	sPayloadPub: 		STRING(255);
 	GetHostName:		FB_GetHostName;
 	HostName: 			STRING(255);
 	LightSwitch:		FB_ButtonEnable;
 	Lightbutton: 		BOOL;
 	bExecute:			BOOL := TRUE;
+	cabinet_temperature_warning:	SR;
+	MQTTClient:		FB_MQTTCommunication;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -63,9 +64,15 @@ Main control loop
 *)
 GetHostName(bExecute := bExecute, sHostName => HostName);
 bExecute := FALSE;
-GVL_Main.isRoboTel := HostName = 'CX-4E6032';
 start := GVL_Main.start_switch OR remote_start;
-stop := NOT (GVL_Main.stop_switch) OR remote_stop;
+stop := (NOT GVL_Main.stop_switch) OR remote_stop;
+key_switch := GVL_Main.key_switch_remote OR remote_keyswitch;
+brake_clearing := GVL_Main.brake_clearing OR remote_brake_clearing;
+reset := GVL_Main.reset_switch OR GVL_pendant_control.reset_switch OR remote_reset;		
+brake_clearing := GVL_Main.brake_clearing;
+cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 100.0;
+cabinet_temperature_warning(SET1 := cabinet_temperature > 40.0,
+							RESET := cabinet_temperature < 35.0);
 
 IF key_switch THEN
 	Transformer.start();
@@ -73,7 +80,7 @@ ELSE
 	Transformer.stop();
 END_IF
 
-IF GVL_Main.reset_switch THEN
+IF reset THEN
 	Transformer.reset();
 END_IF
 
@@ -85,9 +92,7 @@ IF stop THEN
 	HydraulicsControl.stop := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
-reset := GVL_Main.reset_switch OR GVL_pendant_control.reset_switch OR remote_reset;		
-key_switch := GVL_Main.key_switch_remote OR remote_keyswitch;
-brake_clearing := GVL_Main.brake_clearing OR remote_brake_clearing;
+
 cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 100.0;
 
 // telescope is ready when power available and hydraulics ok
@@ -107,7 +112,7 @@ DerotatorControl();	//
 FilterWheelControl();	//
 FocusControl();
 AuxiliaryControl(); //
-MQTTCommunication();
+MQTTClient();
 Transformer();
 
 warn_blink(ENABLE := HydraulicsControl.oil_warning OR HydraulicsControl.oil_hot, 
@@ -137,42 +142,34 @@ ups_output_voltage 		:= GVL_MAIN.ups_output_voltage / 1000.0;
 ups_output_current 		:= GVL_MAIN.ups_output_current / 1000.0;
 ups_temperature 		:= GVL_MAIN.ups_temperature / 10.0;
 ups_battery_temperature := GVL_MAIN.ups_battery_temperature / 10.0;
+ups_input_power			:= ups_input_voltage * ups_input_current;
+ups_output_power		:= ups_output_voltage * ups_output_current;
 
 
 MQTTTimer(IN:=TRUE);
 IF MQTTTimer.Q THEN // publish new payload every second
 	MQTTTimer(IN:=FALSE);
-	sPayloadPub := 'electronics,location=base,host=CX-22747A,module=MAIN ';
-	sPayloadPub := APPEND(sPayloadPub, 'MainCabinetTemperature=', LREAL_TO_FMTSTR(cabinet_temperature, 2, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',PhaseOK=', BOOL_TO_STRING(Transformer.phase_available));
-	
-	MQTTCommunication.fbMqttClient.Publish(	
-					sTopic:= 'STELLA1/Telemetry', 
-					pPayload:= ADR(sPayloadPub), 
-					nPayloadSize:= LEN2(ADR(sPayloadPub)),
-					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
-					bRetain:= FALSE, 
-					bQueue:= FALSE );
-
-	sPayloadPub := 'electronics,location=base,host=CX-22747A,module=MAIN ';
-	sPayloadPub := APPEND(sPayloadPub, 'UPSInputVoltage=', LREAL_TO_FMTSTR(ups_input_voltage, 3, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',UPSInputCurrent=', LREAL_TO_FMTSTR(ups_input_current, 3, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',UPSOutputVoltage=', LREAL_TO_FMTSTR(ups_output_voltage, 3, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',UPSOutputCurrent=', LREAL_TO_FMTSTR(ups_output_current, 3, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',UPSTemperature=', LREAL_TO_FMTSTR(ups_temperature, 1, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',UPSBatteryTemperature=', LREAL_TO_FMTSTR(ups_battery_temperature, 1, TRUE));
-	
-	
-	MQTTCommunication.fbMqttClient.Publish(	
-					sTopic:= 'STELLA1/Telemetry', 
-					pPayload:= ADR(sPayloadPub), 
-					nPayloadSize:= LEN2(ADR(sPayloadPub)),
-					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
-					bRetain:= FALSE, 
-					bQueue:= FALSE );
-
+	MQTTClient.Publish('electronics', 'base', 'MainCabinetTemperature', LREAL_TO_FMTSTR(cabinet_temperature, 2, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'PowerOK', BOOL_TO_STRING(Transformer.power_ok));
+	MQTTClient.Publish('electronics', 'base', 'PhaseOK', BOOL_TO_STRING(Transformer.phase_available));
+	MQTTClient.Publish('electronics', 'base', 'MainReady', BOOL_TO_STRING(ready));
+	MQTTClient.Publish('electronics', 'base', 'MasterError', BOOL_TO_STRING(error));
+	MQTTClient.Publish('electronics', 'base', 'UPSInputVoltage', LREAL_TO_FMTSTR(ups_input_voltage, 3, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSInputCurrent', LREAL_TO_FMTSTR(ups_input_current, 3, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSInputPower', LREAL_TO_FMTSTR(ups_input_power, 3, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSOutputVoltage', LREAL_TO_FMTSTR(ups_output_voltage, 3, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSOutputCurrent', LREAL_TO_FMTSTR(ups_output_current, 3, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSOutputPower', LREAL_TO_FMTSTR(ups_output_power, 3, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSTemperature', LREAL_TO_FMTSTR(ups_temperature, 1, TRUE));
+	MQTTClient.Publish('electronics', 'base', 'UPSBatteryTemperature', LREAL_TO_FMTSTR(ups_battery_temperature, 1, TRUE));
 END_IF
-
+PhaseLog(	
+	Trigger := 		NOT Transformer.phase_available, 
+	Level := 		ADSLOG_MSGTYPE_ERROR,
+	FormatString :=	'%s',
+	OnMessage := 	'electrical phases:	ERROR!',
+	OffLevel := 	ADSLOG_MSGTYPE_HINT,
+	OffMEssage := 	'electrical phases:	active');
 TemperatureEvent(	
 	Trigger := 		cabinet_temperature > 40.0, 
 	Level := 		ADSLOG_MSGTYPE_WARN,
@@ -180,7 +177,12 @@ TemperatureEvent(
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="57" Count="13" />
+      <LineId Id="57" Count="8" />
+      <LineId Id="367" Count="1" />
+      <LineId Id="370" Count="1" />
+      <LineId Id="386" Count="1" />
+      <LineId Id="374" Count="0" />
+      <LineId Id="376" Count="3" />
       <LineId Id="256" Count="2" />
       <LineId Id="262" Count="0" />
       <LineId Id="264" Count="1" />
@@ -189,15 +191,22 @@ TemperatureEvent(
       <LineId Id="71" Count="0" />
       <LineId Id="317" Count="0" />
       <LineId Id="315" Count="0" />
-      <LineId Id="74" Count="19" />
+      <LineId Id="74" Count="7" />
+      <LineId Id="384" Count="0" />
+      <LineId Id="85" Count="8" />
       <LineId Id="95" Count="3" />
       <LineId Id="101" Count="4" />
       <LineId Id="107" Count="3" />
       <LineId Id="116" Count="7" />
       <LineId Id="125" Count="1" />
-      <LineId Id="128" Count="17" />
-      <LineId Id="147" Count="6" />
-      <LineId Id="155" Count="27" />
+      <LineId Id="128" Count="10" />
+      <LineId Id="401" Count="7" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="147" Count="3" />
+      <LineId Id="388" Count="12" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="417" Count="5" />
+      <LineId Id="182" Count="0" />
       <LineId Id="203" Count="3" />
       <LineId Id="2" Count="0" />
     </LineIds>

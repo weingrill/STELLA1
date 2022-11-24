@@ -17,6 +17,10 @@ VAR_OUTPUT
 	error:	BOOL;
 	// drive ready
 	Ready:	BOOL;
+	// Nasmyth points to right mirror
+	Nasmyth_right:		BOOL;
+	// Nasmyth points to left mirror
+	Nasmyth_left:		BOOL;
 END_VAR
 VAR
 	// axis function block
@@ -31,17 +35,12 @@ VAR
 	Nasmyth_unlock:		BOOL;
 	// holding brake is unlocked
 	Nasmyth_unlocked:	BOOL;
-	// Nasmyth points to right mirror
-	Nasmyth_right:		BOOL;
-	// Nasmyth points to left mirror
-	Nasmyth_left:		BOOL;
 	// event log of error
 	NasmythEvent: 		FB_Eventlog;
 	NasmythLeftEvent:	FB_Eventlog;
 	NasmythRightEvent:	FB_Eventlog;
-	//MQTTTimer: 			TON := (PT:=T#10S);
-	// MQTT String
-	sPayloadPub: STRING(255);
+	Nasmyth_Timeout:	TON := (PT := T#10S);
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -62,7 +61,8 @@ Nasmyth_status.0 := Nasmyth_unlocked;
 Nasmyth_status.1 := error;
 Nasmyth_status.2 := Nasmyth_left;
 Nasmyth_status.3 := Nasmyth_right;
-Nasmyth_status.4 := Nasmyth_control.Timeout;
+Nasmyth_status.4 := Nasmyth_Timeout.Q;
+Nasmyth_status.5 := Ready;
 
 Nasmyth_unlock := enable AND (left OR right);
 // report Nasmyth unlocked after n milliseconds										
@@ -72,35 +72,30 @@ Nasmyth_delay(
 	Q => Nasmyth_unlocked);
 
 // set the outputs
-GVL_Telescope.nasmyth_lock := Nasmyth_unlock;
+IF NOT PendantControl.manual THEN
+	GVL_Telescope.nasmyth_lock := Nasmyth_unlock;
+	Nasmyth_control(
+		open := left,
+		close := right,
+		enable := Nasmyth_unlocked,
+		reset := reset,
+		limit_open := NOT Nasmyth_left,
+		limit_close := NOT Nasmyth_right,
+		error => error,
+		Ready => ready);	
+END_IF
 	
-Nasmyth_control(
-	open := left,
-	close := right,
-	enable := Nasmyth_unlocked,
-	reset := reset,
-	limit_open := NOT Nasmyth_left,
-	limit_close := NOT Nasmyth_right,
-	error => error,
-	Ready => ready);
 
+
+Nasmyth_Timeout(IN := (left AND NOT Nasmyth_left) OR (right AND NOT Nasmyth_right));
 
 IF Nasmyth_status <> LastStatus THEN
 	LastStatus := Nasmyth_status;
-	sPayloadPub := 'telescope,location=dome,host=CX-22747A,module=NasmythControl ';
-	sPayloadPub := APPEND(sPayloadPub, 'NasmythUnlocked=', BOOL_TO_STRING(Nasmyth_unlocked));
-	sPayloadPub := APPEND(sPayloadPub, ',NasmythAxisOK=', BOOL_TO_STRING(NOT error));
-	sPayloadPub := APPEND(sPayloadPub, ',NasmythIsLeft=', BOOL_TO_STRING(Nasmyth_left));
-	sPayloadPub := APPEND(sPayloadPub, ',NasmythIsRight=', BOOL_TO_STRING(Nasmyth_right));
-	
-	
-	MQTTCommunication.fbMqttClient.Publish(	
-					sTopic:= 'STELLA1/Telemetry', 
-					pPayload:= ADR(sPayloadPub), 
-					nPayloadSize:= LEN2(ADR(sPayloadPub)),
-					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
-					bRetain:= TRUE, 
-					bQueue:= FALSE );
+	MAIN.MQTTClient.Publish('telescope', 'nasmyth', 'NasmythUnlocked', BOOL_TO_STRING(Nasmyth_unlocked));
+	MAIN.MQTTClient.Publish('telescope', 'nasmyth', 'NasmythError', BOOL_TO_STRING(error));
+	MAIN.MQTTClient.Publish('telescope', 'nasmyth', 'NasmythReady', BOOL_TO_STRING(Ready));
+	MAIN.MQTTClient.Publish('telescope', 'nasmyth', 'NasmythIsLeft', BOOL_TO_STRING(Nasmyth_left));
+	MAIN.MQTTClient.Publish('telescope', 'nasmyth', 'NasmythIsRight', BOOL_TO_STRING(Nasmyth_right));
 END_IF
 
 
@@ -128,6 +123,7 @@ NasmythRightEvent(	Trigger := Nasmyth_right,
       <LineId Id="130" Count="0" />
       <LineId Id="145" Count="2" />
       <LineId Id="178" Count="0" />
+      <LineId Id="229" Count="0" />
       <LineId Id="131" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="35" Count="0" />
@@ -136,17 +132,18 @@ NasmythRightEvent(	Trigger := Nasmyth_right,
       <LineId Id="13" Count="1" />
       <LineId Id="150" Count="0" />
       <LineId Id="140" Count="0" />
+      <LineId Id="321" Count="0" />
       <LineId Id="142" Count="0" />
+      <LineId Id="325" Count="8" />
+      <LineId Id="322" Count="0" />
       <LineId Id="38" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="16" Count="5" />
       <LineId Id="23" Count="0" />
       <LineId Id="43" Count="0" />
-      <LineId Id="93" Count="4" />
+      <LineId Id="92" Count="4" />
       <LineId Id="124" Count="0" />
+      <LineId Id="228" Count="0" />
       <LineId Id="128" Count="1" />
-      <LineId Id="103" Count="9" />
+      <LineId Id="112" Count="0" />
       <LineId Id="151" Count="0" />
       <LineId Id="113" Count="5" />
       <LineId Id="167" Count="3" />

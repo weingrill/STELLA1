@@ -11,6 +11,10 @@ VAR_INPUT
 	open_brake:	BOOL := FALSE;
 	// command to open the brake
 	close_brake: BOOL;
+	// reset any hydraulics error
+	reset: 		BOOL;
+	suction_manual:	BOOL;
+	pump_manual_stop: BOOL;
 END_VAR
 VAR_OUTPUT
 	// status of the brake: is the brake open?
@@ -42,7 +46,7 @@ VAR_OUTPUT
 	// suction pump is running
 	suction_running :	BOOL := FALSE;
 	// error condition
-	error: BOOL;
+	error: 				BOOL;
 END_VAR
 VAR
 	// monitors the pressure of the pump is running
@@ -56,11 +60,13 @@ VAR
 	// represents the state of the main pump
 	oil_pump_state:		RS;
 	// represents the state of the brake
-	brake_state: RS;
+	brake_state: 		RS;
 	// wait for the brake to open after pressure has been established
 	brake_open_delay:	TON;
 	// report brake opend after a short delay
 	brake_opened_delay:	TON;
+	// error state (set dominant)
+	error_state:	SR;
 	HydraulicsLog,
 	PumpLog,
 	ReserveLog,
@@ -74,8 +80,6 @@ VAR
 	
 	// measures the operating cycle of the suction pump
 	suction_timer : FB_Timer;
-	// MQTT Message
-	sPayloadPub: STRING(255);
 	StatusWord, LastStatus:	UDINT;
 END_VAR
 ]]></Declaration>
@@ -92,7 +96,6 @@ Main control Logic for the Hydraulics system
 oil_low := NOT GVL_Hydraulics.oil_low;
 oil_high := NOT GVL_Hydraulics.oil_high;
 oil_warning := GVL_Hydraulics.oil_reserve;
-// Michi Email 22.10.2020 True = OK
 oil_pressure_OK := GVL_Hydraulics.oil_pressure_OK;
 oil_filter_dirty := NOT GVL_Hydraulics.oilfilter_dirty;
 oil_cold := NOT GVL_Hydraulics.oil_undertemperature;
@@ -104,13 +107,12 @@ IF stop THEN
 	start := FALSE;
 END_IF
 
+error_state(SET1 := pressure_failure OR	suction_failure OR hydraulics_failure OR oil_low,
+			RESET := reset,
+			Q1 => error);
+
 oil_pump_state(SET := start,
-				RESET1 := stop OR
-						pressure_failure OR
-						suction_failure OR 
-						hydraulics_failure OR
-						oil_low OR
-						NOT Transformer.phase_available);
+				RESET1 := stop OR error OR NOT Transformer.phase_available OR pump_manual_stop);
 
 GVL_Hydraulics.oil_pump_enable := oil_pump_state.Q1;
 
@@ -151,7 +153,6 @@ IF brake_closed THEN
 	close_brake := FALSE;
 END_IF
 
-error := pressure_failure OR suction_failure OR oil_low;
 (* This is the end of the brake control section *)
 
 // measure suction pump cycle
@@ -160,16 +161,16 @@ suction_timer(	bStart := suction_running AND NOT suction_pump_timer.Q,
 
 suction_pump_timer(IN := Transformer.phase_available AND 
 						GVL_Hydraulics.oilpan_maximum,
-					PT := T#28S,
+					PT := T#55S,
 					Q => GVL_Hydraulics.oil_suction_enable);
-					
+GVL_Hydraulics.oil_suction_enable := suction_pump_timer.Q OR suction_manual;					
 suction_watchdog(IN := GVL_Hydraulics.oil_suction_enable AND NOT suction_running,
 					PT := T#10S,
 					Q => suction_failure);
 					
 pressure_watchdog(IN := GVL_Hydraulics.oil_pump_enable AND 
 						NOT oil_pressure_OK,
-					PT := T#15S,
+					PT := T#30S,
 				  Q => pressure_failure);
 hydraulics_watchdog(IN := pump_running AND NOT suction_running,
 						PT := T#140S,
@@ -202,37 +203,17 @@ StatusWord.10 := suction_running;
 
 IF StatusWord<>LastStatus THEN // publish new payload every second
 	LastStatus := StatusWord;
-	sPayloadPub := 'electronics,location=base,host=CX-22747A,module=HydraulicsControl ';
-	sPayloadPub := APPEND(sPayloadPub, 'OilLow=',			BOOL_TO_STRING(oil_low));
-	sPayloadPub := APPEND(sPayloadPub, ',OilHigh=',			BOOL_TO_STRING(oil_high));
-	sPayloadPub := APPEND(sPayloadPub, ',OilReserve=',		BOOL_TO_STRING(oil_warning));
-	sPayloadPub := APPEND(sPayloadPub, ',OilPressureOK=', 	BOOL_TO_STRING(oil_pressure_OK));
-	sPayloadPub := APPEND(sPayloadPub, ',OilFilterDirty=',	BOOL_TO_STRING(oil_filter_dirty));
-	sPayloadPub := APPEND(sPayloadPub, ',OilCold=',			BOOL_TO_STRING(oil_cold));
-	sPayloadPub := APPEND(sPayloadPub, ',OilHot=',			BOOL_TO_STRING(oil_Hot));
-	
-	MQTTCommunication.fbMqttClient.Publish(	
-					sTopic:= 'STELLA1/Telemetry', 
-					pPayload:= ADR(sPayloadPub), 
-					nPayloadSize:= LEN2(ADR(sPayloadPub)),
-					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
-					bRetain:= TRUE, 
-					bQueue:= FALSE );
-
-	sPayloadPub := 'electronics,location=base,host=CX-22747A,module=HydraulicsControl ';
-	sPayloadPub := APPEND(sPayloadPub, 'BrakeOpen=',		BOOL_TO_STRING(brake_open));
-	sPayloadPub := APPEND(sPayloadPub, ',BrakeClearing=',	BOOL_TO_STRING(GVL_Main.brake_clearing));
-	sPayloadPub := APPEND(sPayloadPub, ',PumpRunning=',		BOOL_TO_STRING(pump_running));
-	sPayloadPub := APPEND(sPayloadPub, ',SuctionRunning=',	BOOL_TO_STRING(suction_running));
-	
-	MQTTCommunication.fbMqttClient.Publish(	
-					sTopic:= 'STELLA1/Telemetry', 
-					pPayload:= ADR(sPayloadPub), 
-					nPayloadSize:= LEN2(ADR(sPayloadPub)),
-					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
-					bRetain:= TRUE, 
-					bQueue:= FALSE );
-	
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilLow',			BOOL_TO_STRING(oil_low));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilHigh',		BOOL_TO_STRING(oil_high));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilReserve',		BOOL_TO_STRING(oil_warning));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilPressureOK', 	BOOL_TO_STRING(oil_pressure_OK));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilFilterDirty',	BOOL_TO_STRING(oil_filter_dirty));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilCold',		BOOL_TO_STRING(oil_cold));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilHot',			BOOL_TO_STRING(oil_Hot));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'BrakeOpen',		BOOL_TO_STRING(brake_open));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'BrakeClearing',	BOOL_TO_STRING(GVL_Main.brake_clearing));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'PumpRunning',	BOOL_TO_STRING(pump_running));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'SuctionRunning',	BOOL_TO_STRING(suction_running));
 END_IF
 
 
@@ -299,13 +280,10 @@ BreakHydraulicsWarning(Trigger := NOT start AND open_brake,
     </Implementation>
     <LineIds Name="HydraulicsControl">
       <LineId Id="308" Count="11" />
-      <LineId Id="454" Count="0" />
       <LineId Id="321" Count="5" />
       <LineId Id="702" Count="3" />
-      <LineId Id="333" Count="3" />
-      <LineId Id="493" Count="0" />
-      <LineId Id="1217" Count="0" />
-      <LineId Id="337" Count="1" />
+      <LineId Id="1388" Count="4" />
+      <LineId Id="334" Count="1" />
       <LineId Id="786" Count="0" />
       <LineId Id="340" Count="0" />
       <LineId Id="788" Count="0" />
@@ -336,9 +314,8 @@ BreakHydraulicsWarning(Trigger := NOT start AND open_brake,
       <LineId Id="629" Count="0" />
       <LineId Id="695" Count="1" />
       <LineId Id="859" Count="0" />
-      <LineId Id="626" Count="0" />
       <LineId Id="555" Count="0" />
-      <LineId Id="547" Count="0" />
+      <LineId Id="1300" Count="0" />
       <LineId Id="350" Count="1" />
       <LineId Id="494" Count="0" />
       <LineId Id="352" Count="4" />
@@ -360,19 +337,17 @@ BreakHydraulicsWarning(Trigger := NOT start AND open_brake,
       <LineId Id="1135" Count="0" />
       <LineId Id="1017" Count="0" />
       <LineId Id="1019" Count="1" />
-      <LineId Id="1219" Count="1" />
+      <LineId Id="1220" Count="0" />
       <LineId Id="1061" Count="0" />
       <LineId Id="1063" Count="0" />
       <LineId Id="1076" Count="0" />
       <LineId Id="1078" Count="0" />
       <LineId Id="1080" Count="0" />
-      <LineId Id="1031" Count="7" />
-      <LineId Id="1082" Count="2" />
+      <LineId Id="1084" Count="0" />
       <LineId Id="1086" Count="0" />
       <LineId Id="1088" Count="0" />
       <LineId Id="1090" Count="0" />
-      <LineId Id="1098" Count="7" />
-      <LineId Id="1039" Count="1" />
+      <LineId Id="1040" Count="0" />
       <LineId Id="1014" Count="1" />
       <LineId Id="366" Count="0" />
       <LineId Id="369" Count="5" />

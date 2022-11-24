@@ -7,65 +7,49 @@ VAR
 	//safety_state 	: RS;
 	start_delay 	: TON;
 	ErrAck_Pulse	: TP;
-	//SafetyLog		: FB_EventLog;
-	Run:		BOOL := TRUE;
-	Restart:	BOOL;
-	ErrAck:		BOOL;
+	SafetyLog		: FB_EventLog;
 END_VAR
 VAR_OUTPUT
-	Error:	BOOL;
-	Stop:	BOOL;
+	Error			: BOOL;
+END_VAR
+VAR_INPUT
+	remote_restart:		BOOL;
+	remote_ErrAck:		BOOL;
+	remote_run:			BOOL := TRUE;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Safety can be stopped by pressing STOP and RESET on main panel
-GVL_Safety.Run := Run;
+GVL_Safety.Run := remote_run;
 // power on delay for Safety RESTART after RUN=1
-restart_safety(IN := TRUE, PT := T#1S);
+restart_safety(IN := GVL_Main.phase_available, PT := T#1S);
 // RESTART Safety after pushing reset or power on delay
-// GVL_Safety.Restart := restart_safety.Q;
-GVL_Safety.Restart := Restart;
+GVL_Safety.Restart := (Main.reset AND NOT GVL_Main.key_switch_remote) 
+						OR restart_safety.Q 
+						OR remote_restart;
+
 // wait n seconds after Start ...
-start_delay(IN := TRUE, PT := T#2S);
+start_delay(IN := GVL_Main.phase_available, PT := T#2S);
 // ... and send ErrAck for n milliseconds
-ErrAck_Pulse(IN := start_delay.Q, PT := T#200MS);
+ErrAck_Pulse(IN := GVL_Main.phase_available AND start_delay.Q, PT := T#200MS);
 
 // Error Acknowledgment: Turn key_switch OFF and press STOP 
-// GVL_Safety.ErrAck := ErrAck_Pulse.Q;
-GVL_Safety.ErrAck := ErrAck;
-Stop := GVL_Safety.Stop;
+GVL_Safety.ErrAck := (NOT GVL_Main.key_switch_remote)
+					OR ErrAck_Pulse.Q OR remote_ErrAck;
+					
 Error := GVL_Safety.Error;
 
-
-//SafetyLog(Trigger := Error,
-//				Level := ADSLOG_MSGTYPE_ERROR,
-//				OnMessage := 'Safety Error! Emergency stop enganged!',
-//				OffMessage := 'Safety is OK.',
-//				OffLevel := ADSLOG_MSGTYPE_HINT);
+SafetyLog(Trigger := Error,
+				Level := ADSLOG_MSGTYPE_ERROR,
+				OnMessage := 'Safety Error! Emergency stop enganged!',
+				OffMessage := 'Safety is OK.',
+				OffLevel := ADSLOG_MSGTYPE_HINT);
 ]]></ST>
     </Implementation>
     <LineIds Name="SafetyHandling">
-      <LineId Id="13" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="31" Count="1" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="110" Count="0" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="87" Count="2" />
-      <LineId Id="91" Count="0" />
-      <LineId Id="81" Count="0" />
+      <LineId Id="159" Count="5" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="165" Count="16" />
       <LineId Id="47" Count="0" />
     </LineIds>
   </POU>

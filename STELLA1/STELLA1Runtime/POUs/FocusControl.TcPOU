@@ -31,16 +31,14 @@ VAR_OUTPUT
 END_VAR
 
 VAR
-	FocusUnlock:		RS;
 	FocusDelay:			TON;
 	FocusAxis:			FB_Axis2;
 	actual_position:	LREAL;
 	Focus_max:			LREAL;
+	FocusUnlock:		BOOL;
 	FocusUnlocked:		BOOL;
 	FocusCalibration:	MC_SetPosition;
-	MQTTTimer : TON := (PT:=T#10S);
-	// MQTT String
-	sPayloadPub: STRING(255);
+	MQTTTimer : 		TON := (PT:=T#5S);
 	getlastposition:	BOOL := TRUE;
 	FocusAxisEvent:		FB_EventLog;
 	CalibrationEvent:	FB_EventLog;
@@ -50,6 +48,7 @@ VAR CONSTANT
 	// reference position for homing
 	homing_position:		LREAL := 97.96; // 107,50 - 9,54
 	calibration_position:	LREAL := 0.0;
+	tolerance:				LREAL := 0.005;
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -62,19 +61,12 @@ brake: 86 61103H00 Var. 0005 Index C; 24VDC geglattet 0,25 A P1672/R7
 motor: Faulhaber ; Schönaich ; 3557K024CR; 454  431 ; Made in germany ==> 5300 rpm
 gear: Faulhaber ; MINIMOTOR SA ; swiss made ; 38/1S  43:1 ; 033896  503
 Focus is locked by default
-//GVL_Telescope.focus_lock := FALSE;
 *)
-// unlock the Focus 
-// TODO: onlock the Focus on movement only
-(*
-FocusUnlock(SET := enable,
-			RESET1 := reset OR NOT enable,
-			Q1 => GVL_Telescope.focus_lock);
-*)
-GVL_Telescope.focus_lock := NOT FocusAxis.StandStill;
+
+GVL_Telescope.focus_unlock := FocusUnlock OR enable;
 
 // wait until the focus is unlocked for n milliseconds
-FocusDelay(IN :=FocusUnlock.Q1, PT := T#1000MS, Q => FocusUnlocked);
+FocusDelay(IN := GVL_Telescope.focus_unlock, PT := T#500MS, Q => FocusUnlocked);
 
 IF HomeAxis THEN
 	position := homing_position;
@@ -87,16 +79,16 @@ MC_SetAcceptBlockedDriveSignal(
 
 //GVL_Telescope.focus_lock := FocusUnlocked;
 FocusAxis(	
-	Enable := 			enable,
+	Enable := 			FocusUnlocked,
 	Reset := 			reset,
-	MoveAxis := 		MoveAxis,
-	HomeAxis :=			HomeAxis,
+	MoveAxis := 		MoveAxis AND FocusUnlocked,
+	HomeAxis :=			HomeAxis AND FocusUnlocked,
 	Position := 		position,
 	Velocity :=			1.0,
 	Enable_Positive := 	NOT GVL_Telescope.focus_limit_far OR HomeAxis,
 	Enable_Negative := 	NOT GVL_Telescope.focus_limit_near,
-	Jog_Forward :=		outward,
-	Jog_Backwards := 	inward,
+	Jog_Forward :=		outward AND FocusUnlocked,
+	Jog_Backwards := 	inward AND FocusUnlocked,
 	bCalibrationCam :=  GVL_Telescope.focus_limit_far,
 	ActualPosition => 	actual_position,
 	Error =>			error,
@@ -144,22 +136,26 @@ IF GVL_Telescope.focus_limit_far THEN
 	Focus_max := actual_position;
 END_IF
 
+IF Calibrated THEN
+ 	IF ABS(actual_position - position) > tolerance THEN
+		enable := TRUE;
+		MoveAxis := TRUE;
+	ELSE
+		MoveAxis := FALSE;
+		IF FocusAxis.StandStill THEN
+			enable := FALSE;
+		END_IF
+	END_IF
+END_IF
+
 Ready := FocusAxis.Ready AND FocusAxis.StandStill;
 
-MQTTTimer(IN:=Enable);
+MQTTTimer(IN:=TRUE);
 IF MQTTTimer.Q THEN // publish new payload every second
 	MQTTTimer(IN:=FALSE);
-	sPayloadPub := 'telescope,location=dome,host=CX-22747A,module=FocusControl ';
-	sPayloadPub := APPEND(sPayloadPub, 'FocusPosition=', LREAL_TO_FMTSTR(actual_position, 5, TRUE));
-	sPayloadPub := APPEND(sPayloadPub, ',Calibrated=', BOOL_TO_STRING(Calibrated));	
-	sPayloadPub := APPEND(sPayloadPub, ',Ready=', BOOL_TO_STRING(Ready));	
-	MQTTCommunication.fbMqttClient.Publish(	
-					sTopic:= 'STELLA1/Telemetry', 
-					pPayload:= ADR(sPayloadPub), 
-					nPayloadSize:= LEN2(ADR(sPayloadPub)),
-					eQoS:= TcIotMqttQos.AtMostOnceDelivery,
-					bRetain:= FALSE, 
-					bQueue:= FALSE );
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'FocusPosition', LREAL_TO_FMTSTR(actual_position, 5, TRUE));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'FocusCalibrated', BOOL_TO_STRING(Calibrated));	
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'FocusReady', BOOL_TO_STRING(Ready));	
 END_IF
 
 FocusAxisEvent(	
@@ -184,14 +180,8 @@ CalibrationEvent(
       <LineId Id="364" Count="0" />
       <LineId Id="363" Count="0" />
       <LineId Id="115" Count="0" />
-      <LineId Id="54" Count="0" />
       <LineId Id="310" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="236" Count="0" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="435" Count="0" />
-      <LineId Id="100" Count="1" />
-      <LineId Id="274" Count="0" />
+      <LineId Id="638" Count="0" />
       <LineId Id="436" Count="1" />
       <LineId Id="112" Count="0" />
       <LineId Id="110" Count="0" />
@@ -234,11 +224,19 @@ CalibrationEvent(
       <LineId Id="543" Count="0" />
       <LineId Id="192" Count="0" />
       <LineId Id="320" Count="1" />
+      <LineId Id="626" Count="1" />
+      <LineId Id="748" Count="0" />
+      <LineId Id="629" Count="0" />
+      <LineId Id="747" Count="0" />
+      <LineId Id="631" Count="1" />
+      <LineId Id="743" Count="2" />
+      <LineId Id="749" Count="0" />
+      <LineId Id="630" Count="0" />
       <LineId Id="433" Count="1" />
       <LineId Id="557" Count="0" />
-      <LineId Id="559" Count="5" />
+      <LineId Id="559" Count="3" />
+      <LineId Id="564" Count="0" />
       <LineId Id="574" Count="0" />
-      <LineId Id="565" Count="6" />
       <LineId Id="558" Count="0" />
       <LineId Id="322" Count="0" />
       <LineId Id="193" Count="5" />

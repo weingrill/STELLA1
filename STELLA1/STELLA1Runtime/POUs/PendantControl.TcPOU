@@ -82,48 +82,50 @@ CoverControl.active_cover := 0;
 // enable only the selected item and connect lamps and buttons accordingly
 CASE Selection OF
 	1:	// reserved for Cover1 control
-		lamp_up := GVL_Telescope.cover1_open AND CoverControl.Ready;
-		lamp_down := GVL_Telescope.cover1_closed AND CoverControl.Ready;
+		lamp_up := GVL_Telescope.cover1_open;
+		lamp_down := GVL_Telescope.cover1_closed;
 		IF manual THEN
-			CoverEnable(SET := enable, Q := CoverControl.enable);
-			CoverControl.active_cover := 1;
-			CoverControl.reset := reset;
-			CoverControl.open := up AND CoverControl.Ready;
-			CoverControl.close := down AND CoverControl.Ready;
+			//CoverEnable(SET := enable, Q := CoverControl.enable);
+			//CoverControl.active_cover := 1;
+			//CoverControl.reset := reset;
+			GVL_Telescope.open_cover1 := up AND GVL_Telescope.cover1_open;
+			GVL_Telescope.close_cover1 := down AND GVL_Telescope.cover1_closed;
 			lamp_error := CoverControl.Cover1_Error;			
 		END_IF
 
 	2: // Cover2 control
-		lamp_up := GVL_Telescope.cover2_open AND CoverControl.Ready;
-		lamp_down := GVL_Telescope.cover2_closed AND CoverControl.Ready;
+		lamp_up := GVL_Telescope.cover2_open;
+		lamp_down := GVL_Telescope.cover2_closed;
 		IF manual THEN
-			CoverEnable(SET := enable, Q := CoverControl.enable);
-			CoverControl.active_cover := 2;
-			CoverControl.reset := reset;
-			CoverControl.open := up AND CoverControl.Ready;
-			CoverControl.close := down AND CoverControl.Ready;
+			//CoverEnable(SET := enable, Q := CoverControl.enable);
+			//CoverControl.active_cover := 2;
+			GVL_Telescope.open_cover2 := up AND GVL_Telescope.cover2_open;
+			GVL_Telescope.close_cover2 := down AND GVL_Telescope.cover2_closed;
 			lamp_error := CoverControl.Cover2_Error;
 		END_IF
  	
 	3:  // Cover3 control
-		lamp_up := GVL_Telescope.cover3_open AND CoverControl.Ready;
-		lamp_down := GVL_Telescope.cover3_closed AND CoverControl.Ready;
+		lamp_up := GVL_Telescope.cover3_open;
+		lamp_down := GVL_Telescope.cover3_closed;
 		IF manual THEN
-			CoverEnable(SET := enable, Q := CoverControl.enable);
-			CoverControl.active_cover := 3;
-			CoverControl.open := up AND CoverControl.Ready;
-			CoverControl.close := down AND CoverControl.Ready;
-			CoverControl.reset := reset;
+			//CoverEnable(SET := enable, Q := CoverControl.enable);
+			//CoverControl.active_cover := 3;
+			GVL_Telescope.open_cover3 := up AND GVL_Telescope.cover3_open;
+			GVL_Telescope.close_cover3 := down AND GVL_Telescope.cover3_closed;
+			//CoverControl.reset := reset;
 			lamp_error := CoverControl.Cover3_Error;
 		END_IF
 		
 	4:	// Nasmyth / mirror M3 control
-		lamp_left := GVL_Telescope.nasmyth_limit_left AND NasmythControl.Ready;
-		lamp_right := GVL_Telescope.nasmyth_limit_right AND NasmythControl.Ready;
+		lamp_left := NOT GVL_Telescope.nasmyth_limit_left;
+		lamp_right := NOT GVL_Telescope.nasmyth_limit_right;
 		IF manual THEN
-			NasmythEnable(SET := enable, Q := NasmythControl.enable);
-			NasmythControl.left := left;
-			NasmythControl.right := right;
+			GVL_Telescope.nasmyth_lock := enable;
+			//NasmythEnable(SET := enable, Q := NasmythControl.enable);
+			GVL_Telescope.nasmyth_left := left AND NOT GVL_Telescope.nasmyth_limit_left;
+			GVL_Telescope.nasmyth_right := right AND NOT GVL_Telescope.nasmyth_limit_right;
+			//NasmythControl.left := left;
+			//NasmythControl.right := right;
 			NasmythControl.reset := reset;
 			lamp_error := Nasmythcontrol.error;
 		END_IF
@@ -180,6 +182,7 @@ CASE Selection OF
 	9: 	// Dome control
 		
 		
+		
 	10:	// FilterWheel control
 		//FIXME
 		FilterWheelControl.Enable := manual;
@@ -232,8 +235,8 @@ CASE Selection OF
 			ElevationControl.down := down AND GVL_Telescope.Elevation_inputs.1;
 			AzimuthElevationControl.left := left AND GVL_Telescope.Azimuth_inputs.0;
 			AzimuthElevationControl.right := right AND GVL_Telescope.Azimuth_inputs.1;
-			TelescopeControl.ra := TelescopeControl.rightascension_calc;
-			TelescopeControl.de := TelescopeControl.declination_calc;
+			TelescopeControl.rightascension := TelescopeControl.rightascension_calc;
+			TelescopeControl.declination := TelescopeControl.declination_calc;
 		ELSE
 			lamp_up := ElevationControl.enable;
 			lamp_down := ElevationControl.enable;
@@ -255,6 +258,10 @@ CASE Selection OF
 		TwinCATRestart(NETID := '', RESTART := ResetDelay.Q AND NOT HydraulicsControl.suction_running, TMOUT := T#60S);
 	
 	14: horn := manual;
+		lamp_up := manual;
+		lamp_down := manual;
+		lamp_left := manual;
+		lamp_right := manual;
 	
 	15:	// Hydraulics control
 		lamp_up := HydraulicsControl.oil_pressure_OK AND Hydraulicscontrol.brake_closed;
@@ -265,8 +272,8 @@ CASE Selection OF
 			HydraulicsEnable(
 				SET := enable, 
 				Q := Hydraulicscontrol.start);
-			Hydraulicscontrol.stop := reset OR NOT Hydraulicscontrol.start;
-			
+			Hydraulicscontrol.stop := NOT Hydraulicscontrol.start;
+			Hydraulicscontrol.reset := reset;
 			
 			IF up THEN
 				Hydraulicscontrol.open_brake := TRUE;
@@ -276,6 +283,8 @@ CASE Selection OF
 				Hydraulicscontrol.open_brake := FALSE;
 				Hydraulicscontrol.close_brake := TRUE;
 			END_IF
+			Hydraulicscontrol.suction_manual := right;
+			Hydraulicscontrol.pump_manual_stop := left;
 			lamp_error := HydraulicsControl.error;
 		END_IF
 END_CASE
@@ -290,13 +299,28 @@ GVL_pendant_control.lamp_error := lamp_error;]]></ST>
     <LineIds Name="PendantControl">
       <LineId Id="2490" Count="20" />
       <LineId Id="2749" Count="0" />
-      <LineId Id="2511" Count="111" />
-      <LineId Id="2635" Count="18" />
+      <LineId Id="2511" Count="22" />
+      <LineId Id="2839" Count="0" />
+      <LineId Id="2535" Count="8" />
+      <LineId Id="2546" Count="0" />
+      <LineId Id="2838" Count="0" />
+      <LineId Id="2547" Count="19" />
+      <LineId Id="2840" Count="0" />
+      <LineId Id="2567" Count="0" />
+      <LineId Id="2842" Count="0" />
+      <LineId Id="2841" Count="0" />
+      <LineId Id="2568" Count="54" />
+      <LineId Id="2634" Count="19" />
       <LineId Id="2747" Count="1" />
       <LineId Id="2654" Count="24" />
       <LineId Id="2743" Count="2" />
       <LineId Id="2742" Count="0" />
-      <LineId Id="2679" Count="56" />
+      <LineId Id="2679" Count="26" />
+      <LineId Id="2792" Count="2" />
+      <LineId Id="2791" Count="0" />
+      <LineId Id="2706" Count="20" />
+      <LineId Id="2836" Count="1" />
+      <LineId Id="2727" Count="8" />
       <LineId Id="121" Count="0" />
     </LineIds>
   </POU>

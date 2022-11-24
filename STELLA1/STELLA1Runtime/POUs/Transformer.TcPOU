@@ -14,7 +14,6 @@ VAR
 	softstart_trafo:	BOOL;
 	PowerEvent:			FB_EventLog;
 	PowerLog:			FB_EventLog;
-	PhaseLog:			FB_EventLog;
 	// indicates the phases for the hydraulics
 	phase_available:	BOOL;
 END_VAR
@@ -28,9 +27,9 @@ power_error_state(SET1 := power_failure, RESET := reset_error);
 
 GVL_Main.softstart_trafo := softstart_trafo AND NOT error;
 
-phase_available := GVL_Main.L1L2_voltage > 360.0 AND
+phase_available := TRUE; (*GVL_Main.L1L2_voltage > 360.0 AND
 					GVL_Main.L2L3_voltage > 360.0 AND
-					GVL_Main.L3L1_voltage > 360.0;
+					GVL_Main.L3L1_voltage > 360.0; *)
 
 PowerEvent(	
 	Trigger := 		power_failure, 
@@ -42,15 +41,8 @@ PowerLog(
 	Trigger := 		power_OK, 
 	Level := 		ADSLOG_MSGTYPE_HINT,
 	FormatString :=	'%s',
-	OnMessage := 	'Power is ON',
-	OffMEssage := 	'Power is OFF');
-PhaseLog(	
-	Trigger := 		NOT phase_available, 
-	Level := 		ADSLOG_MSGTYPE_ERROR,
-	FormatString :=	'%s',
-	OnMessage := 	'electrical phases:	ERROR!',
-	OffLevel := 	ADSLOG_MSGTYPE_HINT,
-	OffMEssage := 	'electrical phases:	active');
+	OnMessage := 	'Mains power is ON',
+	OffMEssage := 	'Mains power is OFF');
 ]]></ST>
     </Implementation>
     <Property Name="error" Id="{4119c9eb-4956-4e1d-9bb0-76d34951f705}">
@@ -73,7 +65,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[power_ok := GVL_Main.trafo_bypassed;
+          <ST><![CDATA[power_ok := GVL_main.trafo_bypassed;
 ]]></ST>
         </Implementation>
       </Get>
@@ -134,9 +126,9 @@ END_VAR
       <LineId Id="17" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="16" Count="0" />
-      <LineId Id="55" Count="3" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="53" Count="2" />
       <LineId Id="26" Count="12" />
-      <LineId Id="62" Count="6" />
       <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="Transformer.error.Get">
