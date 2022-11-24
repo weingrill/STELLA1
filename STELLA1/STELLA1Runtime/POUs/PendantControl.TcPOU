@@ -90,7 +90,14 @@ CASE Selection OF
 			//CoverControl.reset := reset;
 			GVL_Telescope.open_cover1 := up AND GVL_Telescope.cover1_open;
 			GVL_Telescope.close_cover1 := down AND GVL_Telescope.cover1_closed;
-			lamp_error := CoverControl.Cover1_Error;			
+			lamp_error := CoverControl.Cover1_Error;	
+		ELSE
+			IF down THEN 
+				CoverControl.close := TRUE;
+			END_IF
+			IF up THEN
+				CoverControl.open := TRUE;
+			END_IF		
 		END_IF
 
 	2: // Cover2 control
@@ -102,6 +109,13 @@ CASE Selection OF
 			GVL_Telescope.open_cover2 := up AND GVL_Telescope.cover2_open;
 			GVL_Telescope.close_cover2 := down AND GVL_Telescope.cover2_closed;
 			lamp_error := CoverControl.Cover2_Error;
+		ELSE
+			IF down THEN 
+				CoverControl.close := TRUE;
+			END_IF
+			IF up THEN
+				CoverControl.open := TRUE;
+			END_IF		
 		END_IF
  	
 	3:  // Cover3 control
@@ -114,6 +128,13 @@ CASE Selection OF
 			GVL_Telescope.close_cover3 := down AND GVL_Telescope.cover3_closed;
 			//CoverControl.reset := reset;
 			lamp_error := CoverControl.Cover3_Error;
+		ELSE
+			IF down THEN 
+				CoverControl.close := TRUE;
+			END_IF
+			IF up THEN
+				CoverControl.open := TRUE;
+			END_IF		
 		END_IF
 		
 	4:	// Nasmyth / mirror M3 control
@@ -301,10 +322,18 @@ GVL_pendant_control.lamp_error := lamp_error;]]></ST>
       <LineId Id="2749" Count="0" />
       <LineId Id="2511" Count="22" />
       <LineId Id="2839" Count="0" />
-      <LineId Id="2535" Count="8" />
+      <LineId Id="2535" Count="0" />
+      <LineId Id="2884" Count="4" />
+      <LineId Id="2890" Count="0" />
+      <LineId Id="2889" Count="0" />
+      <LineId Id="2536" Count="7" />
       <LineId Id="2546" Count="0" />
       <LineId Id="2838" Count="0" />
-      <LineId Id="2547" Count="19" />
+      <LineId Id="2547" Count="0" />
+      <LineId Id="2891" Count="6" />
+      <LineId Id="2548" Count="11" />
+      <LineId Id="2898" Count="6" />
+      <LineId Id="2560" Count="6" />
       <LineId Id="2840" Count="0" />
       <LineId Id="2567" Count="0" />
       <LineId Id="2842" Count="0" />
