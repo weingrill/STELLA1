@@ -131,7 +131,7 @@ error := Transformer.error OR
 			OR DerotatorControl.Error
 			OR GVL_Safety.Error;
 // set control lights					
-GVL_Main.lamp_ready := ready;
+GVL_Main.lamp_on_manual := PendantControl.manual;
 GVL_Main.lamp_error := error OR warning;
 GVL_Main.lamp_power := Transformer.power_ok AND Transformer.phase_available;
 SafetyHandling();

@@ -27,7 +27,7 @@ VAR_GLOBAL
 	//DOUT1 0.0
 	lamp_power			AT%Q*: BOOL;
 	//DOUT2 0.1
-	lamp_ready			AT%Q*: BOOL;
+	lamp_on_manual			AT%Q*: BOOL;
 	//DOUT3 0.2
 	lamp_error			AT%Q*: BOOL;
 	
