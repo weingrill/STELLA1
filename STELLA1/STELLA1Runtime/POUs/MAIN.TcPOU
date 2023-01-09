@@ -93,7 +93,7 @@ IF stop THEN
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
 
-cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 100.0;
+cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 10.0;
 
 // telescope is ready when power available and hydraulics ok
 ready := Transformer.power_OK AND HydraulicsControl.oil_pressure_OK;

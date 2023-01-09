@@ -28,8 +28,8 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[temperature_mirror2 := GVL_Telescope.temperature_mirror2 / 100.0;
-temperature_mirror1 := GVL_Telescope.temperature_mirror1 / 100.0;
+      <ST><![CDATA[temperature_mirror2 := GVL_Telescope.temperature_mirror2 / 1000.0;
+temperature_mirror1 := GVL_Telescope.temperature_mirror1 / 1000.0;
 temperature_mirror3 := GVL_Telescope.temperature_mirror3 / 100.0;
 temperature_tube 	:= GVL_Telescope.temperature_tube / 100.0;
 temperature_bearing1 := GVL_Telescope.temperature_bearing1 / 100.0;
