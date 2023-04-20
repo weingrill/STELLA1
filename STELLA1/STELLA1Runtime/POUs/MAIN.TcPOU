@@ -41,7 +41,8 @@ VAR
 	ups_input_power:		REAL;
 	ups_output_power:		REAL;
 	PhaseLog:				FB_EventLog;
-	TemperatureEvent:	FB_EventLog;
+	TemperatureEvent,
+	TemperatureCriticalEvent:	FB_EventLog;
 	MQTTTimer : 		TON := (PT:=T#5S);
 	GetHostName:		FB_GetHostName;
 	HostName: 			STRING(255);
@@ -49,6 +50,7 @@ VAR
 	Lightbutton: 		BOOL;
 	bExecute:			BOOL := TRUE;
 	cabinet_temperature_warning:	SR;
+	cabinet_temperature_critical:	SR;
 	MQTTClient:		FB_MQTTCommunication;
 END_VAR
 ]]></Declaration>
@@ -70,10 +72,11 @@ key_switch := GVL_Main.key_switch_remote OR remote_keyswitch;
 brake_clearing := GVL_Main.brake_clearing OR remote_brake_clearing;
 reset := GVL_Main.reset_switch OR GVL_pendant_control.reset_switch OR remote_reset;		
 brake_clearing := NOT GVL_Main.brake_clearing;
-cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 100.0;
+cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 10.0;
 cabinet_temperature_warning(SET1 := cabinet_temperature > 40.0,
 							RESET := cabinet_temperature < 35.0);
-
+cabinet_temperature_critical(SET1 := cabinet_temperature > 50.0,
+							RESET := cabinet_temperature < 40.0);
 IF key_switch THEN
 	Transformer.start();
 ELSE
@@ -93,13 +96,8 @@ IF stop THEN
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
 
-cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 10.0;
-
 // telescope is ready when power available and hydraulics ok
 ready := Transformer.power_OK AND HydraulicsControl.oil_pressure_OK;
-IF ready THEN
-	// SimpleLog(Message := 'power and Hydraulics ready');
-END_IF
 		
 TelescopeControl();	//
 CoverControl();	//
@@ -171,9 +169,14 @@ PhaseLog(
 	OffLevel := 	ADSLOG_MSGTYPE_HINT,
 	OffMEssage := 	'electrical phases:	active');
 TemperatureEvent(	
-	Trigger := 		cabinet_temperature > 40.0, 
+	Trigger := 		cabinet_temperature_warning.Q1, 
 	Level := 		ADSLOG_MSGTYPE_WARN,
-	FormatString :=	'Main Cabinet Temperature warning:	%s',
+	FormatString :=	'Main cabinet temperature warning:	%s',
+	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);
+TemperatureCriticalEvent(	
+	Trigger := 		cabinet_temperature_critical.Q1, 
+	Level := 		ADSLOG_MSGTYPE_ERROR,
+	FormatString :=	'Main cabinet temperature is critical:	%s!',
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
@@ -183,7 +186,9 @@ TemperatureEvent(
       <LineId Id="386" Count="1" />
       <LineId Id="374" Count="0" />
       <LineId Id="376" Count="3" />
-      <LineId Id="256" Count="2" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="480" Count="0" />
+      <LineId Id="257" Count="1" />
       <LineId Id="262" Count="0" />
       <LineId Id="264" Count="1" />
       <LineId Id="316" Count="0" />
@@ -193,7 +198,8 @@ TemperatureEvent(
       <LineId Id="315" Count="0" />
       <LineId Id="74" Count="7" />
       <LineId Id="384" Count="0" />
-      <LineId Id="85" Count="8" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="92" Count="1" />
       <LineId Id="95" Count="3" />
       <LineId Id="101" Count="4" />
       <LineId Id="107" Count="3" />
@@ -209,6 +215,8 @@ TemperatureEvent(
       <LineId Id="182" Count="0" />
       <LineId Id="203" Count="3" />
       <LineId Id="2" Count="0" />
+      <LineId Id="475" Count="3" />
+      <LineId Id="474" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
