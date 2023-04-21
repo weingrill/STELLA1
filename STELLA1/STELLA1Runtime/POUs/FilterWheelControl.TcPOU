@@ -45,7 +45,7 @@ VAR CONSTANT
 	// total number of filters in the filter wheel
 	filters:			WORD := 24;
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 0.0;
+	calibration_position:	LREAL := 1.1346;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* This program controls the filter wheel. 
@@ -128,7 +128,7 @@ CalibratedEvent(
 	OnMessage := 	'Filter wheel is calibrated.');
 	
 FilterReadyEvent(
-	Trigger :=		(filter_position = actual_filter),
+	Trigger :=		(filter_position = actual_filter) AND Calibrated,
 	Level := 		ADSLOG_MSGTYPE_HINT,
 	FormatString :=	'Filter position %s is ready.',
 	OnMessage := 	WORD_TO_STRING(actual_filter));]]></ST>
