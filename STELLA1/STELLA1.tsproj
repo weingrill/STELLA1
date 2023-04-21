@@ -1406,6 +1406,148 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 		<DataType>
+			<Name GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety" TcBaseType="true">FSOE_6</Name>
+			<BitSize>48</BitSize>
+			<SubItem>
+				<Name>FSoE CMD</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FSoE Data</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000032}">BITARR8</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FSoE CRC_0</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FSoE ConnID</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
+			<BitSize>6</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>6</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
+			<BitSize>5</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>5</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{2B008623-51EE-EF6A-ACDE-0017707F5BB8}" AutoDeleteType="true">INFODATA_FB_3</Name>
+			<BitSize>24</BitSize>
+			<SubItem>
+				<Name>State</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Diag</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{1ACAF318-15DD-D449-4F62-AF4D623E4A09}" AutoDeleteType="true">INFODATA_248583369</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>State</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Diag</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Input Safe Data InputChannel1</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Input Safe Data InputChannel2</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>17</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Input Safe Data InputChannel3</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>18</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Input Safe Data InputChannel4</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>19</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{8EA147D6-69F3-6C3B-79EE-020724104888}" AutoDeleteType="true">INFODATA_1525530285</Name>
+			<BitSize>32</BitSize>
+			<SubItem>
+				<Name>State</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Diag</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Output Safe Data OutputChannel1</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>24</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Output Safe Data OutputChannel2</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>25</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Output Safe Data OutputChannel3</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>26</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Output Safe Data OutputChannel4</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>27</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-002000000010}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BYTE</Name>
 			<BitSize>16</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
@@ -1460,15 +1602,6 @@ External Setpoint Generation:
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
-			<BitSize>6</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>6</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-002000000002}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BIT</Name>
 			<BitSize>2</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
@@ -1487,7 +1620,7 @@ External Setpoint Generation:
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-00200000000D}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..12] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-00200000000D}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..12] OF BIT</Name>
 			<BitSize>13</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -1502,15 +1635,6 @@ External Setpoint Generation:
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>9</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
-			<BitSize>5</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>5</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -1762,12 +1886,12 @@ External Setpoint Generation:
 					<Name>Derotator</Name>
 					<AxisPara>
 						<General UnitName="°"/>
-						<Dynamic AccelerationMaximum="21.375" DecelerationMaximum="21.375" Acceleration="21.375" Deceleration="21.375" Jerk="64.125"/>
-						<Velo RefSearch="0.1425" RefSync="0.1425" SlowManual="0.7125" FastManual="4.275" Fast="14.25" Maximum="14.25"/>
+						<Dynamic AccelerationMaximum="12" DecelerationMaximum="12" Acceleration="10.4148" Deceleration="10.4148" Jerk="31.2445"/>
+						<Velo RefSearch="0.069432307434082" RefSync="0.069432307434082" SlowManual="0.34716153717041" FastManual="2.08296922302246" Fast="6.9432307434082" Maximum="6.94323"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
-						<EncPara ScaleFactorNumerator="0.1" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorNumerator="0.225" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Eingänge</Name>
 							<Var>
@@ -1828,7 +1952,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="9">
 						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00030100">
-							<Analog VeloReferenz="15.675" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="7.63755381774902" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -2215,13 +2339,15 @@ External Setpoint Generation:
 				<Axis Id="5" CreateSymbols="true" AxisType="1">
 					<Name>FilterWheel</Name>
 					<AxisPara>
-						<General UnitName="°"/>
+						<General UnitName="°" UnitFlags="#x00000004"/>
 						<Dynamic AccelerationMaximum="1500" DecelerationMaximum="1500" Acceleration="15" Deceleration="15" Jerk="45"/>
 						<Velo RefSearch="5" RefSync="5" SlowManual="1" FastManual="10" Fast="103.833333333333" Maximum="100"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara ScaleFactorNumerator="5" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorNumerator="5" ScaleFactorDenominator="1048576" MaxCount="#xffffffff">
+							<Inc RefMode="1" HomingSensorSource="9"/>
+						</EncPara>
 						<Vars VarGrpType="1">
 							<Name>Eingänge</Name>
 							<Var>
@@ -2399,10 +2525,6 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc</Name>
-							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Hydraulics.oil_pressure_OK</Name>
 							<Comment><![CDATA[ 2.3]]></Comment>
 							<Type>BOOL</Type>
@@ -2421,6 +2543,10 @@ External Setpoint Generation:
 							<Name>GVL_Hydraulics.oilfilter_dirty</Name>
 							<Comment><![CDATA[ 2.6]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc</Name>
+							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Hydraulics.pump_running</Name>
@@ -2733,6 +2859,11 @@ DIN3 0.2]]></Comment>
 							<Name>GVL_Telescope.FocusAxisRef.NcToPlc</Name>
 							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
+						<Var>
+							<Name>GVL_Safety.State</Name>
+							<Comment><![CDATA[ state variable]]></Comment>
+							<Type>USINT</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
@@ -2840,22 +2971,6 @@ DOUT9 1.0]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.AzimuthAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.ElevationAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.DerotatorAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.FocusAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Telescope.open_cover1</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -2870,6 +2985,22 @@ DOUT9 1.0]]></Comment>
 						<Var>
 							<Name>GVL_Telescope.close_cover2</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.AzimuthAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.ElevationAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.DerotatorAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.FocusAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Telescope.open_cover3</Name>
@@ -2897,6 +3028,23 @@ DOUT9 1.0]]></Comment>
 				</Instance>
 			</Project>
 		</Plc>
+		<Safety>
+			<Project GUID="{E2DC9FF7-503D-49B3-B101-902A7E85F7AE}" Name="STELLASafety" PrjFilePath="STELLASafety\STELLASafety.splcproj" TmcFilePath="STELLASafety\STELLASafety.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010010" KeepUnrestoredLinks="2">
+					<Name>STELLASafety Instance</Name>
+					<TmcDesc GUID="{72A6D5B8-E98C-4604-8B90-09D1F8AB38A9}">
+						<Name>Safety</Name>
+						<InitSequence>PO</InitSequence>
+						<Contexts>
+							<Context>
+								<Id>1</Id>
+								<Name>Default</Name>
+							</Context>
+						</Contexts>
+					</TmcDesc>
+				</Instance>
+			</Project>
+		</Safety>
 		<Io>
 			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.34.116.122.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
@@ -2936,13 +3084,13 @@ DOUT9 1.0]]></Comment>
 					<ImageId>1000</ImageId>
 					<EtherCAT PdiType="#x0100" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x04b02c52" RevisionNo="#x00001388" InfoDataState="false" PortPhys="49" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EK1200-5000 EtherCAT Netzteil (2A E-Bus)" Desc="EK1200" PortABoxInfo="#x00ffffff"/>
 					<Box Id="2" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Term 2 (EL6910)</Name>
+						<Name>Safety Logic (EL6910)</Name>
 						<ImageId>1001</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x1afe3052" RevisionNo="#x00140000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL6910, TwinSAFE PLC" Desc="EL6910" PortABoxInfo="#x0100000c">
 							<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
 							<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
-							<SyncMan>001202002400010003000000000000000200001224010000</SyncMan>
-							<SyncMan>001d02002000010004000000000000000200001d20010000</SyncMan>
+							<SyncMan>00120f002400010003000000000000000200001224010000</SyncMan>
+							<SyncMan>001d1a002000010004000000000000000200001d20010000</SyncMan>
 							<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
 							<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
 							<Fmmu>0000000000000000001200020100000001000000060000000200000000000000</Fmmu>
@@ -2952,6 +3100,60 @@ DOUT9 1.0]]></Comment>
 							<Fmmu>0000000000000000000000010000000002000000060000000500010000000000</Fmmu>
 							<BootStrapData>0010f400f410f400</BootStrapData>
 							<MBoxUserCmdData>004003000a00000000000000030010000000000000000000000000000000000020f3100502000000010000</MBoxUserCmdData>
+							<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
+								<Entry Name="TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 TxPDO" Index="#x7000" Sub="#x01">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+								<Entry Name="TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 TxPDO" Index="#x7000" Sub="#x02">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
+								<Entry Name="TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 RxPDO" Index="#x6000" Sub="#x01">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+								<Entry Name="TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 RxPDO" Index="#x6000" Sub="#x02">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="StandardInputs" Index="#x1bf0" Flags="#x2011" SyncMan="3">
+								<Entry Name="TwinSafeGroup1.SafetyError_4" Index="#x7000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="TwinSafeGroup1.SafetyStop_7" Index="#x7000" Sub="#x02">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
+								<Entry Name="TwinSafeGroup1.ErrorAcknowledgement_1" Index="#x6000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="TwinSafeGroup1.RestartSafety_2" Index="#x6000" Sub="#x02">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="TwinSafeGroup1.RunSafety_3" Index="#x6000" Sub="#x03">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry>
+									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Function Block Info Data" Index="#x1bf8" Flags="#x2011" SyncMan="3">
+								<Entry Name="TwinSafeGroup1.Network1.FBEstop1 Info Data" Index="#x7000" Sub="#x01">
+									<Type GUID="{2B008623-51EE-EF6A-ACDE-0017707F5BB8}">INFODATA_FB_3</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Connection Info Data" Index="#x1bf9" Flags="#x2011" SyncMan="3">
+								<Entry Name="TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 Info Data" Index="#x7000" Sub="#x01">
+									<Type GUID="{1ACAF318-15DD-D449-4F62-AF4D623E4A09}">INFODATA_248583369</Type>
+								</Entry>
+								<Entry Name="TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 Info Data" Index="#x7000" Sub="#x02">
+									<Type GUID="{8EA147D6-69F3-6C3B-79EE-020724104888}">INFODATA_1525530285</Type>
+								</Entry>
+							</Pdo>
 							<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0011" SyncMan="3">
 								<Entry Name="Safe Logic State" Index="#xf100" Sub="#x01">
 									<Type>USINT</Type>
@@ -2969,7 +3171,7 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="3" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Term 3 (EL1904)</Name>
+						<Name>Safety IN (EL1904)</Name>
 						<ImageId>118</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x07703052" RevisionNo="#x00130000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="1" Type="EL1904, 4 Ch. Safety Input 24V, TwinSAFE" Desc="EL1904" PortABoxInfo="#x01000002">
 							<SyncMan>001000012600010001000000400000010001001026010000</SyncMan>
@@ -3036,7 +3238,7 @@ DOUT9 1.0]]></Comment>
 						</EtherCAT>
 					</Box>
 					<Box Id="4" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Term 4 (EL2904)</Name>
+						<Name>Safety OUT (EL2904)</Name>
 						<ImageId>118</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x0b583052" RevisionNo="#x00130000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="2" Type="EL2904, 4 Ch. Safety Output 24V, 0.5A, TwinSAFE" Desc="EL2904" PortABoxInfo="#x01000003">
 							<SyncMan>001000012600010001000000400000010001001026010000</SyncMan>
@@ -5676,7 +5878,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 												<Data>00</Data>
 											</InitCmd>
 											<InitCmd Index="32817" SubIndex="20" MotorDataLevel="0" DisableMode="0">
-												<Data>00</Data>
+												<Data>01</Data>
 											</InitCmd>
 											<InitCmd Index="32817" SubIndex="25" MotorDataLevel="0" DisableMode="0">
 												<Data>00</Data>
@@ -5752,7 +5954,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<SyncMan>001080002600010001000000500080008000001026010000</SyncMan>
 									<SyncMan>801080002200010002000000500080008000801022010000</SyncMan>
 									<SyncMan>001106002400010003000000000000000600001124010000</SyncMan>
-									<SyncMan>801106002000010004000000000000000600801120010000</SyncMan>
+									<SyncMan>801108002000010004000000000000000600801120010000</SyncMan>
 									<Fmmu>0000000000000000001100020100000001000000000000000000000000000000</Fmmu>
 									<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
 									<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -5800,7 +6002,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											<Type>INT</Type>
 										</Entry>
 									</Pdo>
-									<Pdo Name="DRV Info data 1" Index="#x1a04" Flags="#x0000">
+									<Pdo Name="DRV Info data 1" Index="#x1a04" Flags="#x0000" SyncMan="3">
 										<Entry Name="Info data 1" BitLen="16" Index="#x6010" Sub="#x12">
 											<Type>UINT</Type>
 										</Entry>
@@ -7569,6 +7771,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 					<ImageId>1012</ImageId>
 					<Xml>
 						<AX5XXXDriveTool>
+							<DisabledStartupListChn>
+								<Chn>0</Chn>
+							</DisabledStartupListChn>
 							<AxisSettings>
 								<AxisSetting Channel="0">
 									<Property>
@@ -7738,6 +7943,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Property>
 										<Name>MotorType</Name>
 										<Value>AM8532-0D20-0000</Value>
+									</Property>
+									<Property>
+										<Name>NcFeedConstant</Name>
+										<Value>0.225000</Value>
 									</Property>
 									<Parametersets>
 										<Parameter>
@@ -8003,85 +8212,87 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								</DialogSetting>
 							</DialogSettings>
 							<InitCmds>
+								<InitCmd DriveNo="0" IDN="15" MotorDataLevel="0" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="16" MotorDataLevel="0" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="24" MotorDataLevel="0" DisableMode="2"/>
 								<InitCmd DriveNo="0" IDN="30" MotorDataLevel="0" DisableMode="0">
 									<RetainData>3e0042004669726d776172653a2076322e313020284275696c64203030313629202f20426f6f746c6f616465723a2076322e303220284275696c6420303030322900</RetainData>
 								</InitCmd>
-								<InitCmd DriveNo="0" IDN="91" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="91" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="100" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="100" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="101" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="101" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="106" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="106" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="107" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="107" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="109" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="109" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="111" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="111" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="113" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="113" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="196" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="196" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="201" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="201" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="204" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="204" MotorDataLevel="1" DisableMode="0"/>
+								<InitCmd DriveNo="0" IDN="91" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="91" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="100" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="100" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="101" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="101" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="106" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="106" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="107" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="107" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="109" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="109" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="111" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="111" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="113" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="113" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="196" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="196" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="201" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="201" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="204" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="204" MotorDataLevel="1" DisableMode="2"/>
 								<InitCmd DriveNo="0" IDN="432" MotorDataLevel="0" DisableMode="0">
 									<RetainData>1200160053657269616c233a20303030323239393631</RetainData>
 								</InitCmd>
-								<InitCmd DriveNo="0" IDN="32770" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32770" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32818" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32818" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32819" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32819" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32821" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32821" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32822" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32822" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32823" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32823" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32825" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32825" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32829" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32829" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32830" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32830" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32834" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32834" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32835" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32835" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32838" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32838" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32839" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32839" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32841" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32841" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32842" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32843" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32844" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32845" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32845" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32857" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32860" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32860" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32861" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32861" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="32918" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="32918" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="33088" MotorDataLevel="0" DisableMode="0">
-									<RetainData>24002400d2001000ca0002002b9d5b002b9d5b000000000000000000000000002260000000000000</RetainData>
-								</InitCmd>
+								<InitCmd DriveNo="0" IDN="32770" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32770" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32818" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32818" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32819" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32819" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32821" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32821" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32822" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32822" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32823" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32823" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32825" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32825" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32829" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32829" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32830" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32830" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32834" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32834" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32835" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32835" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32838" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32838" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32839" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32839" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32841" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32841" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32842" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32843" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32844" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32845" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32845" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32857" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32860" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32860" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32861" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32861" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="32918" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="32918" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="33072" MotorDataLevel="0" DisableMode="2"/>
 								<InitCmd DriveNo="0" IDN="33093" MotorDataLevel="0" DisableMode="0">
 									<RetainData>16001a005365702020352032303137202c2030393a35333a3230</RetainData>
 								</InitCmd>
-								<InitCmd DriveNo="0" IDN="33219" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="33219" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="0" IDN="33279" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="33279" MotorDataLevel="1" DisableMode="0"/>
-								<InitCmd DriveNo="1" IDN="33282" MotorDataLevel="1" DisableMode="0"/>
+								<InitCmd DriveNo="0" IDN="33169" MotorDataLevel="0" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="33219" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="33219" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="0" IDN="33279" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="33279" MotorDataLevel="1" DisableMode="2"/>
+								<InitCmd DriveNo="1" IDN="33282" MotorDataLevel="1" DisableMode="2"/>
 							</InitCmds>
 							<StatusBar>
 								<Element option="0" SortOder="0" SubIdx="0">
@@ -8208,7 +8419,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<SyncMan>001880002600010001000000800080008000001826010000</SyncMan>
 						<SyncMan>001a80002200010002000000800080008000001a22010000</SyncMan>
 						<SyncMan>00100c002400010003000000000000000000001024010000</SyncMan>
-						<SyncMan>001118002200010004000000000000000000001122010000</SyncMan>
+						<SyncMan>00111c002200010004000000000000000000001122010000</SyncMan>
 						<SyncMan>002000002400010005000000000000000000002024010000</SyncMan>
 						<SyncMan>002400002000010006000000000000000000002420010000</SyncMan>
 						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
@@ -8217,6 +8428,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<Fmmu>0000000000000000000000010000000006000000000000000000000000000000</Fmmu>
 						<Fmmu>0000000000000000000000020000000005000000000000000000000000000000</Fmmu>
 						<BootStrapData>0010140200181402</BootStrapData>
+						<SuName>AX</SuName>
 						<DcData>3007000090d0030000000000000000000000ffff000000000000000000000000</DcData>
 						<DcMode>446353796e633235300000000000000053796e63206379636c652074696d653a20323530c2b57300000000000000000090d003000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
 						<DcMode>446353796e633132350000000000000053796e63206379636c652074696d653a20313235c2b57300000000000000000048e801000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
@@ -8226,7 +8438,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<MBoxUserCmdData>020005000a0000001700000000000000000000000000000000000000000000000340020000000000d0075473637963202d20436f6d6d206379636c652074696d6500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000000e000000000000000000000000000000000000000000000003402000000000000b004f7065726174696f6e206d6f646500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000000e000000000000000000000000000000000000000000000023402000000000000b004f7065726174696f6e206d6f646500</MBoxUserCmdData>
-						<MBoxUserCmdData>004005000a0000001e0000000000000000000000000000000000000000000000034030810000000001005265706f727420646961676e6f737469637320696e666f726d6174696f6e00</MBoxUserCmdData>
+						<MBoxUserCmdData>004005000a0000001e0000000000010000000000000000000000000000000000034030810000000001005265706f727420646961676e6f737469637320696e666f726d6174696f6e00</MBoxUserCmdData>
 						<MBoxUserCmdData>004005000a0000001e0000000000000000000000000000000000000000000000234030810000000001005265706f727420646961676e6f737469637320696e666f726d6174696f6e00</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001800000000000000000000000000000000000000000000000340d087000000000300436f6e6669677572656420736166657479206f7074696f6e00</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001300000000000000000000000000000000000000000000000340d8800000000088134d6178204443206c696e6b20766f6c7461676500</MBoxUserCmdData>
@@ -8234,38 +8446,38 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<MBoxUserCmdData>020005000a0000002600000000000000000000000000000000000000000000000340ca8000000000c8004d61696e7320766f6c7461676520706f73697469766520746f6c6572616e63652072616e676500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000002600000000000000000000000000000000000000000000000340cb8000000000c8004d61696e7320766f6c74616765206e6567617469766520746f6c6572616e63652072616e676500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001d00000000000000000000000000000000000000000000000340cc80000000000100506f776572206d616e6167656d656e7420636f6e74726f6c20776f726400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005001a00000015000000000000000000000000000000000000000000000003403580000000000e0022004d52343130382d55332d4e363000436f6e66696775726564206d6f746f72207479706500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a000000170000000000000000000000000000000000000000000000034032800000000000004d6f746f7220636f6e737472756374696f6e207479706500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005001c00000013000000000000000000000000000000000000000000000003403e800000000010001000fc035000640001001400190000000000546865726d616c206d6f746f72206d6f64656c00</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a000000140000000000000000000000000000000000000000000000034033800000000003004e756d626572206f6620706f6c6520706169727300</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001e000000000000000000000000000000000000000000000003406f0000000000ac0d00004d6f746f7220636f6e74696e756f7573207374616c6c2063757272656e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001300000000000000000000000000000000000000000000000340c40000000000fc0800004d6f746f722072617465642063757272656e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c00000012000000000000000000000000000000000000000000000003406d0000000000583400004d6f746f72207065616b2063757272656e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a00000013000000000000000000000000000000000000000000000003404d8000000000fc084d6f746f7220726174656420766f6c7461676500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a000000220000000000000000000000000000000000000000000000034043800000000088134d6f746f722077696e64696e673a204469656c65637472696320737472656e67746800</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001100000000000000000000000000000000000000000000000340498000000000d60100004d6f746f72207065616b20746f7271756500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000000900000000000000000000000000000000000000000000000340378000000000fa004d6f746f7220454d4600</MBoxUserCmdData>
-						<MBoxUserCmdData>02000500140000001400000000000000000000000000000000000000000000000340428000000000080008008601000016030000456c656374726963206d6f746f72206d6f64656c00</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001300000000000000000000000000000000000000000000000340710000000000282300004d6178696d756d206d6f746f7220737065656400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001c000000000000000000000000000000000000000000000003405b00000000001dbc1e094269706f6c61722076656c6f63697479206c696d69742076616c756500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005001400000015000000000000000000000000000000000000000000000003404780000000000800080050000000000000004d656368616e6963616c206d6f746f72206461746100</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001900000000000000000000000000000000000000000000000340c9000000000020034d6f746f72207761726e696e672074656d706572617475726500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001b00000000000000000000000000000000000000000000000340cc0000000000e8034d6f746f72207368757420646f776e2074656d706572617475726500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001b00000000000000000000000000000000000000000000000340c38100000000000043757272656e7420636f6e74726f6c6c65722073657474696e677300</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001d000000000000000000000000000000000000000000000003403980000000003075456c656374726963616c20636f6d6d75746174696f6e206f666673657400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001d000000000000000000000000000000000000000000000003403d800000000004004d6f746f722074656d70657261747572652073656e736f72207479706500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a00000017000000000000000000000000000000000000000000000003400280000000003e0043757272656e74206374726c206379636c652074696d6500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005001c0000001500000000000000000000000000000000000000000000000340368000000000100022004158353230332d303030302d23232323436f6e66696775726564206472697665207479706500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001a000000000000000000000000000000000000000000000003405d8000000000ac0d0000436f6e66696775726564206368616e6e656c2063757272656e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001f000000000000000000000000000000000000000000000003405c8000000000581b0000436f6e66696775726564206368616e6e656c207065616b2063757272656e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001d000000000000000000000000000000000000000000000003404680000000007e0000004d6f746f7220636f6e74696e756f7573207374616c6c20746f7271756500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a00000020000000000000000000000000000000000000000000000003406a0000000000ed0043757272656e74206c6f6f702070726f706f7274696f6e616c206761696e203100</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000002b000000000000000000000000000000000000000000000003406b0000000000080043757272656e7420636f6e74726f6c206c6f6f7020696e74656772616c20616374696f6e2074696d65203100</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000002900000000000000000000000000000000000000000000000340ff8100000000960056656c6f636974792066696c74657220313a204c6f7720706173732074696d6520636f6e7374616e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001f000000000000000000000000000000000000000000000003406400000000002500000056656c6f63697479206c6f6f702070726f706f7274696f6e616c206761696e00</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000002200000000000000000000000000000000000000000000000340650000000000500056656c6f63697479206c6f6f7020696e74656772616c20616374696f6e2074696d6500</MBoxUserCmdData>
-						<MBoxUserCmdData>02000500ec0000000f00000000000000000000000000000000000000000000000340968000000000e000e000000000005265736f6c76657223703266386b487a6e302e35706869306465670000000000000000000000000000000000040000000000000003000400000000000300020832000000102700007e04ee02f401e80300000000000000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a6004a019b0000000000000000000000000000000000000000000000466565646261636b2031207479706500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c000000230000000000000000000000000000000000000000000000034091810000000012001201506f736974696f6e206c696d69742073776974636820636f6e66696775726174696f6e00</MBoxUserCmdData>
+						<MBoxUserCmdData>020005001a00000015000000000001000000000000000000000000000000000003403580000000000e0022004d52343130382d55332d4e363000436f6e66696775726564206d6f746f72207479706500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a000000170000000000010000000000000000000000000000000000034032800000000000004d6f746f7220636f6e737472756374696f6e207479706500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005001c00000013000000000001000000000000000000000000000000000003403e800000000010001000fc035000640001001400190000000000546865726d616c206d6f746f72206d6f64656c00</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a000000140000000000010000000000000000000000000000000000034033800000000003004e756d626572206f6620706f6c6520706169727300</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001e000000000001000000000000000000000000000000000003406f0000000000ac0d00004d6f746f7220636f6e74696e756f7573207374616c6c2063757272656e7400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001300000000000100000000000000000000000000000000000340c40000000000fc0800004d6f746f722072617465642063757272656e7400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c00000012000000000001000000000000000000000000000000000003406d0000000000583400004d6f746f72207065616b2063757272656e7400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a00000013000000000001000000000000000000000000000000000003404d8000000000fc084d6f746f7220726174656420766f6c7461676500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a000000220000000000010000000000000000000000000000000000034043800000000088134d6f746f722077696e64696e673a204469656c65637472696320737472656e67746800</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001100000000000100000000000000000000000000000000000340498000000000d60100004d6f746f72207065616b20746f7271756500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000000900000000000100000000000000000000000000000000000340378000000000fa004d6f746f7220454d4600</MBoxUserCmdData>
+						<MBoxUserCmdData>02000500140000001400000000000100000000000000000000000000000000000340428000000000080008008601000016030000456c656374726963206d6f746f72206d6f64656c00</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001300000000000100000000000000000000000000000000000340710000000000282300004d6178696d756d206d6f746f7220737065656400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001c000000000001000000000000000000000000000000000003405b00000000001dbc1e094269706f6c61722076656c6f63697479206c696d69742076616c756500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005001400000015000000000001000000000000000000000000000000000003404780000000000800080050000000000000004d656368616e6963616c206d6f746f72206461746100</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001900000000000100000000000000000000000000000000000340c9000000000020034d6f746f72207761726e696e672074656d706572617475726500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001b00000000000100000000000000000000000000000000000340cc0000000000e8034d6f746f72207368757420646f776e2074656d706572617475726500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001b00000000000100000000000000000000000000000000000340c38100000000000043757272656e7420636f6e74726f6c6c65722073657474696e677300</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001d000000000001000000000000000000000000000000000003403980000000003075456c656374726963616c20636f6d6d75746174696f6e206f666673657400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001d000000000001000000000000000000000000000000000003403d800000000004004d6f746f722074656d70657261747572652073656e736f72207479706500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a00000017000000000001000000000000000000000000000000000003400280000000003e0043757272656e74206374726c206379636c652074696d6500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005001c0000001500000000000100000000000000000000000000000000000340368000000000100022004158353230332d303030302d23232323436f6e66696775726564206472697665207479706500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001a000000000001000000000000000000000000000000000003405d8000000000ac0d0000436f6e66696775726564206368616e6e656c2063757272656e7400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001f000000000001000000000000000000000000000000000003405c8000000000581b0000436f6e66696775726564206368616e6e656c207065616b2063757272656e7400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001d000000000001000000000000000000000000000000000003404680000000007e0000004d6f746f7220636f6e74696e756f7573207374616c6c20746f7271756500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a00000020000000000001000000000000000000000000000000000003406a0000000000ed0043757272656e74206c6f6f702070726f706f7274696f6e616c206761696e203100</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000002b000000000001000000000000000000000000000000000003406b0000000000080043757272656e7420636f6e74726f6c206c6f6f7020696e74656772616c20616374696f6e2074696d65203100</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000002900000000000100000000000000000000000000000000000340ff8100000000960056656c6f636974792066696c74657220313a204c6f7720706173732074696d6520636f6e7374616e7400</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001f000000000001000000000000000000000000000000000003406400000000002500000056656c6f63697479206c6f6f702070726f706f7274696f6e616c206761696e00</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000002200000000000100000000000000000000000000000000000340650000000000500056656c6f63697479206c6f6f7020696e74656772616c20616374696f6e2074696d6500</MBoxUserCmdData>
+						<MBoxUserCmdData>02000500ec0000000f00000000000100000000000000000000000000000000000340968000000000e000e000000000005265736f6c76657223703266386b487a6e302e35706869306465670000000000000000000000000000000000040000000000000003000400000000000300020832000000102700007e04ee02f401e80300000000000000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a6004a019b0000000000000000000000000000000000000000000000466565646261636b2031207479706500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c000000230000000000010000000000000000000000000000000000034091810000000012001201506f736974696f6e206c696d69742073776974636820636f6e66696775726174696f6e00</MBoxUserCmdData>
 						<MBoxUserCmdData>020005001800000015000000000000000000000000000000000000000000000023403580000000000c002200414d383533322d7844783000436f6e66696775726564206d6f746f72207479706500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a000000170000000000000000000000000000000000000000000000234032800000000000004d6f746f7220636f6e737472756374696f6e207479706500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005001c00000013000000000000000000000000000000000000000000000023403e80000000001000100018065000640001003f00190000000000546865726d616c206d6f746f72206d6f64656c00</MBoxUserCmdData>
@@ -8328,6 +8540,12 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							</Entry>
 							<Entry Name="Following distance" BitLen="32" Index="#x00bd">
 								<Type>DINT</Type>
+							</Entry>
+							<Entry Name="Torque/force feedback value" BitLen="16" Index="#x0054">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Digital inputs, state" BitLen="16" Index="#x8321">
+								<Type>INT</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="MDT 1" Index="#x0018" InOut="1" Flags="#x0001" SyncMan="2">
@@ -8570,6 +8788,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<InitCmd DriveNo="0" IDN="32861" MotorDataLevel="1" DisableMode="0"/>
 								<InitCmd DriveNo="0" IDN="32918" MotorDataLevel="1" DisableMode="0"/>
 								<InitCmd DriveNo="0" IDN="32922" MotorDataLevel="1" DisableMode="0"/>
+								<InitCmd DriveNo="0" IDN="33088" MotorDataLevel="0" DisableMode="0">
+									<RetainData>24002400d6000400ca0002002c9d5b002c9d5b000000000000000000000000002260000000000000</RetainData>
+								</InitCmd>
 								<InitCmd DriveNo="0" IDN="33093" MotorDataLevel="0" DisableMode="0">
 									<RetainData>16001a005365702020392032303231202c2030383a35383a3536</RetainData>
 								</InitCmd>
@@ -8710,6 +8931,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<Fmmu>0000000000000000000000010000000006000000000000000000000000000000</Fmmu>
 						<Fmmu>0000000000000000000000020000000005000000000000000000000000000000</Fmmu>
 						<BootStrapData>0010140200181402</BootStrapData>
+						<SuName>AX</SuName>
 						<DcData>3007000090d0030000000000000000000000ffff000000000000000000000000</DcData>
 						<DcMode>446353796e633235300000000000000053796e63206379636c652074696d653a20323530c2b57300000000000000000090d003000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
 						<DcMode>446353796e633132350000000000000053796e63206379636c652074696d653a20313235c2b57300000000000000000048e801000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
@@ -9176,6 +9398,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<Fmmu>0000000000000000000000010000000006000000000000000000000000000000</Fmmu>
 						<Fmmu>0000000000000000000000020000000005000000000000000000000000000000</Fmmu>
 						<BootStrapData>0010140200181402</BootStrapData>
+						<SuName>AX</SuName>
 						<DcData>3007000090d0030000000000000000000000ffff000000000000000000000000</DcData>
 						<DcMode>446353796e633235300000000000000053796e63206379636c652074696d653a20323530c2b57300000000000000000090d003000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
 						<DcMode>446353796e633132350000000000000053796e63206379636c652074696d653a20313235c2b57300000000000000000048e801000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
@@ -9219,7 +9442,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<MBoxUserCmdData>020005000a00000020000000000000000000000000000000000000000000000003406a0000000000900043757272656e74206c6f6f702070726f706f7274696f6e616c206761696e203100</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000002b000000000000000000000000000000000000000000000003406b0000000000080043757272656e7420636f6e74726f6c206c6f6f7020696e74656772616c20616374696f6e2074696d65203100</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000002900000000000000000000000000000000000000000000000340ff8100000000960056656c6f636974792066696c74657220313a204c6f7720706173732074696d6520636f6e7374616e7400</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000c0000001f00000000000000000000000000000000000000000000000340640000000000808d5b0056656c6f63697479206c6f6f702070726f706f7274696f6e616c206761696e00</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000c0000001f00000000000000000000000000000000000000000000000340640000000000404b4c0056656c6f63697479206c6f6f702070726f706f7274696f6e616c206761696e00</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000002200000000000000000000000000000000000000000000000340650000000000960056656c6f63697479206c6f6f7020696e74656772616c20616374696f6e2074696d6500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a00000017000000000000000000000000000000000000000000000003406800000000000400506f736974696f6e206c6f6f70204b762d666163746f7200</MBoxUserCmdData>
 						<MBoxUserCmdData>02000500480000002800000000000000000000000000000000000000000000000340a580000000003c003c000100010064000000f401b80b0000000000000000f4016400f401f40100000500e1009600b80b84030000000000000000000000000000000000000000436f6d6d75746174696f6e206f66667365742063616c6962726174696f6e20706172616d6574657200</MBoxUserCmdData>
@@ -9277,6 +9500,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<EtherCAT DcSyncMode="3"/>
 			</Device>
 		</Io>
+		<SymbolWatch>
+			<Variable>TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)^DRV Info data 1^Info data 1</Variable>
+			<Variable>TINC^NC-Task 1 SAF^Axes^FilterWheel^Drive^Inputs^In^nState8</Variable>
+		</SymbolWatch>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500841000403}" Id="#x02030030"/>
@@ -9284,6 +9511,17 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-0020-0304-3000-040322000403}" Id="#x02030040"/>
 		<MappingInfo Identifier="{08502001-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{05000010-2001-0850-3000-040300205008}" Id="#x02030050" Watchdog="14000000040000000400000004000000"/>
+		<MappingInfo Identifier="{03040040-0040-0304-4000-040340000403}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
+		<OwnerA Name="TIID^Device 1 (EtherCAT)">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety IN (EL1904)">
+				<Link VarA="Term 30 (EK1200)^Safety Logic (EL6910)^ConnectionInputs^TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 TxPDO" VarB="Module 1 (FSOES)^RxPDO^FSOE"/>
+				<Link VarA="Term 30 (EK1200)^Safety Logic (EL6910)^ConnectionOutputs^TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 RxPDO" VarB="Module 1 (FSOES)^TxPDO^FSOE"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
+				<Link VarA="Term 30 (EK1200)^Safety OUT (EL2904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="ConnectionInputs^TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 TxPDO"/>
+				<Link VarA="Term 30 (EK1200)^Safety OUT (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="ConnectionOutputs^TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 RxPDO"/>
+			</OwnerB>
+		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Azimuth">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Azimuth (AX5125-0000-0214)">
 				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT^Following distance"/>
@@ -9302,15 +9540,15 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Derotator">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Derotator(AX5203-0000-0210)">
-				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT 1^Following distance"/>
+				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT 2^Following distance"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
-				<Link VarA="Drive^Inputs^In^nState1" VarB="AT 1^Drive status word" Size="8" OffsB="8"/>
-				<Link VarA="Drive^Inputs^In^nState2" VarB="AT 1^Drive status word"/>
+				<Link VarA="Drive^Inputs^In^nState1" VarB="AT 2^Drive status word" Size="8" OffsB="8"/>
+				<Link VarA="Drive^Inputs^In^nState2" VarB="AT 2^Drive status word"/>
 				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
 				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
-				<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="MDT 1^Master control word" Size="8" OffsB="8"/>
-				<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="MDT 1^Position command value"/>
-				<Link VarA="Enc^Inputs^In^nDataIn1" VarB="AT 1^Position feedback 1 value"/>
+				<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="MDT 2^Master control word" Size="8" OffsB="8"/>
+				<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="MDT 2^Position command value"/>
+				<Link VarA="Enc^Inputs^In^nDataIn1" VarB="AT 2^Position feedback 1 value"/>
 				<Link VarA="Enc^Inputs^In^nDcInputTime" VarB="InfoData^DcInputShift"/>
 				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
 				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
@@ -9339,6 +9577,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="DRV Statusword^Statusword" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
 				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
+				<Link VarA="Drive^Inputs^In^nState8" VarB="DRV Info data 1^Info data 1"/>
 				<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DRV Controlword^Controlword"/>
 				<Link VarA="Drive^Outputs^Out^nCtrl2" VarB="DRV Controlword^Controlword" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Outputs^Out^nDataOut2" VarB="DRV Target velocity^Target velocity"/>
@@ -9401,8 +9640,8 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GVL_Telescope.Azimuth_torque" VarB="AT^Torque/force feedback value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Derotator(AX5203-0000-0210)">
-				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_inputs" VarB="AT 1^Digital inputs, state"/>
-				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_torque" VarB="AT 1^Torque/force feedback value"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_inputs" VarB="AT 2^Digital inputs, state"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_torque" VarB="AT 2^Torque/force feedback value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Elevation (AX5125-0000-0214)">
 				<Link VarA="PlcTask Inputs^GVL_Telescope.Elevation_diagnostic" VarB="AT^Diagnostic number"/>
@@ -9479,6 +9718,14 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_right" VarB="Channel 3^GVL_pendant_control.lamp_right"/>
 				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_up" VarB="Channel 1^GVL_pendant_control.lamp_up"/>
 			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
+				<Link VarA="PlcTask Inputs^GVL_Safety.Error" VarB="StandardInputs^TwinSafeGroup1.SafetyError_4"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.State" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBEstop1 Info Data^State"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.Stop" VarB="StandardInputs^TwinSafeGroup1.SafetyStop_7"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.ErrAck" VarB="StandardOutputs^TwinSafeGroup1.ErrorAcknowledgement_1"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.Restart" VarB="StandardOutputs^TwinSafeGroup1.RestartSafety_2"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.Run" VarB="StandardOutputs^TwinSafeGroup1.RunSafety_3"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Telescope Hydraulics IN (EL1008)">
 				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_reserve" VarB="Channel 2^GVL_Hydraulics.oil_reserve"/>
 				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oilpan_maximum" VarB="Channel 1^GVL_Hydraulics.oilpan_maximum"/>
@@ -9490,6 +9737,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature M2 M1 (EL3064)">
 				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror1" VarB="AI Standard Channel 2^Value"/>
 				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror2" VarB="AI Standard Channel 1^Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)">
+				<Link VarA="PlcTask Inputs^GVL_FilterWheel.bCalibrationCam" VarB="DRV Info data 1^Info data 1" Size="1"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics IN (EL1008)">
 				<Link VarA="PlcTask Inputs^GVL_Hydraulics.pump_running" VarB="Channel 7^GVL_Hydraulics.pump_running"/>
