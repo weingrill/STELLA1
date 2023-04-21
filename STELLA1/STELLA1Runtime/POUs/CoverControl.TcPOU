@@ -111,7 +111,13 @@ isclosed := cover2_closed AND cover3_closed AND cover1_closed;
 Error := (Cover1_error AND NOT GVL_Main.isRoboTel) OR Cover2_error OR Cover3_error;
 //Warning := Cover1_control.Warning OR Cover2_control.Warning OR Cover3_control.Warning;
 
+IF isclosed THEN
+	close := FALSE;
+END_IF
 
+IF isopen THEN
+	open := FALSE;
+END_IF
 
 Covers_Error_Event.OnMessage := 'Cover drive error';
 IF Error THEN
@@ -209,6 +215,7 @@ Covers_closed_event(Trigger := isclosed,
       <LineId Id="628" Count="0" />
       <LineId Id="627" Count="0" />
       <LineId Id="373" Count="0" />
+      <LineId Id="1162" Count="5" />
       <LineId Id="623" Count="0" />
       <LineId Id="620" Count="0" />
       <LineId Id="624" Count="0" />
