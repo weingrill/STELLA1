@@ -3,11 +3,21 @@
   <POU Name="SafetyHandling" Id="{6d4a788c-2168-4769-93de-c67314036861}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM SafetyHandling
 VAR
-	restart_safety 	: TP;
-	//safety_state 	: RS;
-	start_delay 	: TON;
-	ErrAck_Pulse	: TP;
+	// power on delay
+	start_delay 	: TON := (PT := T#2S);
+	// pulse for error acknowledgement
+	ErrAck_Pulse	: TP := (PT := T#500MS);
+	// pulse for safety restart
+	restart_Pulse 	: TP := (PT := T#500MS);
+	// trigger for falling edge of error acknowledgement
+	ErrAck_Trigger	: F_TRIG;
+	// Errack logging
+	ErrAckLog		: FB_EventLog;
+	// restart logging
+	RestartLog		: FB_EventLog;
+	// safety logging
 	SafetyLog		: FB_EventLog;
+	
 END_VAR
 VAR_OUTPUT
 	Error			: BOOL;
@@ -19,37 +29,61 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Safety can be stopped by pressing STOP and RESET on main panel
+      <ST><![CDATA[// Safety aus running on start
 GVL_Safety.Run := remote_run;
 // power on delay for Safety RESTART after RUN=1
-restart_safety(IN := GVL_Main.phase_available, PT := T#1S);
-// RESTART Safety after pushing reset or power on delay
-GVL_Safety.Restart := (Main.reset AND NOT GVL_Main.key_switch_remote) 
-						OR restart_safety.Q 
-						OR remote_restart;
 
 // wait n seconds after Start ...
-start_delay(IN := GVL_Main.phase_available, PT := T#2S);
+start_delay(IN := Transformer.power_ok);
 // ... and send ErrAck for n milliseconds
-ErrAck_Pulse(IN := GVL_Main.phase_available AND start_delay.Q, PT := T#200MS);
+ErrAck_Pulse(IN := (GVL_Safety.State = 2) AND start_delay.Q);
 
 // Error Acknowledgment: Turn key_switch OFF and press STOP 
 GVL_Safety.ErrAck := (NOT GVL_Main.key_switch_remote)
-					OR ErrAck_Pulse.Q OR remote_ErrAck;
-					
-Error := GVL_Safety.Error;
+					OR ErrAck_Pulse.Q
+					OR remote_ErrAck;
+// detect falling edge 
+ErrAck_Trigger(CLK := GVL_Safety.ErrAck);
+// send restart pulse on falling edge of ErrAck
+restart_pulse(IN := ErrAck_Trigger.Q);
 
-SafetyLog(Trigger := Error,
-				Level := ADSLOG_MSGTYPE_ERROR,
-				OnMessage := 'Safety Error! Emergency stop enganged!',
-				OffMessage := 'Safety is OK.',
-				OffLevel := ADSLOG_MSGTYPE_HINT);
+// RESTART Safety after pushing reset or power on delay
+GVL_Safety.Restart := (Main.reset AND NOT GVL_Main.key_switch_remote) 
+					 	OR restart_pulse.Q 
+						OR remote_restart;
+				
+Error := GVL_Safety.Error OR (GVL_Safety.State <> 1);
+
+ErrAckLog(	Trigger := GVL_Safety.ErrAck,
+			OnMessage := 'Safety error was acknowledged.');
+			
+RestartLog(	Trigger := GVL_Safety.Restart,
+			Level := ADSLOG_MSGTYPE_WARN,
+			OnMessage := 'Safety was restarted.');
+
+SafetyLog(	Trigger := Error,
+			Level := ADSLOG_MSGTYPE_ERROR,
+			OnMessage := 'Safety Error! Emergency stop enganged!',
+			OffMessage := 'Safety is OK.',
+			OffLevel := ADSLOG_MSGTYPE_HINT);
 ]]></ST>
     </Implementation>
     <LineIds Name="SafetyHandling">
-      <LineId Id="159" Count="5" />
-      <LineId Id="182" Count="1" />
-      <LineId Id="165" Count="16" />
+      <LineId Id="159" Count="2" />
+      <LineId Id="165" Count="4" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="171" Count="2" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="213" Count="5" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="233" Count="2" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="239" Count="2" />
+      <LineId Id="176" Count="5" />
       <LineId Id="47" Count="0" />
     </LineIds>
   </POU>

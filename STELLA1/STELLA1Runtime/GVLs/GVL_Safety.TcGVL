@@ -13,6 +13,8 @@ VAR_GLOBAL
 	ErrAck		AT%Q*:	BOOL;
 	// Stop signal coming from Safety
 	Stop		AT%I*:	BOOL;
+	// state variable
+	State		AT%I*:	USINT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

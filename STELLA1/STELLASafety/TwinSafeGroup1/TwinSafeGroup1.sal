@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="4090018352" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.3.0.0" Id="9a6ed079-1b27-4c5b-81fd-73cf1f9abb6b" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="3306704921" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.4.0.0" Id="9a6ed079-1b27-4c5b-81fd-73cf1f9abb6b" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="9115b584-03d6-4c2f-b339-dc3a3bb3eb05">
       <Network Id="e73212ea-32bf-4532-96e1-f177fdb5c9ad" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
         <functionBlocks>
           <networkHasFunctionBlocks Id="d62de6f9-2001-4ddc-aae3-d79a5dbb40f0">
-            <fBEstop Id="4b047eed-3c7e-44de-96f6-b7a21e1db7b3" name="FBEstop1" instanceName="FBEstop1" orderOfExecution="1" mapState="false" mapDiag="false" functionName="safeEstop" safeInputsAfterDiscError="true">
+            <fBEstop Id="4b047eed-3c7e-44de-96f6-b7a21e1db7b3" name="FBEstop1" instanceName="FBEstop1" orderOfExecution="1" mapState="true" mapDiag="true" functionName="safeEstop" safeInputsAfterDiscError="true">
               <inPorts>
                 <functioBlockHasInPorts Id="0c105368-d422-4caa-a6d4-86e99e77331f">
                   <inPort Id="a0662c9c-a810-4447-9602-154ad06cae1c" name="Restart" portName="Restart" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0">
@@ -17,7 +17,7 @@
                   </inPort>
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="fbe385b6-018b-41b9-a94b-f2ef35cdf7ed">
-                  <inPort Id="eded13b4-1aba-493b-b1f7-d457aae9b089" name="EStopIn1" portName="EStopIn1" portNum="4" objectIndex="8" varId="3" filter="2" portDataType="1" channelInterface="Single-Channel Both Activated" deactivate1="Break Contact (NC)" deactivate2="Break Contact (NC)" maxDeviation="0" resetTime="0">
+                  <inPort Id="eded13b4-1aba-493b-b1f7-d457aae9b089" name="EStopIn1" portName="EStopIn1" portNum="4" objectIndex="8" varId="3" filter="2" portDataType="1" channelInterface="Two-Channel" discrepancyTime="100" deactivate1="Break Contact (NC)" deactivate2="Break Contact (NC)" maxDeviation="0" resetTime="0">
                     <fbPortGlobalVariableReferences>
                       <functionBlockPortHasFbPortGlobalVariableReferences Id="8f931004-180a-44c4-9ada-c88aebbd3082">
                         <fbPortGlobalVariableReference Id="1fbaa7d9-ae70-4812-8f9e-a0d9b051d4fc" variableId="b6188a22-31c8-4c1e-996e-d8d8ca9efc9f" lastKnownPath="GVL1.EStop1" />
@@ -55,8 +55,8 @@
                 <functioBlockHasInPorts Id="39b17041-7113-47e6-b768-d6c9286dbd94">
                   <inPort Id="d60c0b06-5d06-4513-b43f-b57a724d29e2" name="EDM1" portName="EDM1" portNum="13" objectIndex="1" varId="12" filter="3" portDataType="1" maxDeviation="0" resetTime="0">
                     <fbPortGlobalVariableReferences>
-                      <functionBlockPortHasFbPortGlobalVariableReferences Id="468a608c-32c8-4f7d-9929-d2690bd930d9">
-                        <fbPortGlobalVariableReference Id="47c16f1f-4d25-4f86-a689-ef4fd1b8677c" variableId="621fd0e6-9e72-4ec1-a206-d8cd2419e5cd" lastKnownPath="GVL1.MotorFeedback" />
+                      <functionBlockPortHasFbPortGlobalVariableReferences Id="e7e3bee5-5b7c-4234-a2f0-ba806de9bea9">
+                        <fbPortGlobalVariableReference Id="f1011598-e4e5-42eb-ab27-9b6b8c771e7f" variableId="20582569-b753-442a-9552-fc47276252b1" lastKnownPath="GVL1.HydraulicsFeedback" />
                       </functionBlockPortHasFbPortGlobalVariableReferences>
                     </fbPortGlobalVariableReferences>
                   </inPort>
@@ -64,8 +64,8 @@
                 <functioBlockHasInPorts Id="8ea7e7fe-1460-4c78-8274-7cb8f1e1469b">
                   <inPort Id="2d9ce9a2-a7b9-4ba6-93c5-f7e1e08db8c5" name="EDM2" portName="EDM2" portNum="14" objectIndex="2" varId="13" filter="3" portDataType="1" maxDeviation="0" resetTime="0">
                     <fbPortGlobalVariableReferences>
-                      <functionBlockPortHasFbPortGlobalVariableReferences Id="2ef8520f-0076-45a1-8b25-73b7b7f825d3">
-                        <fbPortGlobalVariableReference Id="d5e6f6d6-21ec-4ee1-b898-03d811d39ed6" variableId="20582569-b753-442a-9552-fc47276252b1" lastKnownPath="GVL1.HydraulicsFeedback" />
+                      <functionBlockPortHasFbPortGlobalVariableReferences Id="6bdb789e-29f5-4318-821b-cef416b6425c">
+                        <fbPortGlobalVariableReference Id="aa6167bf-a9af-4d6a-8cfd-ce9f6c07b92c" variableId="621fd0e6-9e72-4ec1-a206-d8cd2419e5cd" lastKnownPath="GVL1.MotorFeedback" />
                       </functionBlockPortHasFbPortGlobalVariableReferences>
                     </fbPortGlobalVariableReferences>
                   </inPort>
@@ -87,6 +87,9 @@
                       <functionBlockPortHasFbPortGlobalVariableReferences Id="05b9d6c4-e285-4897-84e6-96b4bb4f0dfc">
                         <fbPortGlobalVariableReference Id="49ecb05a-3075-4e08-933b-3a029f236f8b" variableId="4ddd12a0-8a32-4cef-9412-192393791e06" lastKnownPath="GVL1.Stop" />
                       </functionBlockPortHasFbPortGlobalVariableReferences>
+                      <functionBlockPortHasFbPortGlobalVariableReferences Id="e5fdf5da-338c-4e79-9e71-5fc939bfd02e">
+                        <fbPortGlobalVariableReference Id="fd2be8da-d316-4e4d-9a02-95a411e87003" variableId="467bd9ac-36ba-4556-b50d-661a9cbc37c7" lastKnownPath="GVL1.HydraulicsEnable" />
+                      </functionBlockPortHasFbPortGlobalVariableReferences>
                     </fbPortGlobalVariableReferences>
                   </outPort>
                 </functionBlockHasOutPorts>
@@ -95,9 +98,6 @@
                     <fbPortGlobalVariableReferences>
                       <functionBlockPortHasFbPortGlobalVariableReferences Id="d43ba3f1-bd7b-4605-9b54-b4caea1b70b7">
                         <fbPortGlobalVariableReference Id="d10379e9-1f21-47a8-92f3-54d181ca1756" variableId="361accd6-7d10-4915-8e91-a4a603dc6ed4" lastKnownPath="GVL1.MotorEnable1" />
-                      </functionBlockPortHasFbPortGlobalVariableReferences>
-                      <functionBlockPortHasFbPortGlobalVariableReferences Id="f6a6ec55-f161-438a-ae6f-2e664f12cf54">
-                        <fbPortGlobalVariableReference Id="8e2caf8e-8636-4789-b1bc-760ea56e2503" variableId="467bd9ac-36ba-4556-b50d-661a9cbc37c7" lastKnownPath="GVL1.HydraulicsEnable" />
                       </functionBlockPortHasFbPortGlobalVariableReferences>
                       <functionBlockPortHasFbPortGlobalVariableReferences Id="ce5c75b6-5363-4616-850c-78638c1d2638">
                         <fbPortGlobalVariableReference Id="b2678140-6bfb-4b7d-86a9-131be8d9ff9f" variableId="22d4058e-e71f-4d75-bf29-5a5097eafb6f" lastKnownPath="GVL1.MoterEnable2" />
@@ -108,7 +108,7 @@
               </outPorts>
               <parameterPorts>
                 <functionBlockHasParamPorts Id="cbf1ba6a-dc18-4d0f-a8da-9a7367791acb">
-                  <parameterPort Id="30ddfc54-0eb0-460a-8326-9c4680300c05" name="Delay Time (ms)" portName="Delay Time (ms)" portNum="8" objectIndex="0" varId="0" filter="0" portDataType="0" timing="100" userFbPortName="Delay Time (ms)" useInUserFb="false" />
+                  <parameterPort Id="30ddfc54-0eb0-460a-8326-9c4680300c05" name="Delay Time (ms)" portName="Delay Time (ms)" portNum="8" objectIndex="0" varId="0" filter="0" portDataType="0" timing="500" userFbPortName="Delay Time (ms)" useInUserFb="false" />
                 </functionBlockHasParamPorts>
               </parameterPorts>
             </fBEstop>
