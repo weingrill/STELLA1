@@ -30,6 +30,7 @@ VAR_INPUT
 	isModuloAxis:		BOOL := FALSE;
 	// enable external setpoint generator
 	Tracking:			BOOL;
+	HomingMode:			MC_HomingMode := MC_HomingMode.MC_DefaultHoming;
 END_VAR
 VAR_OUTPUT
 	// Reset has been executed
@@ -166,11 +167,12 @@ Axis_Jog(
 	Axis := 		AxisRef);
 
 Axis_Home(
-	Axis := 		AxisRef,
-	Execute := 		HomeAxis AND Ready,
-	Position := 	position, //DEFAULT_HOME_POSITION,
-	bCalibrationCam := bCalibrationCam,
-	Done => 		HomeDone);	
+	Axis := 			AxisRef,
+	Execute := 			HomeAxis AND Ready,
+	Position := 		position, //DEFAULT_HOME_POSITION,
+	HomingMode :=		HomingMode,
+	bCalibrationCam := 	bCalibrationCam,
+	Done => 			HomeDone);	
 	
 IF (MoveDone OR HomeDone OR JogDone) AND NOT Axis_Status.StandStill THEN
 	StopAxis := TRUE;
@@ -342,6 +344,7 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="611" Count="0" />
       <LineId Id="303" Count="2" />
       <LineId Id="307" Count="0" />
+      <LineId Id="1909" Count="0" />
       <LineId Id="1002" Count="0" />
       <LineId Id="309" Count="0" />
       <LineId Id="302" Count="0" />
