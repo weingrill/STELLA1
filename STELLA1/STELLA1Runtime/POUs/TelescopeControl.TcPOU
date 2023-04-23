@@ -196,7 +196,7 @@ END_IF
 IF ElevationControl.error THEN
 	ElevationControl.enable := FALSE;
 	AzimuthElevationControl.enable := FALSE;
-	HydraulicsControl.close_brake := TRUE;
+	HydraulicsControl.close_brake();
 	power := FALSE;
 END_IF
 
@@ -622,8 +622,7 @@ DerotatorControl.enable := FALSE;
 
 IF NOT ElevationControl.enable THEN
 	// disable hydraulics
-	HydraulicsControl.close_brake := TRUE;
-	HydraulicsControl.stop := TRUE;
+	HydraulicsControl.close_brake();
 END_IF
 
 IF HydraulicsControl.brake_closed THEN
@@ -674,7 +673,7 @@ ELSE
 	powerfailure := FALSE;		
 END_IF
 // enable hydraulics
-HydraulicsControl.start := TRUE;
+// HydraulicsControl.manual_start := TRUE;
 // open cover
 // COVER MUST BE OPENED FOR A SUCCESSFUL WAKE & SHAKE COMMAND!
 CoverControl.enable := TRUE;
@@ -686,7 +685,6 @@ END_IF
 // enable elevation enable azimuth
 
 IF MAIN.ready AND CoverControl.isopen THEN
-	HydraulicsControl.open_brake := TRUE;
 	ElevationControl.enable := TRUE;
 	AzimuthElevationControl.enable := TRUE;
 END_IF
@@ -1024,7 +1022,7 @@ END_IF
       <LineId Id="18" Count="3" />
       <LineId Id="49" Count="0" />
       <LineId Id="38" Count="0" />
-      <LineId Id="41" Count="2" />
+      <LineId Id="41" Count="1" />
       <LineId Id="40" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="44" Count="0" />
@@ -1045,16 +1043,8 @@ END_IF
       <LineId Id="70" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.poweron">
-      <LineId Id="6" Count="25" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="40" Count="7" />
-      <LineId Id="52" Count="21" />
+      <LineId Id="99" Count="28" />
+      <LineId Id="129" Count="32" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.slewtelescope">

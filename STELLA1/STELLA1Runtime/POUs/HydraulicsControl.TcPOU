@@ -4,16 +4,14 @@
     <Declaration><![CDATA[PROGRAM HydraulicsControl
 VAR_INPUT
 	// start the hydraulics
-	start:		BOOL := FALSE;
+	manual_start:		BOOL := FALSE;
 	// stop the hydraulics
-	stop: 		BOOL;
-	// command to open the brake
-	open_brake:	BOOL := FALSE;
-	// command to open the brake
-	close_brake: BOOL;
+	manual_stop: 		BOOL;
 	// reset any hydraulics error
 	reset: 		BOOL;
+	// manual override to start the suction pump
 	suction_manual:	BOOL;
+	//manual override to stop the pump
 	pump_manual_stop: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -49,14 +47,22 @@ VAR_OUTPUT
 	error: 				BOOL;
 END_VAR
 VAR
+	// command to open the brake
+	iopen_brake:	BOOL := FALSE;
+	// command to open the brake
+	iclose_brake: BOOL;
+	// internal command to start pump
+	istart:	BOOL := FALSE;
+	// internal command to stop pump
+	istop:	BOOL;
 	// monitors the pressure of the pump is running
 	pressure_watchdog:	TON;
 	// monitors the activation of the suction pump
 	suction_watchdog: TON;
 	// watch the hydraulics and suction pumps
 	hydraulics_watchdog: TON;
-	// the suction pump is activated for at least 28s when maximum is reached
-	suction_pump_timer: TP;
+	// the suction pump is activated for at least 55s when maximum is reached
+	suction_pump_timer: TOF;
 	// represents the state of the main pump
 	oil_pump_state:		RS;
 	// represents the state of the brake
@@ -103,21 +109,22 @@ oil_hot := GVL_Hydraulics.oil_overtemperature;
 pump_running := GVL_Hydraulics.pump_running;
 suction_running := GVL_Hydraulics.suction_running;
 
-IF stop THEN
-	start := FALSE;
+IF manual_stop THEN
+	manual_start := FALSE;
 END_IF
 
 error_state(SET1 := pressure_failure OR	suction_failure OR hydraulics_failure OR oil_low,
 			RESET := reset,
 			Q1 => error);
 
-oil_pump_state(SET := start,
-				RESET1 := stop OR error OR NOT Transformer.phase_available OR pump_manual_stop);
+oil_pump_state(SET := manual_start OR istart,
+				RESET1 := manual_stop OR istop OR error OR NOT Transformer.power_ok OR pump_manual_stop);
 
 GVL_Hydraulics.oil_pump_enable := oil_pump_state.Q1;
 
 IF NOT pump_running THEN
-	stop := FALSE;
+	manual_stop := FALSE;
+	istop := FALSE;
 END_IF
 (* This section controls the hydraulic brake responsible for azimuth and elevation. 
 Especially the elevation is imbalanced if not in the position control loop. 
@@ -133,13 +140,13 @@ brake_open_delay(IN := pump_running AND oil_pressure_OK,
 //hold the brake, if we reach the az-limit	
 // close the brake if the pump is not running	
 
-IF close_brake OR NOT pump_running THEN 
-	open_brake := FALSE;
+IF iclose_brake OR NOT pump_running THEN 
+	iopen_brake := FALSE;
 END_IF
 		
-brake_state(SET := brake_open_delay.Q AND open_brake AND MAIN.brake_clearing,
+brake_state(SET := brake_open_delay.Q AND iopen_brake AND MAIN.brake_clearing,
 			RESET1 := GVL_Telescope.azimut_limit_switch 
-					  OR close_brake 
+					  OR iclose_brake 
 					  OR NOT pump_running
 					  OR NOT MAIN.brake_clearing,
 			Q1 => GVL_Telescope.brake_azimuth_eve);
@@ -150,7 +157,7 @@ brake_opened_delay(	IN :=brake_state.Q1,
 
 brake_closed := NOT brake_open;
 IF brake_closed THEN
-	close_brake := FALSE;
+	iclose_brake := FALSE;
 END_IF
 
 (* This is the end of the brake control section *)
@@ -161,7 +168,7 @@ suction_timer(	bStart := suction_running AND NOT suction_pump_timer.Q,
 
 suction_pump_timer(IN := Transformer.phase_available AND 
 						GVL_Hydraulics.oilpan_maximum,
-					PT := T#55S,
+					PT := T#90S,
 					Q => GVL_Hydraulics.oil_suction_enable);
 GVL_Hydraulics.oil_suction_enable := suction_pump_timer.Q OR suction_manual;					
 suction_watchdog(IN := GVL_Hydraulics.oil_suction_enable AND NOT suction_running,
@@ -267,112 +274,71 @@ SuctionLog(Trigger := suction_failure OR hydraulics_failure,
 				OffMessage := 'OK',
 				OffLevel := ADSLOG_MSGTYPE_HINT);
 
-BreakClearingWarning(Trigger := NOT Main.brake_clearing AND open_brake,
+BreakClearingWarning(Trigger := NOT Main.brake_clearing AND iopen_brake,
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := '%s',
 				OnMessage := 'Cannot open brake without brake clearing.');
 
-BreakHydraulicsWarning(Trigger := NOT start AND open_brake,
+BreakHydraulicsWarning(Trigger := NOT manual_start AND iopen_brake,
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := '%s',
 				OnMessage := 'Cannot open brake without running hydraulics.');
 ]]></ST>
     </Implementation>
+    <Method Name="close_brake" Id="{7fefbb0e-6635-46fb-8dba-b1b28670200d}">
+      <Declaration><![CDATA[METHOD close_brake : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	hydraulics_off_timer:	TON  := (PT := T#10S);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// close the brake
+iclose_brake := TRUE;
+// if the brake is closed, turn off the hydraulics after n seconds
+hydraulics_off_timer(IN := brake_closed);
+IF hydraulics_off_timer.Q THEN
+	istop := TRUE;
+END_IF
+
+RETURN(brake_closed);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="open_brake" Id="{927530ea-3ed2-4333-ae45-3cb22ac63b25}">
+      <Declaration><![CDATA[METHOD open_brake : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// start the pump
+istart := TRUE;
+// open the brake
+iopen_brake := TRUE;
+RETURN(brake_open);]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="HydraulicsControl">
-      <LineId Id="308" Count="11" />
-      <LineId Id="321" Count="5" />
-      <LineId Id="702" Count="3" />
-      <LineId Id="1388" Count="4" />
-      <LineId Id="334" Count="1" />
-      <LineId Id="786" Count="0" />
-      <LineId Id="340" Count="0" />
-      <LineId Id="788" Count="0" />
-      <LineId Id="787" Count="0" />
-      <LineId Id="789" Count="1" />
-      <LineId Id="549" Count="0" />
-      <LineId Id="551" Count="1" />
-      <LineId Id="550" Count="0" />
-      <LineId Id="621" Count="0" />
-      <LineId Id="620" Count="0" />
-      <LineId Id="622" Count="0" />
-      <LineId Id="342" Count="4" />
-      <LineId Id="416" Count="0" />
-      <LineId Id="691" Count="0" />
-      <LineId Id="689" Count="0" />
-      <LineId Id="692" Count="0" />
-      <LineId Id="690" Count="0" />
-      <LineId Id="693" Count="0" />
-      <LineId Id="347" Count="1" />
-      <LineId Id="455" Count="1" />
-      <LineId Id="694" Count="0" />
-      <LineId Id="349" Count="0" />
-      <LineId Id="559" Count="0" />
-      <LineId Id="558" Count="0" />
-      <LineId Id="560" Count="1" />
-      <LineId Id="625" Count="0" />
-      <LineId Id="554" Count="0" />
-      <LineId Id="629" Count="0" />
-      <LineId Id="695" Count="1" />
-      <LineId Id="859" Count="0" />
-      <LineId Id="555" Count="0" />
-      <LineId Id="1300" Count="0" />
-      <LineId Id="350" Count="1" />
-      <LineId Id="494" Count="0" />
-      <LineId Id="352" Count="4" />
-      <LineId Id="936" Count="0" />
-      <LineId Id="357" Count="3" />
-      <LineId Id="362" Count="3" />
-      <LineId Id="1212" Count="1" />
-      <LineId Id="1215" Count="0" />
-      <LineId Id="1045" Count="0" />
-      <LineId Id="1013" Count="0" />
-      <LineId Id="1049" Count="9" />
-      <LineId Id="1048" Count="0" />
-      <LineId Id="1047" Count="0" />
-      <LineId Id="1046" Count="0" />
-      <LineId Id="1065" Count="1" />
-      <LineId Id="1068" Count="5" />
-      <LineId Id="1067" Count="0" />
-      <LineId Id="1075" Count="0" />
-      <LineId Id="1135" Count="0" />
-      <LineId Id="1017" Count="0" />
-      <LineId Id="1019" Count="1" />
-      <LineId Id="1220" Count="0" />
-      <LineId Id="1061" Count="0" />
-      <LineId Id="1063" Count="0" />
-      <LineId Id="1076" Count="0" />
-      <LineId Id="1078" Count="0" />
-      <LineId Id="1080" Count="0" />
-      <LineId Id="1084" Count="0" />
-      <LineId Id="1086" Count="0" />
-      <LineId Id="1088" Count="0" />
-      <LineId Id="1090" Count="0" />
-      <LineId Id="1040" Count="0" />
-      <LineId Id="1014" Count="1" />
-      <LineId Id="366" Count="0" />
-      <LineId Id="369" Count="5" />
-      <LineId Id="937" Count="0" />
-      <LineId Id="930" Count="5" />
-      <LineId Id="929" Count="0" />
-      <LineId Id="375" Count="5" />
-      <LineId Id="938" Count="0" />
-      <LineId Id="381" Count="5" />
-      <LineId Id="939" Count="0" />
-      <LineId Id="387" Count="2" />
-      <LineId Id="392" Count="0" />
-      <LineId Id="940" Count="0" />
-      <LineId Id="393" Count="2" />
-      <LineId Id="398" Count="3" />
-      <LineId Id="404" Count="0" />
-      <LineId Id="941" Count="0" />
-      <LineId Id="405" Count="4" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="942" Count="0" />
-      <LineId Id="709" Count="2" />
-      <LineId Id="714" Count="0" />
-      <LineId Id="943" Count="0" />
-      <LineId Id="716" Count="3" />
+      <LineId Id="1912" Count="21" />
+      <LineId Id="2192" Count="0" />
+      <LineId Id="1935" Count="10" />
+      <LineId Id="2191" Count="0" />
+      <LineId Id="1946" Count="157" />
       <LineId Id="708" Count="0" />
+    </LineIds>
+    <LineIds Name="HydraulicsControl.close_brake">
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="HydraulicsControl.open_brake">
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="5" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

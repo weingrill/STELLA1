@@ -292,17 +292,15 @@ CASE Selection OF
 		IF manual THEN
 			HydraulicsEnable(
 				SET := enable, 
-				Q := Hydraulicscontrol.start);
-			Hydraulicscontrol.stop := NOT Hydraulicscontrol.start;
+				Q := Hydraulicscontrol.manual_start);
+			Hydraulicscontrol.manual_stop := NOT Hydraulicscontrol.manual_start;
 			Hydraulicscontrol.reset := reset;
 			
 			IF up THEN
-				Hydraulicscontrol.open_brake := TRUE;
-				Hydraulicscontrol.close_brake := FALSE;
+				Hydraulicscontrol.open_brake();
 			END_IF
 			IF down THEN
-				Hydraulicscontrol.open_brake := FALSE;
-				Hydraulicscontrol.close_brake := TRUE;
+				Hydraulicscontrol.close_brake();
 			END_IF
 			Hydraulicscontrol.suction_manual := right;
 			Hydraulicscontrol.pump_manual_stop := left;
@@ -318,38 +316,9 @@ GVL_pendant_control.lamp_down := lamp_down;
 GVL_pendant_control.lamp_error := lamp_error;]]></ST>
     </Implementation>
     <LineIds Name="PendantControl">
-      <LineId Id="2490" Count="20" />
-      <LineId Id="2749" Count="0" />
-      <LineId Id="2511" Count="22" />
-      <LineId Id="2839" Count="0" />
-      <LineId Id="2535" Count="0" />
-      <LineId Id="2884" Count="4" />
-      <LineId Id="2890" Count="0" />
-      <LineId Id="2889" Count="0" />
-      <LineId Id="2536" Count="7" />
-      <LineId Id="2546" Count="0" />
-      <LineId Id="2838" Count="0" />
-      <LineId Id="2547" Count="0" />
-      <LineId Id="2891" Count="6" />
-      <LineId Id="2548" Count="11" />
-      <LineId Id="2898" Count="6" />
-      <LineId Id="2560" Count="6" />
-      <LineId Id="2840" Count="0" />
-      <LineId Id="2567" Count="0" />
-      <LineId Id="2842" Count="0" />
-      <LineId Id="2841" Count="0" />
-      <LineId Id="2568" Count="54" />
-      <LineId Id="2634" Count="19" />
-      <LineId Id="2747" Count="1" />
-      <LineId Id="2654" Count="24" />
-      <LineId Id="2743" Count="2" />
-      <LineId Id="2742" Count="0" />
-      <LineId Id="2679" Count="26" />
-      <LineId Id="2792" Count="2" />
-      <LineId Id="2791" Count="0" />
-      <LineId Id="2706" Count="20" />
-      <LineId Id="2836" Count="1" />
-      <LineId Id="2727" Count="8" />
+      <LineId Id="3217" Count="253" />
+      <LineId Id="3472" Count="2" />
+      <LineId Id="3476" Count="11" />
       <LineId Id="121" Count="0" />
     </LineIds>
   </POU>

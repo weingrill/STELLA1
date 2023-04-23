@@ -43,6 +43,7 @@ VAR
 	bSoEReset : BOOL;
 	// delay until commutator angle is measured
 	readydelay:				TON;
+	enable_trigger:			F_TRIG;
 	getlastposition:		BOOL := TRUE;
 	ElevationAxisEvent: 	FB_Eventlog;
 	ElevationBrakeEvent: 	FB_Eventlog;
@@ -55,7 +56,7 @@ VAR
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 45.0;
+	calibration_position:	LREAL := 73.9885;
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -67,13 +68,18 @@ position := LIMIT(0.0, position, 90.0);
 
 //if we enable the axis, we have to open the brake first
 IF Enable THEN
-	HydraulicsControl.open_brake := TRUE;
+	HydraulicsControl.open_brake();
 END_IF
+
+enable_trigger(CLK := enable);
 
 // if an error occurs on te enabled axis we close the brake
 IF Enable AND error THEN
 	Enable := FALSE;
-	HydraulicsControl.close_brake := TRUE;
+END_IF
+
+IF enable_trigger.Q THEN
+	HydraulicsControl.close_brake();
 END_IF
 
 IF ElevationAxis.Calibrated OR Error THEN
@@ -216,11 +222,14 @@ CalibrationEvent(
       <LineId Id="451" Count="0" />
       <LineId Id="234" Count="1" />
       <LineId Id="238" Count="0" />
+      <LineId Id="1253" Count="1" />
       <LineId Id="707" Count="0" />
       <LineId Id="702" Count="0" />
       <LineId Id="251" Count="0" />
       <LineId Id="708" Count="0" />
-      <LineId Id="703" Count="2" />
+      <LineId Id="704" Count="0" />
+      <LineId Id="1255" Count="3" />
+      <LineId Id="705" Count="0" />
       <LineId Id="252" Count="0" />
       <LineId Id="254" Count="1" />
       <LineId Id="558" Count="1" />

@@ -88,11 +88,11 @@ IF reset THEN
 END_IF
 
 IF start THEN
-	HydraulicsControl.start := TRUE;
+	HydraulicsControl.manual_start := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics start');
 END_IF
 IF stop THEN
-	HydraulicsControl.stop := TRUE;
+	HydraulicsControl.manual_stop := TRUE;
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
 
@@ -180,42 +180,7 @@ TemperatureCriticalEvent(
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="57" Count="8" />
-      <LineId Id="367" Count="1" />
-      <LineId Id="370" Count="1" />
-      <LineId Id="386" Count="1" />
-      <LineId Id="374" Count="0" />
-      <LineId Id="376" Count="3" />
-      <LineId Id="256" Count="0" />
-      <LineId Id="480" Count="0" />
-      <LineId Id="257" Count="1" />
-      <LineId Id="262" Count="0" />
-      <LineId Id="264" Count="1" />
-      <LineId Id="316" Count="0" />
-      <LineId Id="263" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="317" Count="0" />
-      <LineId Id="315" Count="0" />
-      <LineId Id="74" Count="7" />
-      <LineId Id="384" Count="0" />
-      <LineId Id="87" Count="1" />
-      <LineId Id="92" Count="1" />
-      <LineId Id="95" Count="3" />
-      <LineId Id="101" Count="4" />
-      <LineId Id="107" Count="3" />
-      <LineId Id="116" Count="7" />
-      <LineId Id="125" Count="1" />
-      <LineId Id="128" Count="10" />
-      <LineId Id="401" Count="7" />
-      <LineId Id="145" Count="0" />
-      <LineId Id="147" Count="3" />
-      <LineId Id="388" Count="12" />
-      <LineId Id="181" Count="0" />
-      <LineId Id="417" Count="5" />
-      <LineId Id="182" Count="0" />
-      <LineId Id="203" Count="3" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="475" Count="3" />
+      <LineId Id="655" Count="121" />
       <LineId Id="474" Count="0" />
     </LineIds>
   </POU>
