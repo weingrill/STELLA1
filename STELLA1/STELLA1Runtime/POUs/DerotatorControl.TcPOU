@@ -77,6 +77,10 @@ MC_SetAcceptBlockedDriveSignal(
 	Axis := GVL_Telescope.DerotatorAxisRef,
 	Enable := HomeAxis);
 
+// home on enable (forced)
+IF enable THEN
+	HomeAxis := TRUE;
+END_IF
 
 IF DerotatorAxis.Calibrated THEN
 	HomeAxis := FALSE;
@@ -101,6 +105,7 @@ DeRotatorAxis(
 	Reset := 			Reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis :=			HomeAxis,
+	HomingMode :=		MC_ForceCalibration,
 	Position := 		position, 
 	Velocity :=			Velocity,
 	Enable_Positive := 	NOT GVL_Telescope.Derotator_inputs.0 OR HomeAxis,
@@ -179,7 +184,10 @@ CalibrationEvent(
       <LineId Id="141" Count="0" />
       <LineId Id="147" Count="0" />
       <LineId Id="145" Count="0" />
+      <LineId Id="569" Count="0" />
+      <LineId Id="566" Count="0" />
       <LineId Id="275" Count="0" />
+      <LineId Id="567" Count="1" />
       <LineId Id="164" Count="0" />
       <LineId Id="163" Count="0" />
       <LineId Id="165" Count="0" />
@@ -198,6 +206,7 @@ CalibrationEvent(
       <LineId Id="10" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="93" Count="2" />
+      <LineId Id="511" Count="0" />
       <LineId Id="312" Count="0" />
       <LineId Id="431" Count="0" />
       <LineId Id="11" Count="3" />
