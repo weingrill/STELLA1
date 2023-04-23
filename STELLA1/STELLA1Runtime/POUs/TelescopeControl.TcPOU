@@ -571,10 +571,19 @@ ElevationControl.position := elevation_park;
 AzimuthElevationControl.position := azimuth_park;
 ElevationControl.MoveAxis := TRUE;
 AzimuthElevationControl.MoveAxis := TRUE;
+IF FocusControl.FocusAxis.StandStill THEN
+	Focuscontrol.enable := FALSE;
+END_IF
 CoverControl.close := TRUE;
+// disable filterwheel
+FilterWheelControl.Enable := FALSE;
+// disable derotator
+DerotatorControl.enable := FALSE;
 IF ElevationControl.ElevationAxis.MoveDone AND 
 	AzimuthElevationControl.AzimuthAxis.MoveDone AND 
 	CoverControl.isclosed THEN
+	ElevationControl.enable := FALSE;
+	AzimuthElevationControl.Enable := FALSE;
 	park := FALSE;
 	parktelescope := TRUE;
 ELSE
@@ -585,69 +594,6 @@ ParkEvent(Trigger := parktelescope,
 			Level := ADSLOG_MSGTYPE_HINT,
 			FormatString := '%s',
 			OnMessage := 'Telescope is parked.');]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="poweroff" Id="{7801bc9a-aa08-4645-aed9-20fc5aa5a24f}">
-      <Declaration><![CDATA[METHOD poweroff : BOOL
-VAR_INPUT
-END_VAR
-VAR
-	power_is_off: 	BOOL;
-	offtrigger:		R_TRIG;
-	PowerOffEvent: 	FB_Eventlog;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[gohome := 	FALSE;
-park  := 	FALSE;
-track := 	FALSE;
-goto := 	FALSE;
-slew := 	FALSE;
-pumping :=	FALSE;
-// disable azimuth
-// disbale elevation (closes brake)
-IF stopped THEN
-	AzimuthElevationControl.enable := FALSE;
-	ElevationControl.enable := FALSE;
-END_IF
-// disable Focus
-(*
-IF FocusControl.FocusAxis.StandStill THEN
-	Focuscontrol.enable := FALSE;
-END_IF
-*)
-// disable filterwheel
-FilterWheelControl.Enable := FALSE;
-// disable derotator
-DerotatorControl.enable := FALSE;
-
-IF NOT ElevationControl.enable THEN
-	// disable hydraulics
-	HydraulicsControl.close_brake();
-END_IF
-
-IF HydraulicsControl.brake_closed THEN
-	// close cover
-	CoverControl.close := TRUE;	
-END_IF
-
-power_is_off := NOT power 
-	AND NOT AzimuthElevationControl.enable 
-	AND NOT ElevationControl.enable 
-//	AND NOT FocusControl.enable
-	AND NOT FilterWheelControl.Enable
-	AND NOT DerotatorControl.enable
-	AND HydraulicsControl.brake_closed
-	AND CoverControl.isclosed;
-
-poweroff := power_is_off;
-
-offtrigger(CLK := power_is_off);
-	
-PowerOffEvent(Trigger := FALSE, 
-				Level := ADSLOG_MSGTYPE_HINT,
-				FormatString := '%s',
-				OnMessage := 'RoboTel shutdown finished');
-]]></ST>
       </Implementation>
     </Method>
     <Method Name="poweron" Id="{34114692-caf6-4cf5-8270-8b1671f5dd0a}">
@@ -1000,47 +946,16 @@ END_IF
       <LineId Id="18" Count="3" />
       <LineId Id="14" Count="0" />
       <LineId Id="6" Count="3" />
+      <LineId Id="46" Count="2" />
       <LineId Id="22" Count="0" />
+      <LineId Id="42" Count="3" />
       <LineId Id="26" Count="2" />
+      <LineId Id="49" Count="1" />
       <LineId Id="11" Count="1" />
       <LineId Id="29" Count="1" />
       <LineId Id="13" Count="0" />
       <LineId Id="31" Count="3" />
       <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="TelescopeControl.poweroff">
-      <LineId Id="6" Count="6" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="95" Count="0" />
-      <LineId Id="85" Count="2" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="18" Count="3" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="41" Count="1" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="47" Count="1" />
-      <LineId Id="46" Count="0" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="54" Count="1" />
-      <LineId Id="57" Count="2" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="72" Count="1" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="66" Count="2" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="70" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.poweron">
       <LineId Id="99" Count="28" />
