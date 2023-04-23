@@ -20,11 +20,17 @@ VAR
 	
 END_VAR
 VAR_OUTPUT
+	// error condition
 	Error			: BOOL;
+	// Emergency_stop engaged
+	Emergency_stop	: BOOL;
 END_VAR
 VAR_INPUT
+	// issue a remote restart
 	remote_restart:		BOOL;
+	// issue a remote Error Acknowledgment
 	remote_ErrAck:		BOOL;
+	// issue a remute run/stop
 	remote_run:			BOOL := TRUE;
 END_VAR
 ]]></Declaration>
@@ -54,6 +60,8 @@ GVL_Safety.Restart := (Main.reset AND NOT GVL_Main.key_switch_remote)
 				
 Error := GVL_Safety.Error OR (GVL_Safety.State <> 1);
 
+Emergency_stop := NOT GVL_Safety.Stop;
+
 ErrAckLog(	Trigger := GVL_Safety.ErrAck,
 			OnMessage := 'Safety error was acknowledged.');
 			
@@ -80,6 +88,7 @@ SafetyLog(	Trigger := Error,
       <LineId Id="213" Count="5" />
       <LineId Id="210" Count="0" />
       <LineId Id="175" Count="0" />
+      <LineId Id="275" Count="1" />
       <LineId Id="233" Count="2" />
       <LineId Id="244" Count="0" />
       <LineId Id="239" Count="2" />
