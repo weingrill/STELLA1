@@ -73,6 +73,9 @@ VAR
 	brake_opened_delay:	TON;
 	// error state (set dominant)
 	error_state:	SR;
+	// timer to shut off hydraulics after breake was closed
+	hydraulics_off_timer:	TON  := (PT := T#10S);
+	brake_close_trigger:	F_TRIG;
 	HydraulicsLog,
 	PumpLog,
 	ReserveLog,
@@ -158,6 +161,13 @@ brake_opened_delay(	IN :=brake_state.Q1,
 brake_closed := NOT brake_open;
 IF brake_closed THEN
 	iclose_brake := FALSE;
+END_IF
+brake_close_trigger(CLK := brake_closed);
+// if the brake is closed, turn off the hydraulics after n seconds
+hydraulics_off_timer(IN := brake_close_trigger.Q);
+
+IF hydraulics_off_timer.Q AND pump_running THEN
+	istop := TRUE;
 END_IF
 
 (* This is the end of the brake control section *)
@@ -289,17 +299,10 @@ BreakHydraulicsWarning(Trigger := NOT manual_start AND iopen_brake,
       <Declaration><![CDATA[METHOD close_brake : BOOL
 VAR_INPUT
 END_VAR
-VAR
-	hydraulics_off_timer:	TON  := (PT := T#10S);
-END_VAR]]></Declaration>
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[// close the brake
 iclose_brake := TRUE;
-// if the brake is closed, turn off the hydraulics after n seconds
-hydraulics_off_timer(IN := brake_closed);
-IF hydraulics_off_timer.Q THEN
-	istop := TRUE;
-END_IF
 
 RETURN(brake_closed);]]></ST>
       </Implementation>
@@ -322,15 +325,17 @@ RETURN(brake_open);]]></ST>
       <LineId Id="2192" Count="0" />
       <LineId Id="1935" Count="10" />
       <LineId Id="2191" Count="0" />
-      <LineId Id="1946" Count="157" />
+      <LineId Id="1946" Count="33" />
+      <LineId Id="2203" Count="0" />
+      <LineId Id="2197" Count="1" />
+      <LineId Id="2202" Count="0" />
+      <LineId Id="2199" Count="2" />
+      <LineId Id="1980" Count="123" />
       <LineId Id="708" Count="0" />
     </LineIds>
     <LineIds Name="HydraulicsControl.close_brake">
       <LineId Id="11" Count="0" />
       <LineId Id="5" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="2" />
       <LineId Id="10" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
