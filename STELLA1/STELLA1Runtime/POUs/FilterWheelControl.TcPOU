@@ -14,7 +14,7 @@ VAR_INPUT
 	// TRUE, if the filter is in position and wheel has come to rest
 	Ready:				BOOL;
 	// filter position
-	filter_position: 	WORD;
+	filter_position: 	USINT;
 	// move to given position
 	MoveAxis: 			BOOL;
 	// calibrate the axis
@@ -34,18 +34,18 @@ VAR
 	// axis position to set to with `MoveAxis`
 	position:			LREAL;
 	// current filter determined from the axis position
-	actual_filter:		WORD;
+	actual_filter:		USINT;
 	FilterWheelEvent:	FB_EventLog;
 	CalibratedEvent:	FB_EventLog;
 	FilterReadyEvent:	FB_Eventlog;
 	// last known filter position
-	last_filter_position:	WORD;
+	last_filter_position:	USINT;
 END_VAR
 VAR CONSTANT
 	// total number of filters in the filter wheel
-	filters:			WORD := 24;
+	filters:			USINT := 24;
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 1.1346;
+	calibration_position:	LREAL := 0.0;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* This program controls the filter wheel. 
@@ -57,7 +57,7 @@ The number of filters is hard coded to 24.
 // limit desired filter_position to [0...filters-1]
 filter_position := filter_position MOD filters;
 // calculate the actual filter position
-actual_filter := LREAL_TO_WORD((360.0 - act_position) * filters / 360.0) MOD filters;
+actual_filter := LREAL_TO_USINT((360.0 - act_position) * filters / 360.0) MOD filters;
 
 Ready := (filter_position = actual_filter) AND FilterWheelAxis.Standstill;
 
@@ -70,7 +70,7 @@ IF Enable THEN
 		MoveAxis := filter_position <> actual_filter AND FilterWheelAxis.Standstill;
 	ELSE
 		position := calibration_position;
-		IF FilterWheelAxis.Ready AND NOT Pendantcontrol.manual THEN
+		IF FilterWheelAxis.Ready THEN
 			HomeAxis := TRUE;
 		END_IF
 	END_IF
@@ -83,6 +83,7 @@ FilterWheelAxis(
 	Reset := 			Reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis :=			HomeAxis,
+	HomingMode :=		MC_ForceCalibration,
 	Position := 		position, 
 	Velocity :=			60.0,
 	Enable_Positive :=  TRUE,
@@ -163,6 +164,7 @@ FilterReadyEvent(
       <LineId Id="46" Count="1" />
       <LineId Id="99" Count="0" />
       <LineId Id="48" Count="0" />
+      <LineId Id="540" Count="0" />
       <LineId Id="389" Count="0" />
       <LineId Id="49" Count="3" />
       <LineId Id="96" Count="1" />

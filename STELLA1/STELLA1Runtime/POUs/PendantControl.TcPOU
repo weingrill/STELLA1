@@ -28,19 +28,22 @@ VAR
 	lamp_error:		BOOL;
 	horn:			BOOL;
 	// counter for filter position
-	Filter_position:	CTUD;
+	Filter_position:	USINT;
 	CoverEnable: FB_ButtonEnable;
 	NasmythEnable: FB_ButtonEnable;
 	FocusEnable: FB_ButtonEnable;
 	DerotatorEnable:	FB_ButtonEnable;
 	ElevationEnable: 	FB_ButtonEnable;
 	AzimuthEnable: 		FB_ButtonEnable;
+	FilterWheelEnable:	FB_ButtonEnable;
 	TelescopeControlEnable: 	FB_ButtonEnable;
 	HydraulicsEnable: 	FB_ButtonEnable;
 	TrackingEnable:			FB_ButtonEnable;
 	ResetDelay:	TON;
 	TwinCATRestart: TC_Restart;
-	//R_Enable:	R_TRIG;
+	up_trigger:	R_TRIG;
+	down_trigger:	R_TRIG;	
+//R_Enable:	R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -75,6 +78,8 @@ down := GVL_pendant_control.direction_down;
 left := GVL_pendant_control.direction_left;
 right := GVL_pendant_control.direction_right;
 
+up_trigger(CLK := up);
+down_trigger(CLK := down);
 //R_Enable(CLK := enable);
 // the error lamp is the same as the error lamp of the main panel
 lamp_error := GVL_Main.lamp_error;
@@ -205,20 +210,23 @@ CASE Selection OF
 		
 		
 	10:	// FilterWheel control
-		//FIXME
-		FilterWheelControl.Enable := manual;
-		lamp_left := manual;
-		lamp_right := manual;
+		lamp_left := manual AND FilterWheelControl.enable;
+		lamp_right := manual AND FilterWheelControl.enable;
+		lamp_up := manual AND FilterWheelControl.enable AND FilterWheelControl.Calibrated;
+		lamp_down := manual AND FilterWheelControl.enable AND FilterWheelControl.Calibrated;
+		FilterWheelControl.reset := reset;
 		FilterWheelControl.left := left;
 		FilterWheelControl.right := right;
-		Filter_position(CU := up, CD := down, RESET := reset, PV := 15);
-		lamp_up := NOT Filter_position.QU;
-		lamp_down := NOT Filter_position.QD;
-		IF enable THEN
-			FilterWheelControl.filter_position := Filter_position.CV;
-		END_IF
-		FilterWheelControl.reset := reset;
+		
 		IF manual THEN
+			FilterWheelEnable(SET := enable, Q := FilterWheelControl.enable);
+			IF up_trigger.Q THEN
+				Filter_position := (Filter_position + 1) MOD 24;
+				FilterWheelControl.filter_position := Filter_position;
+			ELSIF down_trigger.Q THEN
+				Filter_position := (Filter_position - 1) MOD 24;
+				FilterWheelControl.filter_position := Filter_position;
+			END_IF
 			lamp_error := FilterWheelControl.Error;
 		END_IF
 		
@@ -316,7 +324,25 @@ GVL_pendant_control.lamp_down := lamp_down;
 GVL_pendant_control.lamp_error := lamp_error;]]></ST>
     </Implementation>
     <LineIds Name="PendantControl">
-      <LineId Id="3217" Count="253" />
+      <LineId Id="3217" Count="29" />
+      <LineId Id="3548" Count="0" />
+      <LineId Id="3247" Count="0" />
+      <LineId Id="3549" Count="0" />
+      <LineId Id="3248" Count="129" />
+      <LineId Id="3379" Count="0" />
+      <LineId Id="3381" Count="0" />
+      <LineId Id="3535" Count="0" />
+      <LineId Id="3386" Count="0" />
+      <LineId Id="3390" Count="0" />
+      <LineId Id="3543" Count="2" />
+      <LineId Id="3391" Count="0" />
+      <LineId Id="3532" Count="0" />
+      <LineId Id="3536" Count="1" />
+      <LineId Id="3541" Count="0" />
+      <LineId Id="3539" Count="1" />
+      <LineId Id="3542" Count="0" />
+      <LineId Id="3538" Count="0" />
+      <LineId Id="3392" Count="78" />
       <LineId Id="3472" Count="2" />
       <LineId Id="3476" Count="11" />
       <LineId Id="121" Count="0" />
