@@ -2,20 +2,33 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="Transformer" Id="{0a280e03-5b4e-47d4-8865-661b3df896f8}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Transformer
+VAR_INPUT
+	// reset signal for the error condition
+	reset_error:		BOOL := FALSE;
+	// signal to start the transformer
+	softstart_trafo:	BOOL;
+END_VAR
+VAR_OUTPUT
+	// indicates the phases for the hydraulics
+	phase_available:	BOOL;
+	// trafo failed to start after timeout
+	power_failure:		BOOL;
+	// restart was inhibited
+	restart_inhibited:	BOOL;
+END_VAR
 VAR
 	// watchdog for trafo softstarter
 	power_watchdog: 	TON;
+	// timer to measure the startup time
 	power_timer:		FB_timer;
+	// timeout for the startup
 	startup_timeout:	TIME := T#2S;
+	// error state
 	power_error_state:	SR;
-	// trafo failed to start after timeout
-	power_failure:		BOOL;
-	reset_error:		BOOL := FALSE;
-	softstart_trafo:	BOOL;
+	// restart inhibitor
+	restart_inhibit:	TOF;
 	PowerEvent:			FB_EventLog;
 	PowerLog:			FB_EventLog;
-	// indicates the phases for the hydraulics
-	phase_available:	BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,7 +37,12 @@ power_watchdog(IN := GVL_Main.softstart_trafo AND NOT power_OK,
 				PT := startup_timeout,
 				Q => power_failure);
 power_error_state(SET1 := power_failure, RESET := reset_error);
+restart_inhibit(IN := GVL_MAIN.trafo_bypassed, PT := T#5S);
 
+restart_inhibited := NOT GVL_MAIN.trafo_bypassed AND restart_inhibit.Q;
+IF restart_inhibited THEN
+	softstart_trafo := FALSE;
+END_IF
 GVL_Main.softstart_trafo := softstart_trafo AND NOT error;
 
 phase_available := TRUE; (*GVL_Main.L1L2_voltage > 360.0 AND
@@ -124,7 +142,10 @@ END_VAR
       <LineId Id="7" Count="2" />
       <LineId Id="5" Count="0" />
       <LineId Id="17" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="100" Count="0" />
       <LineId Id="21" Count="0" />
+      <LineId Id="101" Count="2" />
       <LineId Id="16" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="53" Count="2" />
