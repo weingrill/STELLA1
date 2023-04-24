@@ -388,7 +388,6 @@ IF NOT error THEN
 	reset := FALSE;
 END_IF
 
-GVL_Telescope.horn := poweronwarning.Q OR Pendantcontrol.horn;
 
 MQTTTimer(IN:=TRUE);
 IF MQTTTimer.Q THEN // publish new payload every second
@@ -871,7 +870,6 @@ END_IF
       <LineId Id="6942" Count="0" />
       <LineId Id="7472" Count="3" />
       <LineId Id="7133" Count="0" />
-      <LineId Id="5167" Count="0" />
       <LineId Id="4662" Count="3" />
       <LineId Id="4837" Count="1" />
       <LineId Id="4841" Count="0" />
