@@ -3,7 +3,7 @@
   <POU Name="FB_BLINK" Id="{56aa9b26-e1df-4289-b787-9e9311227a5a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_BLINK
 VAR_INPUT
-	ENABLE:		BOOL;
+	blink:		E_Blink;
 	ON_TIME:	TIME := T#500MS;
 	OFF_TIME:	TIME := T#500MS;
 END_VAR
@@ -16,13 +16,59 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IMPULS(IN:= NOT PAUSE.Q AND NOT IMPULS.Q, PT:= ON_TIME);
+      <ST><![CDATA[CASE blink OF
+	e_blink.off:
+		ON_TIME := T#0MS;
+		OFF_TIME := T#1000MS;
+	e_blink.slow:
+		ON_TIME := T#500MS;
+		OFF_TIME := T#500MS;
+	e_blink.fast:
+		ON_TIME := T#250MS;
+		OFF_TIME := T#250MS;
+	e_blink.short:
+		ON_TIME := T#100MS;
+		OFF_TIME := T#900MS;
+	e_blink.long:
+		ON_TIME := T#900MS;
+		OFF_TIME := T#100MS;
+	e_blink.on:
+		ON_TIME := T#0MS;
+		OFF_TIME := T#0MS;
+END_CASE
+
+IMPULS(IN:= NOT PAUSE.Q AND NOT IMPULS.Q, PT:= ON_TIME);
 PAUSE(IN:= NOT PAUSE.Q AND NOT IMPULS.Q, PT:= OFF_TIME);
-Q := IMPULS.Q AND ENABLE;]]></ST>
+IF blink = e_blink.off THEN
+	Q := FALSE;
+ELSIF blink = e_blink.on THEN
+	Q := TRUE;
+ELSE
+	Q := IMPULS.Q;	
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_BLINK">
+      <LineId Id="18" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="19" Count="0" />
       <LineId Id="3" Count="1" />
-      <LineId Id="2" Count="0" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="43" Count="2" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="42" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

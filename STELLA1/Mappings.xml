@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<VarLinks>
+	<OwnerA Name="TIID^Device 1 (EtherCAT)">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety IN (EL1904)">
+			<Link VarA="Term 30 (EK1200)^Safety Logic (EL6910)^ConnectionOutputs^TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 RxPDO" VarB="Module 1 (FSOES)^TxPDO^FSOE"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
+			<Link VarA="Term 30 (EK1200)^Safety IN (EL1904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="ConnectionInputs^TwinSafeGroup1.Safety IN (EL1904) - Module 1 (FSOES)_10 TxPDO"/>
+			<Link VarA="Term 30 (EK1200)^Safety OUT (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="ConnectionOutputs^TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 RxPDO"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety OUT (EL2904)">
+			<Link VarA="Term 30 (EK1200)^Safety Logic (EL6910)^ConnectionInputs^TwinSafeGroup1.Safety OUT (EL2904) - Module 1 (FSOES)_11 TxPDO" VarB="Module 1 (FSOES)^RxPDO^FSOE"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Azimuth">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Azimuth (AX5125-0000-0214)">
+			<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT^Following distance"/>
+			<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="AT^Drive status word" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="AT^Drive status word"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="MDT^Master control word" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="MDT^Position command value"/>
+			<Link VarA="Enc^Inputs^In^nDataIn1" VarB="AT^Position feedback 1 value"/>
+			<Link VarA="Enc^Inputs^In^nDcInputTime" VarB="InfoData^DcInputShift"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Derotator">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Derotator(AX5203-0000-0210)">
+			<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT 1^Following distance"/>
+			<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="AT 1^Torque/force feedback value"/>
+			<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="AT 1^Drive status word" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="AT 1^Drive status word"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="MDT 1^Master control word" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="MDT 1^Position command value"/>
+			<Link VarA="Enc^Inputs^In^nDataIn1" VarB="AT 1^Position feedback 1 value"/>
+			<Link VarA="Enc^Inputs^In^nDcInputTime" VarB="InfoData^DcInputShift"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Elevation">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Elevation (AX5125-0000-0214)">
+			<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT^Following distance"/>
+			<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="AT^Drive status word" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="AT^Drive status word"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="MDT^Master control word" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="MDT^Position command value"/>
+			<Link VarA="Enc^Inputs^In^nDataIn1" VarB="AT^Position feedback 1 value"/>
+			<Link VarA="Enc^Inputs^In^nDcInputTime" VarB="InfoData^DcInputShift"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="TINC^NC-Task 1 SAF^Axes^FilterWheel">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)">
+			<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DRV Statusword^Statusword"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="DRV Statusword^Statusword" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
+			<Link VarA="Drive^Inputs^In^nState8" VarB="DRV Info data 1^Info data 1"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DRV Controlword^Controlword"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl2" VarB="DRV Controlword^Controlword" Size="8" OffsB="8"/>
+			<Link VarA="Drive^Outputs^Out^nDataOut2" VarB="DRV Target velocity^Target velocity"/>
+			<Link VarA="Enc^Inputs^In^nDataIn1" VarB="FB Position^Position"/>
+			<Link VarA="Enc^Inputs^In^nDcInputTime" VarB="InfoData^DcInputShift"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Fokus">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^FocusEncoder (EL5101-0010)">
+			<Link VarA="Enc^Inputs^In^nDataIn1[0]" VarB="ENC Status compact^Counter value"/>
+			<Link VarA="Enc^Inputs^In^nDataIn2[0]" VarB="ENC Status compact^Latch value"/>
+			<Link VarA="Enc^Inputs^In^nState1" VarB="ENC Status compact^Status^Latch C valid"/>
+			<Link VarA="Enc^Inputs^In^nState1" VarB="ENC Status compact^Status^Latch extern valid" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState1" VarB="ENC Status compact^Status^Open circuit" Size="1" OffsA="6"/>
+			<Link VarA="Enc^Inputs^In^nState1" VarB="ENC Status compact^Status^Set counter done" Size="1" OffsA="2"/>
+			<Link VarA="Enc^Inputs^In^nState1" VarB="ENC Status compact^Status^Status of input status" Size="1" OffsA="5"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of extern latch" Size="1" OffsA="4"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input A"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input B" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input C" Size="1" OffsA="2"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input gate" Size="1" OffsA="3"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Sync error" Size="1" OffsA="5"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^TxPDO State" Size="1" OffsA="6"/>
+			<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^TxPDO Toggle" Size="1" OffsA="7"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
+			<Link VarA="Enc^Outputs^Out^nCtrl1" VarB="ENC Control compact^Control^Enable latch C"/>
+			<Link VarA="Enc^Outputs^Out^nCtrl1" VarB="ENC Control compact^Control^Enable latch extern on negative edge" Size="1" OffsA="3"/>
+			<Link VarA="Enc^Outputs^Out^nCtrl1" VarB="ENC Control compact^Control^Enable latch extern on positive edge" Size="1" OffsA="1"/>
+			<Link VarA="Enc^Outputs^Out^nCtrl1" VarB="ENC Control compact^Control^Set counter" Size="1" OffsA="2"/>
+			<Link VarA="Enc^Outputs^Out^nDataOut1[0]" VarB="ENC Control compact^Set counter value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^FocusMotor (EL7342)">
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Error" Size="1" OffsA="3"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Moving negative" Size="1" OffsA="5"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Moving positive" Size="1" OffsA="4"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Ready" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Ready to enable"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Torque reduced" Size="1" OffsA="6"/>
+			<Link VarA="Drive^Inputs^In^nState1" VarB="DCM Status Channel 1^Status^Warning" Size="1" OffsA="2"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="DCM Status Channel 1^Status^Digital input 1" Size="1" OffsA="3"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="DCM Status Channel 1^Status^Digital input 2" Size="1" OffsA="4"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="DCM Status Channel 1^Status^Sync error" Size="1" OffsA="5"/>
+			<Link VarA="Drive^Inputs^In^nState2" VarB="DCM Status Channel 1^Status^TxPDO Toggle" Size="1" OffsA="7"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DCM Control Channel 1^Control^Enable"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DCM Control Channel 1^Control^Reduce torque" Size="1" OffsA="2"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DCM Control Channel 1^Control^Reset" Size="1" OffsA="1"/>
+			<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DCM Control Channel 1^Control^Threshold active" Size="1" OffsA="3"/>
+			<Link VarA="Drive^Outputs^Out^nDataOut2[0]" VarB="DCM Velocity Channel 1^Velocity"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="TIPC^STELLA1Runtime^STELLA1Runtime Instance">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Azimuth (AX5125-0000-0214)">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Azimuth_diagnostic" VarB="AT^Diagnostic number"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Azimuth_inputs" VarB="AT^Digital inputs, state"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Azimuth_torque" VarB="AT^Torque/force feedback value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Derotator(AX5203-0000-0210)">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_inputs" VarB="AT 2^Digital inputs, state"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_torque" VarB="AT 2^Torque/force feedback value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Elevation (AX5125-0000-0214)">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Elevation_diagnostic" VarB="AT^Diagnostic number"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Elevation_inputs" VarB="AT^Digital inputs, state"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.Elevation_torque" VarB="AT^Torque/force feedback value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Cover Limit Switches (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.cover1_closed" VarB="Channel 2^GVL_Telescope.cover1_closed"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.cover1_open" VarB="Channel 1^GVL_Telescope.cover1_open"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.cover2_closed" VarB="Channel 4^GVL_Telescope.cover2_closed"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.cover2_open" VarB="Channel 3^GVL_Telescope.cover2_open"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.cover3_closed" VarB="Channel 6^GVL_Telescope.cover3_closed"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.cover3_open" VarB="Channel 5^GVL_Telescope.cover3_open"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Cover Motors (EL2008)">
+			<Link VarA="PlcTask Outputs^GVL_Telescope.close_cover1" VarB="Channel 4^GVL_Telescope.close_cover1"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.close_cover2" VarB="Channel 6^GVL_Telescope.close_cover2"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.close_cover3" VarB="Channel 8^GVL_Telescope.close_cover3"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.nasmyth_left" VarB="Channel 1^GVL_Telescope.nasmyth_left"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.nasmyth_right" VarB="Channel 2^GVL_Telescope.nasmyth_right"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.open_cover1" VarB="Channel 3^GVL_Telescope.open_cover1"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.open_cover2" VarB="Channel 5^GVL_Telescope.open_cover2"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.open_cover3" VarB="Channel 7^GVL_Telescope.open_cover3"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Hydraulics IN (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_high" VarB="Channel 2^GVL_Hydraulics.oil_high"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_low" VarB="Channel 1^GVL_Hydraulics.oil_low"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_overtemperature" VarB="Channel 4^GVL_Hydraulics.oil_overtemperature"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_pressure_OK" VarB="Channel 3^GVL_Hydraulics.oil_pressure_OK"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_undertemperature" VarB="Channel 5^GVL_Hydraulics.oil_undertemperature"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oilfilter_dirty" VarB="Channel 6^GVL_Hydraulics.oilfilter_dirty"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Lock and Horn (EL2008)">
+			<Link VarA="PlcTask Outputs^GVL_Telescope.focus_unlock" VarB="Channel 1^GVL_Telescope.focus_lock"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.horn" VarB="Channel 8^GVL_Telescope.horn"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.nasmyth_lock" VarB="Channel 2^GVL_Telescope.nasmyth_lock"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^M2 M3 Limit switches (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.focus_limit_far" VarB="Channel 2^GVL_Telescope.focus_limit_far"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.focus_limit_near" VarB="Channel 1^GVL_Telescope.focus_limit_near"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.nasmyth_limit_left" VarB="Channel 3^GVL_Telescope.nasmyth_limit_left"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.nasmyth_limit_right" VarB="Channel 4^GVL_Telescope.nasmyth_limit_right"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Main Panel IN (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_Main.key_switch_remote" VarB="Channel 1^GVL_Main.key_switch_remote"/>
+			<Link VarA="PlcTask Inputs^GVL_Main.reset_switch" VarB="Channel 4^GVL_Main.reset_switch"/>
+			<Link VarA="PlcTask Inputs^GVL_Main.start_switch" VarB="Channel 2^GVL_Main.start_switch"/>
+			<Link VarA="PlcTask Inputs^GVL_Main.stop_switch" VarB="Channel 3^GVL_Main.stop_switch"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Main Panel Out (EL2008)">
+			<Link VarA="PlcTask Outputs^GVL_Main.lamp_error" VarB="Channel 3^GVL_Main.lamp_error"/>
+			<Link VarA="PlcTask Outputs^GVL_Main.lamp_on_manual" VarB="Channel 2^GVL_Main.lamp_ready"/>
+			<Link VarA="PlcTask Outputs^GVL_Main.lamp_power" VarB="Channel 1^GVL_Main.lamp_power"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Control (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD1" VarB="Channel 1^GVL_pendant_control.BCD1"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD2" VarB="Channel 2^GVL_pendant_control.BCD2"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD4" VarB="Channel 3^GVL_pendant_control.BCD4"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.BCD8" VarB="Channel 4^GVL_pendant_control.BCD8"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_down" VarB="Channel 7^GVL_pendant_control.direction_down"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_up" VarB="Channel 6^GVL_pendant_control.direction_up"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.key_switch" VarB="Channel 8^GVL_pendant_control.key_switch"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.reset_switch" VarB="Channel 5^GVL_pendant_control.reset_switch"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Control2 (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_left" VarB="Channel 2^GVL_pendant_control.direction_left"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.direction_right" VarB="Channel 3^GVL_pendant_control.direction_right"/>
+			<Link VarA="PlcTask Inputs^GVL_pendant_control.start_switch" VarB="Channel 1^GVL_pendant_control.start_switch"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Lights (EL2008)">
+			<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_down" VarB="Channel 2^GVL_pendant_control.lamp_down"/>
+			<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_error" VarB="Channel 5^GVL_pendant_control.lamp_error"/>
+			<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_left" VarB="Channel 4^GVL_pendant_control.lamp_left"/>
+			<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_right" VarB="Channel 3^GVL_pendant_control.lamp_right"/>
+			<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_up" VarB="Channel 1^GVL_pendant_control.lamp_up"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
+			<Link VarA="PlcTask Inputs^GVL_Safety.Error" VarB="StandardInputs^TwinSafeGroup1.SafetyError_4"/>
+			<Link VarA="PlcTask Inputs^GVL_Safety.State" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBEstop1 Info Data^State"/>
+			<Link VarA="PlcTask Inputs^GVL_Safety.Stop" VarB="StandardInputs^TwinSafeGroup1.SafetyStop_7"/>
+			<Link VarA="PlcTask Outputs^GVL_Safety.ErrAck" VarB="StandardOutputs^TwinSafeGroup1.ErrorAcknowledgement_1"/>
+			<Link VarA="PlcTask Outputs^GVL_Safety.Restart" VarB="StandardOutputs^TwinSafeGroup1.RestartSafety_2"/>
+			<Link VarA="PlcTask Outputs^GVL_Safety.Run" VarB="StandardOutputs^TwinSafeGroup1.RunSafety_3"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Telescope Hydraulics IN (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_reserve" VarB="Channel 2^GVL_Hydraulics.oil_reserve"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.oilpan_maximum" VarB="Channel 1^GVL_Hydraulics.oilpan_maximum"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.azimut_limit_switch" VarB="Channel 8^GVL_Telescope.azimut_limit_switch"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature IN (EL3202)">
+			<Link VarA="PlcTask Inputs^GVL_Main.main_cabinet_temperature" VarB="RTD Inputs Channel 1^Value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature M2 M1 (EL3064)">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror1" VarB="AI Standard Channel 2^Value"/>
+			<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror2" VarB="AI Standard Channel 1^Value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)">
+			<Link VarA="PlcTask Inputs^GVL_FilterWheel.bCalibrationCam" VarB="DRV Info data 1^Info data 1" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics IN (EL1008)">
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.pump_running" VarB="Channel 7^GVL_Hydraulics.pump_running"/>
+			<Link VarA="PlcTask Inputs^GVL_Hydraulics.suction_running" VarB="Channel 8^GVL_Hydraulics.suction_running"/>
+			<Link VarA="PlcTask Inputs^GVL_Main.brake_clearing" VarB="Channel 3^GVL_Main.brake_clearing"/>
+			<Link VarA="PlcTask Inputs^GVL_Main.trafo_bypassed" VarB="Channel 2^GVL_Main.trafo_bypassed"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics OUT (EL2008)">
+			<Link VarA="PlcTask Outputs^GVL_Hydraulics.oil_pump_enable" VarB="Channel 1^GVL_Hydraulics.oil_pump_enable"/>
+			<Link VarA="PlcTask Outputs^GVL_Hydraulics.oil_suction_enable" VarB="Channel 2^GVL_Hydraulics.oil_suction_enable"/>
+			<Link VarA="PlcTask Outputs^GVL_Main.softstart_trafo" VarB="Channel 8^GVL_Main.softstart_trafo"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.brake_azimuth_eve" VarB="Channel 3^GVL_Telescope.brake_azimuth_eve"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Azimuth">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.AzimuthAxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.AzimuthAxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Derotator">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.DerotatorAxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.DerotatorAxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Elevation">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.ElevationAxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.ElevationAxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^FilterWheel">
+			<Link VarA="PlcTask Inputs^GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+			<Link VarA="PlcTask Outputs^GVL_FilterWheel.FilterWheel_AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Fokus">
+			<Link VarA="PlcTask Inputs^GVL_Telescope.FocusAxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+			<Link VarA="PlcTask Outputs^GVL_Telescope.FocusAxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+	</OwnerA>
+</VarLinks>

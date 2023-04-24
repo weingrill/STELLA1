@@ -26,7 +26,8 @@ VAR
 	remote_keyswitch:	BOOL;
 	remote_brake_clearing:	BOOL;
 	// blink error lamp on warning
-	warn_blink: 		FB_BLINK;
+	error_lamp: 		FB_BLINK;
+	power_lamp:			FB_BLINK;
 	// watchdog for trafo softstarter
 	power_watchdog: 	TON;
 	// main cabinet temperature in degrees
@@ -113,25 +114,41 @@ AuxiliaryControl(); //
 MQTTClient();
 Transformer();
 
-warn_blink(ENABLE := HydraulicsControl.oil_warning OR HydraulicsControl.oil_hot, 
-	Q => warning);
-error := Transformer.error OR 
-			HydraulicsControl.pressure_failure 
-			OR (NOT Transformer.phase_available)
-			OR GVL_Telescope.azimut_limit_switch
-			//OR PendantControl.error
-			OR ElevationControl.error
+error := GVL_Telescope.azimut_limit_switch
 			OR FilterWheelControl.Error
 			OR Focuscontrol.Error
 			OR NasmythControl.error
-			OR CoverControl.Error
-			OR AzimuthElevationControl.error
-			OR DerotatorControl.Error
-			OR GVL_Safety.Error;
+			OR CoverControl.Error;
 // set control lights					
 GVL_Main.lamp_on_manual := PendantControl.manual;
-GVL_Main.lamp_error := error OR warning;
-GVL_Main.lamp_power := Transformer.power_ok AND Transformer.phase_available;
+
+IF GVL_Safety.Error THEN
+	error_lamp.blink := e_blink.short;
+ELSIF ElevationControl.error OR AzimuthElevationControl.error OR DerotatorControl.Error THEN
+	error_lamp.blink := e_blink.long;
+ELSIF HydraulicsControl.oil_warning OR HydraulicsControl.oil_hot OR HydraulicsControl.pressure_failure THEN
+	error_lamp.blink := e_blink.slow;
+ELSIF Transformer.error THEN
+	error_lamp.blink := e_blink.fast;
+ELSIF error THEN
+	error_lamp.blink := e_blink.on;
+ELSE
+	error_lamp.blink := e_blink.off; 
+END_IF
+
+IF Transformer.phase_available THEN
+	power_lamp.blink := e_blink.long;
+ELSIF NOT Transformer.phase_available THEN
+	power_lamp.blink := e_blink.short;
+ELSIF  Transformer.error THEN
+	power_lamp.blink := e_blink.fast;
+ELSIF Transformer.power_ok THEN 
+	power_lamp.blink := e_blink.on;
+ELSE 
+	power_lamp.blink := e_blink.off; 
+END_IF
+GVL_Main.lamp_error := error_lamp.Q;
+GVL_Main.lamp_power := power_lamp.Q; // Transformer.power_ok AND Transformer.phase_available;
 SafetyHandling();
 
 ups_input_voltage 		:= GVL_MAIN.ups_input_voltage / 1000.0;
@@ -180,7 +197,28 @@ TemperatureCriticalEvent(
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="655" Count="121" />
+      <LineId Id="655" Count="57" />
+      <LineId Id="718" Count="1" />
+      <LineId Id="722" Count="2" />
+      <LineId Id="728" Count="1" />
+      <LineId Id="832" Count="0" />
+      <LineId Id="829" Count="1" />
+      <LineId Id="842" Count="0" />
+      <LineId Id="844" Count="0" />
+      <LineId Id="833" Count="0" />
+      <LineId Id="835" Count="2" />
+      <LineId Id="840" Count="1" />
+      <LineId Id="838" Count="1" />
+      <LineId Id="831" Count="0" />
+      <LineId Id="847" Count="0" />
+      <LineId Id="846" Count="0" />
+      <LineId Id="848" Count="0" />
+      <LineId Id="857" Count="1" />
+      <LineId Id="855" Count="1" />
+      <LineId Id="850" Count="0" />
+      <LineId Id="852" Count="2" />
+      <LineId Id="849" Count="0" />
+      <LineId Id="730" Count="46" />
       <LineId Id="474" Count="0" />
     </LineIds>
   </POU>
