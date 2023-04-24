@@ -73,9 +73,9 @@ VAR
 	brake_opened_delay:	TON;
 	// error state (set dominant)
 	error_state:	SR;
-	// timer to shut off hydraulics after breake was closed
-	hydraulics_off_timer:	TON  := (PT := T#10S);
-	brake_close_trigger:	F_TRIG;
+	// timer to shut off hydraulics after break was closed
+	hydraulics_off_timer:	TOF  := (PT := T#10S);
+	off_trigger:	F_TRIG;
 	HydraulicsLog,
 	PumpLog,
 	ReserveLog,
@@ -116,6 +116,9 @@ IF manual_stop THEN
 	manual_start := FALSE;
 END_IF
 
+IF istop THEN
+	istart := FALSE;
+END_IF
 error_state(SET1 := pressure_failure OR	suction_failure OR hydraulics_failure OR oil_low,
 			RESET := reset,
 			Q1 => error);
@@ -162,11 +165,11 @@ brake_closed := NOT brake_open;
 IF brake_closed THEN
 	iclose_brake := FALSE;
 END_IF
-brake_close_trigger(CLK := brake_closed);
-// if the brake is closed, turn off the hydraulics after n seconds
-hydraulics_off_timer(IN := brake_close_trigger.Q);
+hydraulics_off_timer(IN := brake_open AND pump_running );
+off_trigger(CLK := hydraulics_off_timer.Q);
 
-IF hydraulics_off_timer.Q AND pump_running THEN
+IF off_trigger.Q THEN
+	istart := FALSE;
 	istop := TRUE;
 END_IF
 
@@ -316,21 +319,28 @@ END_VAR
         <ST><![CDATA[// start the pump
 istart := TRUE;
 // open the brake
-iopen_brake := TRUE;
+IF oil_pressure_OK THEN
+	iopen_brake := TRUE;
+END_IF;
 RETURN(brake_open);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="HydraulicsControl">
       <LineId Id="1912" Count="21" />
+      <LineId Id="2296" Count="0" />
       <LineId Id="2192" Count="0" />
+      <LineId Id="2297" Count="1" />
       <LineId Id="1935" Count="10" />
       <LineId Id="2191" Count="0" />
       <LineId Id="1946" Count="33" />
-      <LineId Id="2203" Count="0" />
-      <LineId Id="2197" Count="1" />
+      <LineId Id="2198" Count="0" />
+      <LineId Id="2300" Count="0" />
       <LineId Id="2202" Count="0" />
-      <LineId Id="2199" Count="2" />
-      <LineId Id="1980" Count="123" />
+      <LineId Id="2199" Count="0" />
+      <LineId Id="2294" Count="0" />
+      <LineId Id="2200" Count="1" />
+      <LineId Id="2295" Count="0" />
+      <LineId Id="1981" Count="122" />
       <LineId Id="708" Count="0" />
     </LineIds>
     <LineIds Name="HydraulicsControl.close_brake">
@@ -343,7 +353,10 @@ RETURN(brake_open);]]></ST>
       <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="12" Count="0" />
-      <LineId Id="5" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="6" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
