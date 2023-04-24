@@ -56,7 +56,7 @@ VAR
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 73.9885;
+	calibration_position:	LREAL := 43.000;
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -68,7 +68,15 @@ position := LIMIT(0.0, position, 90.0);
 
 //if we enable the axis, we have to open the brake first
 IF Enable THEN
-	HydraulicsControl.open_brake();
+	IF NOT Calibrated THEN
+		CoverControl.open := TRUE;
+		IF CoverControl.isopen THEN
+			HydraulicsControl.open_brake();
+		END_IF
+	ELSE
+		HydraulicsControl.open_brake();
+	END_IF
+	
 END_IF
 
 enable_trigger(CLK := enable);
@@ -220,7 +228,12 @@ CalibrationEvent(
       <LineId Id="233" Count="0" />
       <LineId Id="706" Count="0" />
       <LineId Id="451" Count="0" />
-      <LineId Id="234" Count="1" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="1319" Count="1" />
+      <LineId Id="1324" Count="2" />
+      <LineId Id="1322" Count="1" />
+      <LineId Id="1321" Count="0" />
+      <LineId Id="235" Count="0" />
       <LineId Id="238" Count="0" />
       <LineId Id="1253" Count="1" />
       <LineId Id="707" Count="0" />

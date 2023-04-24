@@ -56,7 +56,7 @@ VAR CONSTANT
 	// reference position for homing
 	// homing_position:		LREAL := 439.0; // was 442 - -21.21 = 463.21; 463 + 24 = 439
 	// current position of the calibration cam encoder zero index. Apply an offset here if necessary
-	calibration_position:	LREAL := 156.1195; // 393.0; 
+	calibration_position:	LREAL := 208.2342; // 393.0; 
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -122,14 +122,14 @@ MC_SetAcceptBlockedDriveSignal(
 	Enable := HomeAxis);
 
 AzimuthAxis(	
-	Enable := 			enable AND azimuth_at_rest,
+	Enable := 			enable AND azimuth_at_rest AND NOT GVL_Telescope.azimut_limit_switch,
 	Reset := 			reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis := 		HomeAxis,
 	Tracking :=			Tracking,
 	Position := 		position, 
-	Enable_Positive := 	NOT GVL_Telescope.azimut_limit_switch AND (GVL_Telescope.Azimuth_inputs.1 OR HomeAxis),
-	Enable_Negative := 	NOT GVL_Telescope.azimut_limit_switch AND GVL_Telescope.Azimuth_inputs.0,
+	Enable_Positive := 	GVL_Telescope.Azimuth_inputs.1 OR HomeAxis,
+	Enable_Negative := 	GVL_Telescope.Azimuth_inputs.0,
 	Jog_Forward :=		right,
 	Jog_Backwards := 	left,
 	bCalibrationCam :=	NOT GVL_Telescope.Azimuth_inputs.1,
