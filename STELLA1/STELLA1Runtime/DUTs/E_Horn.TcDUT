@@ -6,6 +6,7 @@
 TYPE E_Horn :
 (
 	off := 0,
+	beep,
 	short,
 	long
 );

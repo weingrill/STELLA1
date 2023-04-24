@@ -28,6 +28,7 @@ VAR
 	// blink error lamp on warning
 	error_lamp: 		FB_BLINK;
 	power_lamp:			FB_BLINK;
+	sound_horn:			FB_Horn;
 	// watchdog for trafo softstarter
 	power_watchdog: 	TON;
 	// main cabinet temperature in degrees
@@ -136,19 +137,38 @@ ELSE
 	error_lamp.blink := e_blink.off; 
 END_IF
 
-IF Transformer.phase_available THEN
+IF Transformer.restart_inhibited THEN
+	power_lamp.blink := e_blink.short;
+ELSIF GVL_main.trafo_bypassed THEN 
+	power_lamp.blink := e_blink.on;
+ELSIF Transformer.phase_available THEN
 	power_lamp.blink := e_blink.long;
 ELSIF NOT Transformer.phase_available THEN
-	power_lamp.blink := e_blink.short;
+	power_lamp.blink := e_blink.off;
 ELSIF  Transformer.error THEN
 	power_lamp.blink := e_blink.fast;
-ELSIF Transformer.power_ok THEN 
-	power_lamp.blink := e_blink.on;
 ELSE 
 	power_lamp.blink := e_blink.off; 
 END_IF
-GVL_Main.lamp_error := error_lamp.Q;
-GVL_Main.lamp_power := power_lamp.Q; // Transformer.power_ok AND Transformer.phase_available;
+error_lamp(Q => GVL_Main.lamp_error);
+//GVL_Main.lamp_error := error_lamp.Q;
+power_lamp(Q => GVL_Main.lamp_power);
+//GVL_Main.lamp_power := power_lamp.Q;
+
+IF GVL_Telescope.azimut_limit_switch THEN
+	sound_horn.horn := E_horn.long;
+ELSIF Hydraulicscontrol.suction_failure THEN
+	sound_horn.horn := E_horn.long;
+ELSIF TelescopeControl.poweronwarning.Q THEN
+	sound_horn.horn := E_horn.short;
+ELSIF Pendantcontrol.horn THEN
+	sound_horn.horn := E_horn.beep;
+ELSE
+	sound_horn.horn := E_horn.off;
+END_IF 
+
+sound_horn(Q => GVL_Telescope.horn );
+
 SafetyHandling();
 
 ups_input_voltage 		:= GVL_MAIN.ups_input_voltage / 1000.0;
@@ -210,15 +230,31 @@ TemperatureCriticalEvent(
       <LineId Id="840" Count="1" />
       <LineId Id="838" Count="1" />
       <LineId Id="831" Count="0" />
+      <LineId Id="884" Count="0" />
       <LineId Id="847" Count="0" />
+      <LineId Id="885" Count="2" />
       <LineId Id="846" Count="0" />
       <LineId Id="848" Count="0" />
       <LineId Id="857" Count="1" />
       <LineId Id="855" Count="1" />
-      <LineId Id="850" Count="0" />
-      <LineId Id="852" Count="2" />
+      <LineId Id="853" Count="1" />
       <LineId Id="849" Count="0" />
-      <LineId Id="730" Count="46" />
+      <LineId Id="859" Count="0" />
+      <LineId Id="730" Count="0" />
+      <LineId Id="860" Count="0" />
+      <LineId Id="731" Count="0" />
+      <LineId Id="865" Count="0" />
+      <LineId Id="864" Count="0" />
+      <LineId Id="867" Count="1" />
+      <LineId Id="870" Count="1" />
+      <LineId Id="873" Count="0" />
+      <LineId Id="878" Count="1" />
+      <LineId Id="875" Count="1" />
+      <LineId Id="866" Count="0" />
+      <LineId Id="880" Count="0" />
+      <LineId Id="862" Count="0" />
+      <LineId Id="861" Count="0" />
+      <LineId Id="732" Count="44" />
       <LineId Id="474" Count="0" />
     </LineIds>
   </POU>

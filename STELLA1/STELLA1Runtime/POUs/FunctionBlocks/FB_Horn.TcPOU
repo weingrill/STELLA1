@@ -19,6 +19,8 @@ END_VAR
       <ST><![CDATA[CASE horn OF
 	e_horn.off:
 		ON_TIME := T#0MS;
+	e_horn.beep:
+		ON_TIME := T#500MS;
 	e_horn.short:
 		ON_TIME := T#3000MS;
 	e_horn.long:
@@ -34,6 +36,7 @@ END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_Horn">
       <LineId Id="10" Count="2" />
+      <LineId Id="47" Count="1" />
       <LineId Id="14" Count="1" />
       <LineId Id="17" Count="0" />
       <LineId Id="46" Count="0" />
