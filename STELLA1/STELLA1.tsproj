@@ -1695,6 +1695,10 @@ External Setpoint Generation:
 	</ImageDatas>
 	<Project ProjectGUID="{9406D69C-EBA9-4591-A513-578A75D14426}" TargetNetId="5.122.3.233.1.1" Target64Bit="true" ShowHideConfigurations="#x346">
 		<System>
+			<Settings MaxCpus="4">
+				<Cpu/>
+				<Cpu CpuId="1"/>
+			</Settings>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
@@ -1790,7 +1794,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="23">
 						<DrvPara>
-							<Analog VeloReferenz="10.2713178" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="10.2713178" TorqueSetpointScale="10" ScaleFactorActTorque="0.2"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -1863,7 +1867,8 @@ External Setpoint Generation:
 						</Vars>
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
-						<CtrPara PriorControlFactor="1">
+						<CtrPara PriorControlFactor="0.5">
+							<PID PosKp="50"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -2038,7 +2043,7 @@ External Setpoint Generation:
 					<AxisPara>
 						<General UnitName="°"/>
 						<Dynamic AccelerationMaximum="10" DecelerationMaximum="10" Acceleration="3" Deceleration="3" Jerk="1"/>
-						<Velo RefSearch="1" RefSync="1" SlowManual="1" FastManual="5" Fast="798" Maximum="10"/>
+						<Velo RefSearch="2" RefSync="1" SlowManual="1" FastManual="5" Fast="798" Maximum="10"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
