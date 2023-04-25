@@ -92,6 +92,9 @@ VAR
 	Acceleration:	LREAL := 0.0;
 	EndTracking:	F_TRIG;
 	PositionDifference:	LREAL;
+	tracking_PID:	FB_BasicPID;
+	fKp : LREAL := 0.01;
+	fTv : LREAL := 0.0;
 END_VAR
 
 VAR_IN_OUT
@@ -129,9 +132,16 @@ IF PositionDifference < 0.0 THEN
 ELSE
 	Direction := 1;
 END_IF
+
+tracking_PID(	fSetpointValue := Position,
+				fActualValue := AbsolutePosition,
+				bReset := NOT Tracking,
+				fCtrlCycleTime := 0.01, // 10ms
+				fKp := fKp,
+				fTv := fTv);
 	
 MC_ExtSetPointGenFeed(
-	Position :=		AbsolutePosition + LIMIT(-0.5, PositionDifference, 0.5),
+	Position :=		AbsolutePosition + LIMIT(-0.01, tracking_PID.fCtrlOutput, 0.01),
 	Velocity :=		0, //ABS(Velocity),
 	Acceleration :=	ABS(Acceleration),
 	Direction :=	Direction, 
@@ -317,6 +327,8 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="1810" Count="0" />
       <LineId Id="1419" Count="1" />
       <LineId Id="1418" Count="0" />
+      <LineId Id="2007" Count="5" />
+      <LineId Id="2016" Count="0" />
       <LineId Id="1416" Count="0" />
       <LineId Id="1287" Count="0" />
       <LineId Id="1297" Count="3" />
