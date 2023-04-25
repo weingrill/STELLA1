@@ -98,8 +98,8 @@ IF stop THEN
 	// SimpleLog(Message := 'manual Hydraulics stop');
 END_IF
 
-// telescope is ready when power available and hydraulics ok
-ready := Transformer.power_OK AND HydraulicsControl.oil_pressure_OK;
+// telescope is ready when power available
+ready :=  GVL_main.trafo_bypassed;
 		
 TelescopeControl();	//
 CoverControl();	//
@@ -189,6 +189,7 @@ IF MQTTTimer.Q THEN // publish new payload every second
 	MQTTClient.Publish('electronics', 'base', 'PhaseOK', BOOL_TO_STRING(Transformer.phase_available));
 	MQTTClient.Publish('electronics', 'base', 'MainReady', BOOL_TO_STRING(ready));
 	MQTTClient.Publish('electronics', 'base', 'MasterError', BOOL_TO_STRING(error));
+	(*
 	MQTTClient.Publish('electronics', 'base', 'UPSInputVoltage', LREAL_TO_FMTSTR(ups_input_voltage, 3, TRUE));
 	MQTTClient.Publish('electronics', 'base', 'UPSInputCurrent', LREAL_TO_FMTSTR(ups_input_current, 3, TRUE));
 	MQTTClient.Publish('electronics', 'base', 'UPSInputPower', LREAL_TO_FMTSTR(ups_input_power, 3, TRUE));
@@ -197,6 +198,7 @@ IF MQTTTimer.Q THEN // publish new payload every second
 	MQTTClient.Publish('electronics', 'base', 'UPSOutputPower', LREAL_TO_FMTSTR(ups_output_power, 3, TRUE));
 	MQTTClient.Publish('electronics', 'base', 'UPSTemperature', LREAL_TO_FMTSTR(ups_temperature, 1, TRUE));
 	MQTTClient.Publish('electronics', 'base', 'UPSBatteryTemperature', LREAL_TO_FMTSTR(ups_battery_temperature, 1, TRUE));
+	*)
 END_IF
 PhaseLog(	
 	Trigger := 		NOT Transformer.phase_available, 
@@ -217,7 +219,9 @@ TemperatureCriticalEvent(
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="655" Count="57" />
+      <LineId Id="655" Count="40" />
+      <LineId Id="888" Count="2" />
+      <LineId Id="699" Count="13" />
       <LineId Id="718" Count="1" />
       <LineId Id="722" Count="2" />
       <LineId Id="728" Count="1" />
@@ -254,7 +258,11 @@ TemperatureCriticalEvent(
       <LineId Id="880" Count="0" />
       <LineId Id="862" Count="0" />
       <LineId Id="861" Count="0" />
-      <LineId Id="732" Count="44" />
+      <LineId Id="732" Count="19" />
+      <LineId Id="891" Count="0" />
+      <LineId Id="752" Count="7" />
+      <LineId Id="892" Count="0" />
+      <LineId Id="760" Count="16" />
       <LineId Id="474" Count="0" />
     </LineIds>
   </POU>
