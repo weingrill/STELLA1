@@ -60,30 +60,25 @@ filter_position := filter_position MOD filters;
 actual_filter := LREAL_TO_USINT((360.0 - act_position) * filters / 360.0) MOD filters;
 
 Ready := (filter_position = actual_filter) AND FilterWheelAxis.Standstill;
-
-// TODO: Enable only on filter change
-IF FilterWheelAxis.Calibrated THEN
-	// if we are on automatic mode then position the filterwheel
-	position := MODABS(360.0 - 360.0 * WORD_TO_LREAL(filter_position) / WORD_TO_LREAL(filters), 360.0);
-	IF filter_position <> actual_filter THEN
-		IF FilterWheelAxis.Ready THEN
-			MoveAxis := TRUE;	
-		ELSE
-			Enable := TRUE;
+IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
+	IF FilterWheelAxis.Calibrated THEN
+		// if we are on automatic mode then position the filterwheel
+		position := MODABS(360.0 - 360.0 * WORD_TO_LREAL(filter_position) / WORD_TO_LREAL(filters), 360.0);
+		IF filter_position <> actual_filter THEN
+			IF FilterWheelAxis.Ready THEN
+				MoveAxis := TRUE;	
+			ELSE
+				Enable := TRUE;
+			END_IF
 		END_IF
-	END_IF
-	IF FilterWheelAxis.MoveDone THEN
-		Enable := FALSE;
-	END_IF
-	(*
-	IF FilterWheelAxis.Standstill THEN
-		Enable := FALSE;
-	END_IF
-	*)
-ELSE
-	position := calibration_position;
-	IF FilterWheelAxis.Ready THEN
-		HomeAxis := TRUE;
+		IF FilterWheelAxis.MoveDone THEN
+			Enable := FALSE;
+		END_IF
+	ELSE
+		position := calibration_position;
+		IF FilterWheelAxis.Ready THEN
+			HomeAxis := TRUE;
+		END_IF
 	END_IF
 END_IF
 
@@ -158,25 +153,22 @@ FilterReadyEvent(
       <LineId Id="222" Count="0" />
       <LineId Id="235" Count="1" />
       <LineId Id="390" Count="0" />
-      <LineId Id="87" Count="1" />
+      <LineId Id="88" Count="0" />
       <LineId Id="177" Count="0" />
       <LineId Id="252" Count="1" />
-      <LineId Id="596" Count="1" />
-      <LineId Id="599" Count="0" />
-      <LineId Id="601" Count="0" />
-      <LineId Id="598" Count="0" />
+      <LineId Id="596" Count="0" />
+      <LineId Id="607" Count="1" />
+      <LineId Id="597" Count="1" />
       <LineId Id="592" Count="1" />
       <LineId Id="604" Count="0" />
       <LineId Id="595" Count="0" />
-      <LineId Id="602" Count="0" />
-      <LineId Id="589" Count="1" />
-      <LineId Id="587" Count="0" />
-      <LineId Id="603" Count="0" />
       <LineId Id="91" Count="0" />
       <LineId Id="179" Count="1" />
       <LineId Id="443" Count="1" />
       <LineId Id="379" Count="0" />
-      <LineId Id="376" Count="1" />
+      <LineId Id="376" Count="0" />
+      <LineId Id="606" Count="0" />
+      <LineId Id="377" Count="0" />
       <LineId Id="181" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="58" Count="0" />
