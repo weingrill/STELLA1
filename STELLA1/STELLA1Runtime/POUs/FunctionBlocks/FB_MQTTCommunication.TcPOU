@@ -96,7 +96,8 @@ IF fbMessageQueue.nQueuedMessages > 0 THEN
 				ELSIF parameter = 'reset' THEN
 					TelescopeControl.reset := STRING_TO_BOOL(value);
 				ELSIF parameter = 'nasmyth' THEN
-					TelescopeControl.Nasmyth_port := STRING_TO_USINT(value);
+					NasmythControl.left := STRING_TO_USINT(value) = 1;
+					NasmythControl.right := STRING_TO_USINT(value) = 2;
 				ELSIF parameter = 'rightascension' THEN
 					TelescopeControl.rightascension := STRING_TO_LREAL(value);
 				ELSIF parameter = 'declination' THEN
@@ -106,7 +107,9 @@ IF fbMessageQueue.nQueuedMessages > 0 THEN
 				ELSIF parameter = 'azimuth' THEN
 					TelescopeControl.azimuth := STRING_TO_LREAL(value);
 				ELSIF parameter = 'focus' THEN
-					TelescopeControl.focus_position := STRING_TO_LREAL(value);
+					FocusControl.position := STRING_TO_LREAL(value);
+				ELSIF parameter = 'filter' THEN
+					FilterWheelControl.filter_position := STRING_TO_USINT(value);
 				ELSIF parameter = 'derotator' THEN
 					TelescopeControl.derotator_offset := STRING_TO_LREAL(value);
 				ELSIF parameter = 'elevationoffset' THEN
@@ -165,7 +168,7 @@ fbFormat( sFormat := '%s,location=%s,host=%s %s=%s',
 retain_message := value = 'TRUE' OR value = 'FALSE';
 
 Publish := fbMqttClient.Publish(	
-				sTopic:= 'STELLA/Telemetry', 
+				sTopic:= 'STELLA1/Telemetry', 
 				pPayload:= ADR(sPayloadPub), 
 				nPayloadSize:= LEN2(ADR(sPayloadPub)),
 				eQoS:= TcIotMqttQos.AtMostOnceDelivery,
@@ -202,7 +205,7 @@ fbFormat( sFormat := 'log,host=%s,level=%s message="%s"',
 			nErrID => nErrID );
 
 published := fbMqttClient.Publish(	
-				sTopic:= 'STELLA/Log', 
+				sTopic:= 'STELLA1/Log', 
 				pPayload:= ADR(sPayloadPub), 
 				nPayloadSize:= LEN2(ADR(sPayloadPub)),
 				eQoS:= TcIotMqttQos.AtMostOnceDelivery,
@@ -212,7 +215,10 @@ published := fbMqttClient.Publish(
       </Implementation>
     </Method>
     <LineIds Name="FB_MQTTCommunication">
-      <LineId Id="308" Count="78" />
+      <LineId Id="308" Count="68" />
+      <LineId Id="457" Count="0" />
+      <LineId Id="377" Count="7" />
+      <LineId Id="453" Count="3" />
       <LineId Id="394" Count="1" />
       <LineId Id="421" Count="3" />
       <LineId Id="427" Count="0" />
