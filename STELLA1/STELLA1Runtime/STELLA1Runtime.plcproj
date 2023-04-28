@@ -170,6 +170,9 @@
     <Compile Include="POUs\Functions\DateTime2JD.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Functions\F_Azimuthvelocity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Functions\F_DerotatorPosition2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -177,6 +180,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Functions\F_Dewpoint.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_Elevationvelocity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Functions\F_YREAL.TcPOU">
