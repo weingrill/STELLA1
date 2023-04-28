@@ -42,16 +42,18 @@ VAR
 	getlastposition:	BOOL := TRUE;
 	FocusAxisEvent:		FB_EventLog;
 	CalibrationEvent:	FB_EventLog;
+	last_position:		LREAL := -1.0;
+	HomingMode: 		MC_HOMINGMODE := 		MC_DefaultHoming;
 END_VAR
 
 VAR CONSTANT
 	// reference position for homing
-	homing_position:		LREAL := 97.96; // 107,50 - 9,54
+	homing_position:		LREAL := 92.8936; // 106.5936 - 13.7000
 	calibration_position:	LREAL := 0.0;
 	tolerance:				LREAL := 0.005;
 END_VAR
 VAR PERSISTENT
-	last_position:	LREAL := -1.0;
+	last_calibrationposition:	LREAL := -1.0;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(*
@@ -68,8 +70,43 @@ GVL_Telescope.focus_unlock := FocusUnlock OR enable;
 // wait until the focus is unlocked for n milliseconds
 FocusDelay(IN := GVL_Telescope.focus_unlock, PT := T#500MS, Q => FocusUnlocked);
 
+// if we are on automatic mode then position the filterwheel
+IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
+	IF FocusAxis.Calibrated THEN
+		IF position <> last_position THEN
+			IF FocusAxis.Ready THEN
+				MoveAxis := TRUE;
+			ELSE
+				Enable := TRUE;
+			END_IF
+		END_IF
+		IF ABS(position - actual_position) > tolerance THEN
+			;
+		END_IF
+		IF FocusAxis.MoveDone AND FocusAxis.StandStill THEN
+			position := actual_position;
+			last_position := position;
+			Enable := FALSE;
+		END_IF
+	ELSE // not calibrated
+		position := calibration_position;
+		IF FocusAxis.Ready THEN
+			HomeAxis := TRUE;
+		END_IF
+	END_IF
+END_IF
+
+
 IF HomeAxis THEN
-	position := homing_position;
+	IF last_calibrationposition > 0.0 THEN
+		// calibrate on stored position
+		HomingMode := MC_ForceCalibration;
+		position := last_calibrationposition;
+	ELSE
+		// calibrate on limit switch
+		HomingMode := MC_DefaultHoming;
+		position := homing_position;
+	END_IF
 END_IF
 
 // deactivate limit switches on homing
@@ -77,12 +114,12 @@ MC_SetAcceptBlockedDriveSignal(
 	Axis := GVL_Telescope.FocusAxisRef, 
 	Enable := HomeAxis);
 
-//GVL_Telescope.focus_lock := FocusUnlocked;
 FocusAxis(	
 	Enable := 			FocusUnlocked,
 	Reset := 			reset,
 	MoveAxis := 		MoveAxis AND FocusUnlocked,
 	HomeAxis :=			HomeAxis AND FocusUnlocked,
+	HomingMode :=		HomingMode,
 	Position := 		position,
 	Velocity :=			1.0,
 	Enable_Positive := 	NOT GVL_Telescope.focus_limit_far OR HomeAxis,
@@ -101,6 +138,8 @@ END_IF
 
 IF FocusAxis.HomeDone THEN
 	HomeAxis := FALSE;
+	Enable := FALSE;
+	last_position := position;
 END_IF
 	
 IF FocusAxis.ResetDone THEN
@@ -113,39 +152,25 @@ END_IF
 
 Calibrated := FocusAxis.Calibrated;
 
-IF getlastposition AND last_position>=0.0 AND NOT Calibrated THEN
-	// calibrate on stored position
-	FocusCalibration.Execute := getlastposition AND FocusAxis.Ready;
-	FocusCalibration.Position := last_position;
-ELSE
-	// Calibrate on near end
-	FocusCalibration.Execute := GVL_Telescope.focus_limit_near;
-	FocusCalibration.Position := calibration_position;
-END_IF
-	
-
-FocusCalibration(Axis := GVL_Telescope.FocusAxisRef);
-
-IF FocusCalibration.Done OR Calibrated THEN
-	last_position := actual_position;
-	getlastposition := FALSE;
+IF Calibrated AND actual_position < 0.0 AND last_calibrationposition > 0.0 THEN
+	FocusCalibration.Execute := TRUE;
 END_IF
 
+IF FocusCalibration.Done THEN
+	FocusCalibration.Execute := FALSE;
+END_IF
+
+FocusCalibration(Axis := GVL_Telescope.FocusAxisRef,
+					Position := last_calibrationposition);
+			
+
+IF Calibrated AND actual_position > 0.0 THEN // AND NOT enable
+	last_calibrationposition := actual_position;
+	//getlastposition := FALSE;
+END_IF
 	
 IF GVL_Telescope.focus_limit_far THEN
 	Focus_max := actual_position;
-END_IF
-
-IF Calibrated THEN
- 	IF ABS(actual_position - position) > tolerance THEN
-		enable := TRUE;
-		MoveAxis := TRUE;
-	ELSE
-		MoveAxis := FALSE;
-		IF FocusAxis.StandStill THEN
-			enable := FALSE;
-		END_IF
-	END_IF
 END_IF
 
 Ready := FocusAxis.Ready AND FocusAxis.StandStill;
@@ -185,15 +210,34 @@ CalibrationEvent(
       <LineId Id="436" Count="1" />
       <LineId Id="112" Count="0" />
       <LineId Id="110" Count="0" />
+      <LineId Id="832" Count="1" />
+      <LineId Id="803" Count="1" />
+      <LineId Id="834" Count="0" />
+      <LineId Id="837" Count="2" />
+      <LineId Id="841" Count="0" />
+      <LineId Id="835" Count="1" />
+      <LineId Id="805" Count="0" />
+      <LineId Id="812" Count="2" />
+      <LineId Id="824" Count="0" />
+      <LineId Id="840" Count="0" />
+      <LineId Id="815" Count="8" />
+      <LineId Id="802" Count="0" />
       <LineId Id="377" Count="0" />
-      <LineId Id="379" Count="6" />
+      <LineId Id="379" Count="0" />
+      <LineId Id="864" Count="0" />
+      <LineId Id="869" Count="2" />
+      <LineId Id="865" Count="0" />
+      <LineId Id="874" Count="0" />
+      <LineId Id="872" Count="1" />
+      <LineId Id="866" Count="0" />
+      <LineId Id="381" Count="4" />
       <LineId Id="378" Count="0" />
-      <LineId Id="111" Count="0" />
-      <LineId Id="237" Count="0" />
+      <LineId Id="847" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="176" Count="0" />
       <LineId Id="91" Count="1" />
       <LineId Id="175" Count="0" />
+      <LineId Id="858" Count="0" />
       <LineId Id="93" Count="0" />
       <LineId Id="239" Count="0" />
       <LineId Id="94" Count="1" />
@@ -202,37 +246,27 @@ CalibrationEvent(
       <LineId Id="97" Count="0" />
       <LineId Id="114" Count="0" />
       <LineId Id="98" Count="0" />
-      <LineId Id="179" Count="11" />
+      <LineId Id="179" Count="6" />
+      <LineId Id="877" Count="0" />
+      <LineId Id="876" Count="0" />
+      <LineId Id="186" Count="4" />
       <LineId Id="368" Count="0" />
       <LineId Id="370" Count="2" />
       <LineId Id="426" Count="1" />
-      <LineId Id="547" Count="0" />
-      <LineId Id="549" Count="0" />
-      <LineId Id="556" Count="0" />
-      <LineId Id="550" Count="2" />
-      <LineId Id="555" Count="0" />
-      <LineId Id="553" Count="1" />
-      <LineId Id="548" Count="0" />
-      <LineId Id="373" Count="0" />
-      <LineId Id="314" Count="0" />
-      <LineId Id="318" Count="0" />
-      <LineId Id="542" Count="0" />
-      <LineId Id="544" Count="0" />
-      <LineId Id="575" Count="0" />
-      <LineId Id="545" Count="1" />
+      <LineId Id="878" Count="3" />
+      <LineId Id="888" Count="0" />
+      <LineId Id="890" Count="1" />
+      <LineId Id="889" Count="0" />
+      <LineId Id="884" Count="3" />
       <LineId Id="315" Count="0" />
+      <LineId Id="842" Count="0" />
+      <LineId Id="845" Count="1" />
+      <LineId Id="844" Count="0" />
       <LineId Id="543" Count="0" />
       <LineId Id="192" Count="0" />
       <LineId Id="320" Count="1" />
-      <LineId Id="626" Count="1" />
-      <LineId Id="748" Count="0" />
-      <LineId Id="629" Count="0" />
-      <LineId Id="747" Count="0" />
-      <LineId Id="631" Count="1" />
-      <LineId Id="743" Count="2" />
-      <LineId Id="749" Count="0" />
-      <LineId Id="630" Count="0" />
-      <LineId Id="433" Count="1" />
+      <LineId Id="626" Count="0" />
+      <LineId Id="434" Count="0" />
       <LineId Id="557" Count="0" />
       <LineId Id="559" Count="3" />
       <LineId Id="564" Count="0" />
