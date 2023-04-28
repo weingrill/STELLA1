@@ -89,12 +89,10 @@ VAR
 	//wasEnabled:		BOOL;
 	// Direction fot Axis_SetpointFeed
 	Direction:		DINT;
-	Acceleration:	LREAL := 0.0;
+	Acceleration:	LREAL := 0.1;
 	EndTracking:	F_TRIG;
 	PositionDifference:	LREAL;
-	tracking_PID:	FB_BasicPID;
-	fKp : LREAL := 0.01;
-	fTv : LREAL := 0.0;
+	newposition :	LREAL;
 END_VAR
 
 VAR_IN_OUT
@@ -120,29 +118,40 @@ Axis_Reset(
 	Execute := 	Reset,
 	Done => 	ResetDone);
 
-Axis_SetpointEnable(Axis := AxisRef,
-	Execute :=		Tracking AND Ready AND Calibrated AND NOT StopAxis,
-	Position :=		Position,	// final destination
-	PositionType := POSITIONTYPE_ABSOLUTE);
+(* Tracking section ********************************************** *)
+
+IF Tracking THEN
+	IF ABS(AbsolutePosition - Position) > 0.01 THEN
+		Tracking := FALSE;
+		Velocity := 1;
+		MoveAxis := TRUE;
+	ELSE
+		MoveAxis := FALSE;
+	END_IF
+END_IF
+	
 
 PositionDifference := Position - AbsolutePosition;
 IF PositionDifference < 0.0 THEN
 	Direction := -1;
-	
 ELSE
 	Direction := 1;
 END_IF
 
-tracking_PID(	fSetpointValue := Position,
-				fActualValue := AbsolutePosition,
-				bReset := NOT Tracking,
-				fCtrlCycleTime := 0.01, // 10ms
-				fKp := fKp,
-				fTv := fTv);
+IF ABS(PositionDifference)> 0.001 THEN
+	newposition := AbsolutePosition + LIMIT(-0.001, PositionDifference, 0.001);
+ELSE 
+	newposition := Position;
+END_IF
+
+Axis_SetpointEnable(Axis := AxisRef,
+	Execute :=		Tracking AND Ready AND Calibrated AND NOT StopAxis,
+	Position :=		newposition,	// final destination
+	PositionType := POSITIONTYPE_ABSOLUTE);
 	
 MC_ExtSetPointGenFeed(
-	Position :=		AbsolutePosition + LIMIT(-0.01, tracking_PID.fCtrlOutput, 0.01),
-	Velocity :=		0, //ABS(Velocity),
+	Position :=		newposition,
+	Velocity :=		ABS(Velocity),
 	Acceleration :=	ABS(Acceleration),
 	Direction :=	Direction, 
 	Axis :=			AxisRef);
@@ -151,7 +160,9 @@ MC_ExtSetPointGenFeed(
 EndTracking(CLK := Tracking);
 Axis_SetpointDisable(Axis := AxisRef,
 	Execute := NOT Tracking);
-
+	
+(* end of tracking section  ********************************************** *)
+	
 IF isModuloAxis THEN
 	Axis_Modulo( 
 		Axis := 		AxisRef,
@@ -317,19 +328,23 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="37" Count="1" />
       <LineId Id="286" Count="0" />
       <LineId Id="39" Count="1" />
+      <LineId Id="2023" Count="0" />
       <LineId Id="1620" Count="0" />
-      <LineId Id="1280" Count="0" />
-      <LineId Id="1283" Count="2" />
+      <LineId Id="2028" Count="9" />
+      <LineId Id="2024" Count="0" />
       <LineId Id="1812" Count="0" />
       <LineId Id="1415" Count="0" />
       <LineId Id="1301" Count="0" />
       <LineId Id="1417" Count="0" />
-      <LineId Id="1810" Count="0" />
       <LineId Id="1419" Count="1" />
       <LineId Id="1418" Count="0" />
-      <LineId Id="2007" Count="5" />
-      <LineId Id="2016" Count="0" />
+      <LineId Id="2007" Count="0" />
       <LineId Id="1416" Count="0" />
+      <LineId Id="2019" Count="0" />
+      <LineId Id="2021" Count="1" />
+      <LineId Id="2020" Count="0" />
+      <LineId Id="2038" Count="4" />
+      <LineId Id="2018" Count="0" />
       <LineId Id="1287" Count="0" />
       <LineId Id="1297" Count="3" />
       <LineId Id="1296" Count="0" />
@@ -338,6 +353,7 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="1294" Count="0" />
       <LineId Id="1288" Count="0" />
       <LineId Id="1291" Count="0" />
+      <LineId Id="2026" Count="1" />
       <LineId Id="1185" Count="0" />
       <LineId Id="391" Count="0" />
       <LineId Id="491" Count="3" />

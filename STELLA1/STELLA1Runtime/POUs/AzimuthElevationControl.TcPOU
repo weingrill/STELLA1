@@ -19,6 +19,8 @@ VAR_INPUT
 	Tracking:	BOOL;
 	// position to move the axis to
 	position: 	LREAL;
+	// set the Velocity of the axis
+	velocity:	LREAL;
 END_VAR
 VAR_OUTPUT
 	// error state of the axis
@@ -56,7 +58,7 @@ VAR CONSTANT
 	// reference position for homing
 	// homing_position:		LREAL := 439.0; // was 442 - -21.21 = 463.21; 463 + 24 = 439
 	// current position of the calibration cam encoder zero index. Apply an offset here if necessary
-	calibration_position:	LREAL := 208.2342; // 393.0; 
+	calibration_position:	LREAL := 207.0092; // 208.2342; 
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -128,6 +130,7 @@ AzimuthAxis(
 	HomeAxis := 		HomeAxis,
 	Tracking :=			Tracking,
 	Position := 		position, 
+	Velocity :=			velocity,
 	Enable_Positive := 	GVL_Telescope.Azimuth_inputs.1 OR HomeAxis,
 	Enable_Negative := 	GVL_Telescope.Azimuth_inputs.0,
 	Jog_Forward :=		right,
@@ -238,6 +241,7 @@ CalibrationEvent(
       <LineId Id="252" Count="0" />
       <LineId Id="337" Count="0" />
       <LineId Id="41" Count="0" />
+      <LineId Id="962" Count="0" />
       <LineId Id="104" Count="3" />
       <LineId Id="237" Count="0" />
       <LineId Id="38" Count="0" />

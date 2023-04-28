@@ -91,15 +91,6 @@ IF HomeAxis THEN
 	position := calibration_position;
 END_IF
 
-IF Tracking THEN
-	IF ABS(actual_position - position) > 1.0 THEN
-		Tracking := FALSE;
-		MoveAxis := TRUE;
-	ELSE
-		MoveAxis := FALSE;
-	END_IF
-END_IF
-
 DeRotatorAxis(
 	enable := 			enable,
 	Reset := 			Reset,
@@ -196,12 +187,6 @@ CalibrationEvent(
       <LineId Id="155" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="156" Count="1" />
-      <LineId Id="436" Count="1" />
-      <LineId Id="442" Count="0" />
-      <LineId Id="438" Count="0" />
-      <LineId Id="440" Count="0" />
-      <LineId Id="443" Count="2" />
-      <LineId Id="439" Count="0" />
       <LineId Id="424" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="23" Count="0" />

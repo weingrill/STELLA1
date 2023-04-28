@@ -13,6 +13,8 @@ VAR_INPUT
 	enable: 	BOOL;
 	// set position of the axis in degrees
 	position:	LREAL;
+	// set the Velocity of the axis
+	velocity:	LREAL;
 	// move axis command
 	MoveAxis:	BOOL;
 	// calibrate the focus axis
@@ -28,7 +30,7 @@ VAR_OUTPUT
 	// warning condition
 	warning:		BOOL;
 	// actual position of the elevation axis
-	act_position: 	LREAL;
+	actual_position: 	LREAL;
 	// error ID of the elevation axis
 	ErrorID: 		UDINT;
 	// axis is calibrated
@@ -39,11 +41,14 @@ END_VAR
 VAR
 	ElevationAxis:			FB_Axis2;
 	ElevationCalibration: 	MC_SetPosition;
+	// auto-reset commutation errors
 	fbSoEReset: 			FB_SoEReset;
-	bSoEReset : BOOL;
+	bSoEReset:	 			BOOL;
 	// delay until commutator angle is measured
 	readydelay:				TON;
+	// disable trigger for hydraulics
 	enable_trigger:			F_TRIG;
+	// store last position
 	getlastposition:		BOOL := TRUE;
 	ElevationAxisEvent: 	FB_Eventlog;
 	ElevationBrakeEvent: 	FB_Eventlog;
@@ -51,12 +56,15 @@ VAR
 	LowElevationEvent:		FB_Eventlog;
 	TorqueWarning:			FB_EventLog;
 	CalibrationEvent:		FB_Eventlog;
-	elevation_torque: REAL;
-	ReadParameter:		MC_ReadParameter;
+	// elevation torque in percent
+	elevation_torque: 		REAL;
+	// timer to trigger a warning if torque is high
+	torque_timer:			TON;
+	ReadParameter:			MC_ReadParameter;
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 43.000;
+	calibration_position:	LREAL := 42.1281; //43.000
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -114,11 +122,6 @@ warning := NOT enable AND GVL_Telescope.ElevationAxisRef.NcToPlc.ActVelo>2.0;
 MC_SetAcceptBlockedDriveSignal(
 	Axis := GVL_Telescope.ElevationAxisRef, 
 	Enable := HomeAxis);
-
-IF Tracking AND ABS(position - act_position) > 1.0 THEN
-	MoveAxis := TRUE;
-END_IF
-
 	
 ElevationAxis(
 	Enable := 			enable AND HydraulicsControl.brake_open,
@@ -127,12 +130,13 @@ ElevationAxis(
 	HomeAxis :=			HomeAxis,
 	Tracking :=			Tracking,
 	Position := 		position, 
+	Velocity :=			Velocity,
 	Enable_Positive :=  GVL_Telescope.Elevation_inputs.0 OR HomeAxis,
 	Enable_Negative := 	GVL_Telescope.Elevation_inputs.1,
 	Jog_Forward :=		up,
 	Jog_Backwards := 	down,
 	bCalibrationCam :=	NOT GVL_Telescope.Elevation_inputs.0,
-	ActualPosition => 	act_position,
+	ActualPosition => 	actual_position,
 	Error => 			error,
 	ErrorID => 			ErrorID,
 	AxisRef :=			GVL_Telescope.ElevationAxisRef);
@@ -158,7 +162,7 @@ IF ElevationCalibration.Done THEN
 END_IF
 
 IF Calibrated THEN
-	last_position := act_position;
+	last_position := actual_position;
 END_IF
 	
 bSoEReset := GVL_Telescope.Elevation_diagnostic = 16#0000F10B OR GVL_Telescope.Elevation_diagnostic = 16#0000F601;
@@ -188,22 +192,22 @@ IF ReadParameter.Valid THEN
 END_IF
 
 elevation_torque := GVL_Telescope.Elevation_torque / 10.0;
-
+torque_timer(IN := ABS(elevation_torque) > 60.0, PT := T#1000MS);
 		
 ElevationAxisEvent(	Trigger := Error, 
 				Level := ADSLOG_MSGTYPE_ERROR,
 				FormatString := 'Elevation Axis Error: %s',
 				OnMessage := NCError_TO_STRING(ErrorID));
 
-HighElevationEvent(	Trigger := Calibrated AND act_position > 80.0, 
+HighElevationEvent(	Trigger := Calibrated AND actual_position > 85.0, 
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := 'High Elevation: %s',
-				OnMessage := LREAL_TO_FMTSTR(act_position, 2, TRUE));
+				OnMessage := LREAL_TO_FMTSTR(actual_position, 2, TRUE));
 
-LowElevationEvent(	Trigger := Calibrated AND act_position < 15.0, 
+LowElevationEvent(	Trigger := Calibrated AND actual_position < 15.0, 
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := 'Low Elevation: %s',
-				OnMessage := LREAL_TO_FMTSTR(act_position, 2, TRUE));
+				OnMessage := LREAL_TO_FMTSTR(actual_position, 2, TRUE));
 				
 ElevationBrakeEvent( Trigger := NOT enable AND HydraulicsControl.brake_open, 
 				Level := ADSLOG_MSGTYPE_WARN,
@@ -211,7 +215,7 @@ ElevationBrakeEvent( Trigger := NOT enable AND HydraulicsControl.brake_open,
 				OnMessage := 'Brake was opened without elevation axis enabled!'); 
 
 TorqueWarning(	
-	Trigger := 		ABS(elevation_torque) > 60.0, 
+	Trigger := torque_timer.Q, 
 	Level := 		ADSLOG_MSGTYPE_WARN,
 	FormatString :=	'%s',
 	OnMessage := 	'Elevation torque is high.');
@@ -261,15 +265,14 @@ CalibrationEvent(
       <LineId Id="279" Count="0" />
       <LineId Id="243" Count="0" />
       <LineId Id="291" Count="1" />
-      <LineId Id="381" Count="0" />
-      <LineId Id="763" Count="2" />
-      <LineId Id="762" Count="0" />
       <LineId Id="615" Count="0" />
       <LineId Id="128" Count="0" />
       <LineId Id="184" Count="2" />
-      <LineId Id="277" Count="0" />
+      <LineId Id="1335" Count="0" />
       <LineId Id="562" Count="0" />
-      <LineId Id="187" Count="4" />
+      <LineId Id="187" Count="1" />
+      <LineId Id="1336" Count="0" />
+      <LineId Id="189" Count="2" />
       <LineId Id="300" Count="0" />
       <LineId Id="192" Count="2" />
       <LineId Id="135" Count="0" />
