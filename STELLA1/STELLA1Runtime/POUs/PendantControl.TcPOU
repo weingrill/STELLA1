@@ -43,7 +43,8 @@ VAR
 	TwinCATRestart: TC_Restart;
 	up_trigger:	R_TRIG;
 	down_trigger:	R_TRIG;	
-//R_Enable:	R_TRIG;
+	// manual or automatic operation of the telescope
+	telescope_mode : E_TelescopeMode;	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -84,6 +85,15 @@ down_trigger(CLK := down);
 // the error lamp is the same as the error lamp of the main panel
 lamp_error := GVL_Main.lamp_error;
 CoverControl.active_cover := 0;
+
+
+// determine the operation of the telescope based on the switch set
+IF manual THEN
+	telescope_mode := E_TelescopeMode.manual;
+ELSE
+	telescope_mode := E_TelescopeMode.automatic;
+END_IF
+
 // enable only the selected item and connect lamps and buttons accordingly
 CASE Selection OF
 	1:	// reserved for Cover1 control
@@ -212,8 +222,8 @@ CASE Selection OF
 	10:	// FilterWheel control
 		lamp_left := manual AND FilterWheelControl.enable;
 		lamp_right := manual AND FilterWheelControl.enable;
-		lamp_up := manual AND FilterWheelControl.enable AND FilterWheelControl.Calibrated;
-		lamp_down := manual AND FilterWheelControl.enable AND FilterWheelControl.Calibrated;
+		lamp_up :=	NOT  manual AND FilterWheelControl.enable AND FilterWheelControl.Calibrated;
+		lamp_down := NOT manual AND FilterWheelControl.enable AND FilterWheelControl.Calibrated;
 		FilterWheelControl.reset := reset;
 		FilterWheelControl.left := left;
 		FilterWheelControl.right := right;
@@ -328,7 +338,10 @@ GVL_pendant_control.lamp_error := lamp_error;]]></ST>
       <LineId Id="3548" Count="0" />
       <LineId Id="3247" Count="0" />
       <LineId Id="3549" Count="0" />
-      <LineId Id="3248" Count="129" />
+      <LineId Id="3248" Count="3" />
+      <LineId Id="3595" Count="7" />
+      <LineId Id="3594" Count="0" />
+      <LineId Id="3252" Count="125" />
       <LineId Id="3379" Count="0" />
       <LineId Id="3381" Count="0" />
       <LineId Id="3535" Count="0" />
