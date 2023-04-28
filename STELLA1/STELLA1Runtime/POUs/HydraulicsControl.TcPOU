@@ -84,8 +84,9 @@ VAR
 	OverTemperatureLog,
 	UnderTemperatureLog,
 	SuctionLog,
-	BreakClearingWarning,
-	BreakHydraulicsWarning: FB_EventLog;
+	BrakeClearingWarning,
+	BrakeHydraulicsWarning,
+	BrakeWarning: FB_EventLog;
 	
 	// measures the operating cycle of the suction pump
 	suction_timer : FB_Timer;
@@ -287,12 +288,18 @@ SuctionLog(Trigger := suction_failure OR hydraulics_failure,
 				OffMessage := 'OK',
 				OffLevel := ADSLOG_MSGTYPE_HINT);
 
-BreakClearingWarning(Trigger := NOT Main.brake_clearing AND iopen_brake,
+BrakeClearingWarning(Trigger := NOT Main.brake_clearing AND iopen_brake,
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := '%s',
 				OnMessage := 'Cannot open brake without brake clearing.');
 
-BreakHydraulicsWarning(Trigger := NOT manual_start AND iopen_brake,
+BrakeWarning(	Trigger := brake_open,
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := '%s',
+				OnMessage := 'Brake is open.',
+				OffMessage := 'Brake is closed.');
+
+BrakeHydraulicsWarning(Trigger := NOT manual_start AND iopen_brake,
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := '%s',
 				OnMessage := 'Cannot open brake without running hydraulics.');
@@ -326,21 +333,7 @@ RETURN(brake_open);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="HydraulicsControl">
-      <LineId Id="1912" Count="21" />
-      <LineId Id="2296" Count="0" />
-      <LineId Id="2192" Count="0" />
-      <LineId Id="2297" Count="1" />
-      <LineId Id="1935" Count="10" />
-      <LineId Id="2191" Count="0" />
-      <LineId Id="1946" Count="33" />
-      <LineId Id="2198" Count="0" />
-      <LineId Id="2300" Count="0" />
-      <LineId Id="2202" Count="0" />
-      <LineId Id="2199" Count="0" />
-      <LineId Id="2294" Count="0" />
-      <LineId Id="2200" Count="1" />
-      <LineId Id="2295" Count="0" />
-      <LineId Id="1981" Count="122" />
+      <LineId Id="2699" Count="208" />
       <LineId Id="708" Count="0" />
     </LineIds>
     <LineIds Name="HydraulicsControl.close_brake">
