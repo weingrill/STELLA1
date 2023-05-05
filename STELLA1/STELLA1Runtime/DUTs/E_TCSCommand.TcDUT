@@ -11,8 +11,8 @@ TYPE E_TCSCommand :
 	track,
 	goto,
 	stop,
-	pumping,
-	slew
+	slew,
+	poweron
 );
 END_TYPE
 ]]></Declaration>

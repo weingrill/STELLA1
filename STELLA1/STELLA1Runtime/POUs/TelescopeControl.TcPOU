@@ -22,14 +22,12 @@ see https://gitlab.aip.de/bmk10k/telescope_firmware/snippets/5
 	slew:		BOOL;
 	// boolean, TRUE: Stop motion OF telescope immediately, set goto AND track TO FALSE. FALSE: Allow motion OF telescope again via track/goto).
 	stop:		BOOL;	
-	// internal command: telescope is moved to pumping position
-	pumping:	BOOL;
 	// initiates hard-reset on all axis
 	reset:		BOOL;
 	// apparent right ascension, degrees, double
-	rightascension:		LREAL := (7.0 + 39.0/60.0 + 16.75/3600.0) *15.0;	
+	rightascension:		LREAL := (4.0 + 35.0/60.0 + 54.09/3600.0) *15.0;	
 	// apparent declination, degrees, double
-	declination: 		LREAL := 5.0 + 13.0/60.0 + 0.7/3600.0;
+	declination: 		LREAL := 16.0 + 30.0/60.0 + 25.4/3600.0;
 	// desired elevation of the telescope pointing 
 	elevation:	LREAL := 45.0;
 	// desired azimut of the telescope pointing 
@@ -184,7 +182,6 @@ IF error THEN
 	track := 	FALSE;
 	goto := 	FALSE;
 	slew := 	FALSE;
-	pumping :=	FALSE;
 END_IF
 		 
 IF ElevationControl.error THEN
@@ -272,25 +269,11 @@ ELSE
 	NasmythControl.enable := FALSE;	
 END_IF
 	
-IF power THEN
-	poweron();
-END_IF
-
-IF NOT power AND NOT PendantControl.manual THEN
-	// if the power is deactivatied and we are on automatic, ...
-	IF CoverControl.isclosed THEN
-		// if the covers are closed, disable them
-		CoverControl.close := FALSE;
-		CoverControl.enable := FALSE;
-(*	ELSIF Environment.WeatherBad THEN
-		// if the covers are not closed and the weather is bad, close them
-		CoverControl.enable := TRUE;
-		CoverControl.close := TRUE; *)
-	END_IF
-END_IF
 		
 // set TCS_command according to state variables ordered by precedence
-IF track THEN
+IF power THEN
+	TCS_command := E_TCSCommand.poweron;
+ELSIF track THEN
 	TCS_command := E_TCSCommand.track;
 	goto := FALSE;
 	slew := FALSE;
@@ -312,8 +295,6 @@ ELSIF park THEN
 	goto := FALSE;
 	track := FALSE;
 	slew := FALSE;
-ELSIF pumping THEN
-	TCS_command := E_TCSCommand.pumping;
 ELSIF stop THEN
 	TCS_command := E_TCSCommand.stop;
 	goto := FALSE;
@@ -328,7 +309,9 @@ ELSE
 END_IF
 
 
-IF TCS_command = E_TCSCommand.park THEN
+IF TCS_command = E_TCSCommand.poweron THEN
+	poweron();
+ELSIF TCS_command = E_TCSCommand.park THEN
 	parktelescope();
 ELSIF TCS_command = E_TCSCommand.gohome THEN
 	 hometelescope();
@@ -338,8 +321,6 @@ ELSIF TCS_command = E_TCSCommand.goto THEN
 	gototelescope();
 ELSIF TCS_command = E_TCSCommand.slew THEN
 	slewtelescope();
-ELSIF TCS_command = E_TCSCommand.pumping THEN
-	gotopumping();
 END_IF
  
 sliding := ElevationControl.MoveAxis OR 
@@ -401,6 +382,13 @@ StatusWord.2 := sliding;
 StatusWord.3 := tracking;
 StatusWord.4 := stopped;
 StatusWord.5 := homed;
+StatusWord.6 := power;
+StatusWord.7 := park;
+StatusWord.8 := gohome;
+StatusWord.9 := track;
+StatusWord.10 := goto;
+StatusWord.11 := slew;
+StatusWord.12 := stop;
 
 IF StatusWord<>LastStatus THEN // publish new payload every second
 	LastStatus := StatusWord;
@@ -410,6 +398,13 @@ IF StatusWord<>LastStatus THEN // publish new payload every second
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'tracking', 	BOOL_TO_STRING(tracking));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'stopped',		BOOL_TO_STRING(stopped));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'homed',		BOOL_TO_STRING(homed));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'power',		BOOL_TO_STRING(power));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'park',		BOOL_TO_STRING(park));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'gohome',		BOOL_TO_STRING(gohome));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'track',		BOOL_TO_STRING(track));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'goto',		BOOL_TO_STRING(goto));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'slew',		BOOL_TO_STRING(slew));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'stop',		BOOL_TO_STRING(stop));
 END_IF
 
 
@@ -456,62 +451,59 @@ TCSreadyEvent(	Trigger := power AND ready,
 				FormatString := '%s',
 				OnMessage := 'STELLA1 startup finished');]]></ST>
     </Implementation>
-    <Method Name="gotopumping" Id="{6208024a-fbb3-40ba-982b-c39f896215a8}">
-      <Declaration><![CDATA[METHOD gotopumping : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ElevationControl.position := elevation;
-ElevationControl.MoveAxis := TRUE;
-AzimuthElevationControl.position := azimuth;
-AzimuthElevationControl.MoveAxis := TRUE;
-DerotatorControl.position := 90.0;
-DerotatorControl.MoveAxis := TRUE;
-
-IF ElevationControl.ElevationAxis.StopDone AND 
-	AzimuthElevationControl.AzimuthAxis.StopDone AND 
-	DerotatorControl.DerotatorAxis.StopDone THEN
-	ElevationControl.MoveAxis := FALSE;
-	AzimuthElevationControl.MoveAxis := FALSE;
-	DerotatorControl.MoveAxis := FALSE;
-	pumping := FALSE;
-	gotopumping := TRUE;
-ELSE
-	gotopumping := FALSE;
-END_IF
-
-]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="gototelescope" Id="{c7053474-39ba-4cc3-ab24-2521b02cf8f4}">
-      <Declaration><![CDATA[METHOD gototelescope : BOOL
+      <Declaration><![CDATA[METHOD gototelescope: USINT
 VAR_INPUT
 END_VAR
-]]></Declaration>
+VAR
+	GoToEvent:	FB_Eventlog;
+END_VAR
+VAR_STAT
+	Stage:		USINT := 0;
+	LastStage:	USINT := 101;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[ElevationControl.position := elevation_calc;
-AzimuthElevationControl.position := azimuth_calc;
-DerotatorControl.position := derotation_calc;
-DerotatorControl.Velocity := 10.0;
-ElevationControl.velocity := 10.0;
-AzimuthElevationControl.velocity := 10.0;
-
-ElevationControl.MoveAxis := TRUE;
-AzimuthElevationControl.MoveAxis := TRUE;
-DerotatorControl.MoveAxis := TRUE;
-IF ElevationControl.ElevationAxis.MoveDone AND 
-	AzimuthElevationControl.AzimuthAxis.MoveDone AND
-	DerotatorControl.DerotatorAxis.MoveDone THEN
-	ElevationControl.MoveAxis := FALSE;
-	AzimuthElevationControl.MoveAxis := FALSE;
-	DerotatorControl.MoveAxis := FALSE;
-	goto := FALSE;
-	gototelescope := TRUE;
-ELSE
-	gototelescope := FALSE;
-END_IF
-]]></ST>
+        <ST><![CDATA[gototelescope := Stage;
+CASE Stage OF
+	0:
+		ElevationControl.position := elevation_calc;
+		AzimuthElevationControl.position := azimuth_calc;
+		DerotatorControl.position := derotation_calc;
+		DerotatorControl.Velocity := 10.0;
+		ElevationControl.velocity := 10.0;
+		AzimuthElevationControl.velocity := 10.0;
+		
+		ElevationControl.MoveAxis := TRUE;
+		AzimuthElevationControl.MoveAxis := TRUE;
+		DerotatorControl.MoveAxis := TRUE;
+		IF ElevationControl.ElevationAxis.Busy AND
+			AzimuthElevationControl.AzimuthAxis.Busy AND
+			DerotatorControl.DerotatorAxis.Busy THEN
+				Stage := 50;
+		END_IF
+	50:
+		IF NOT ElevationControl.ElevationAxis.Busy OR
+		   ElevationControl.ElevationAxis.MoveDone THEN
+			ElevationControl.MoveAxis := FALSE;
+		END_IF
+		IF NOT AzimuthElevationControl.AzimuthAxis.Busy OR
+		   AzimuthElevationControl.AzimuthAxis.MoveDone THEN
+			AzimuthElevationControl.MoveAxis := FALSE;
+		END_IF
+		IF NOT DerotatorControl.DerotatorAxis.Busy OR 
+		   DerotatorControl.DerotatorAxis.MoveDone THEN
+			DerotatorControl.MoveAxis := FALSE;
+		END_IF
+		IF NOT sliding OR stopped THEN // all axis standstill
+			Stage := 100;
+		END_IF
+	100:
+		goto := FALSE;
+		gototelescope := 100;
+		Stage := 0;
+END_CASE
+GoToEvent(Trigger := Stage <> LastStage, FormatString := 'GoTo progress: %s', OnMessage := USINT_TO_STRING(Stage));
+LastStage := Stage;]]></ST>
       </Implementation>
     </Method>
     <Method Name="hometelescope" Id="{2c96c3e4-ffc4-4f92-b3af-46d302446b40}">
@@ -542,66 +534,72 @@ HomeEvent(Trigger := hometelescope,
       </Implementation>
     </Method>
     <Method Name="parktelescope" Id="{99ae1f40-9696-469a-b290-774914abbb25}">
-      <Declaration><![CDATA[METHOD parktelescope : BOOL
+      <Declaration><![CDATA[METHOD parktelescope: USINT
 VAR_INPUT
 END_VAR
-
-
 VAR
-	ParkEvent: FB_Eventlog;
+	ParkEvent:	FB_Eventlog;
+END_VAR
+VAR_STAT
+	Stage:		USINT := 0;
+	LastStage:	USINT := 101;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[gohome := 	FALSE;
-track := 	FALSE;
-goto := 	FALSE;
-slew := 	FALSE;
-pumping :=	FALSE;
-
-IF NOT FocusControl.FocusUnlocked THEN
-	Focuscontrol.enable := FALSE;
-END_IF
-
-// disable filterwheel
-FilterWheelControl.Enable := FALSE;
-// disable derotator
-IF ElevationControl.ElevationAxis.MoveDone AND AzimuthElevationControl.AzimuthAxis.MoveDone THEN 
-	ElevationControl.enable := FALSE;
-	AzimuthElevationControl.Enable := FALSE;
-ELSE
-	ElevationControl.position := elevation_park;
-	ElevationControl.MoveAxis := TRUE;
-	AzimuthElevationControl.position := azimuth_park;
-	AzimuthElevationControl.MoveAxis := TRUE;
-END_IF
-
-IF DerotatorControl.DerotatorAxis.MoveDone THEN
-	DerotatorControl.enable := FALSE;
-ELSIF ABS(DerotatorControl.actual_position -derotator_park )> 1.0 THEN
-	DerotatorControl.position := derotator_park;
-	DerotatorControl.Velocity := 10.0;
-	DerotatorControl.MoveAxis := TRUE;
-END_IF
-
-IF HydraulicsControl.brake_closed THEN
-	CoverControl.close := TRUE;
-END_IF
-
-IF CoverControl.isclosed AND
-	NOT ElevationControl.enable AND
-	NOT AzimuthElevationControl.Enable AND 
-	NOT DerotatorControl.enable AND 
-	NOT FilterWheelControl.Enable AND
-	NOT Focuscontrol.enable THEN
-	park := FALSE;
-	parktelescope := TRUE;	
-ELSE
-	parktelescope := FALSE;
-END_IF
-
-ParkEvent(Trigger := parktelescope, 
-			Level := ADSLOG_MSGTYPE_HINT,
-			FormatString := '%s',
-			OnMessage := 'Telescope is parked.');]]></ST>
+        <ST><![CDATA[parktelescope := Stage;
+CASE Stage OF
+	0: 
+		gohome := 	FALSE;
+		track := 	FALSE;
+		goto := 	FALSE;
+		slew := 	FALSE;
+		IF FocusControl.enable THEN
+			Focuscontrol.enable := FALSE;
+		END_IF
+		// disable filterwheel
+		FilterWheelControl.Enable := FALSE;
+		Stage := 25;
+	25:
+		ElevationControl.position := elevation_park;
+		ElevationControl.velocity := 10.0;
+		ElevationControl.MoveAxis := TRUE;
+		AzimuthElevationControl.position := azimuth_park;
+		AzimuthElevationControl.velocity := 10;
+		AzimuthElevationControl.MoveAxis := TRUE;
+		DerotatorControl.position := derotator_park;
+		DerotatorControl.Velocity := 10.0;
+		DerotatorControl.MoveAxis := TRUE;
+		Stage := 50;
+	50:
+		IF NOT ElevationControl.ElevationAxis.Busy AND 
+			ElevationControl.ElevationAxis.MoveDone AND 
+			NOT AzimuthElevationControl.AzimuthAxis.Busy AND
+			AzimuthElevationControl.AzimuthAxis.MoveDone THEN 
+				ElevationControl.enable := FALSE;
+				AzimuthElevationControl.Enable := FALSE;
+		END_IF
+		IF NOT DerotatorControl.DerotatorAxis.Busy AND 
+			DerotatorControl.DerotatorAxis.MoveDone THEN
+				DerotatorControl.enable := FALSE;
+		END_IF
+		IF NOT ElevationControl.enable AND 
+		   NOT AzimuthElevationControl.Enable AND 
+		   NOT DerotatorControl.enable THEN
+			Stage := 75;
+		END_IF
+	75:
+		IF HydraulicsControl.brake_closed THEN
+			CoverControl.close := TRUE;			
+		END_IF
+		IF CoverControl.isclosed THEN
+			Stage := 100;
+		END_IF
+	100:
+			park := FALSE;
+			parktelescope := 100;
+			Stage := 0;	
+END_CASE
+ParkEvent(Trigger := Stage <> LastStage, FormatString := 'Parking progress: %s', OnMessage := USINT_TO_STRING(Stage));
+LastStage := Stage;]]></ST>
       </Implementation>
     </Method>
     <Method Name="poweron" Id="{34114692-caf6-4cf5-8270-8b1671f5dd0a}">
@@ -681,10 +679,13 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[ElevationControl.position := elevation;
+ElevationControl.velocity := 10.0;
 ElevationControl.MoveAxis := TRUE;
 AzimuthElevationControl.position := azimuth;
+AzimuthElevationControl.velocity := 10.0;
 AzimuthElevationControl.MoveAxis := TRUE;
 DerotatorControl.position := elevation + derotator_offset;
+DerotatorControl.Velocity := 10.0;
 DerotatorControl.MoveAxis := TRUE;
 IF ElevationControl.ElevationAxis.MoveDone 
 	AND AzimuthElevationControl.AzimuthAxis.MoveDone 
@@ -715,7 +716,7 @@ DerotatorControl.Velocity := 		DerotatorVelocity;
 ElevationControl.velocity := 		ElevationVelocity;
 AzimuthElevationControl.velocity := AzimuthVelocity;
 
-//ElevationControl.Tracking := 		TRUE;
+ElevationControl.Tracking := 		TRUE;
 AzimuthElevationControl.Tracking := TRUE;
 DerotatorControl.Tracking := 		TRUE;
 	
@@ -751,7 +752,7 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="6600" Count="0" />
       <LineId Id="6598" Count="0" />
       <LineId Id="4330" Count="0" />
-      <LineId Id="6587" Count="5" />
+      <LineId Id="6587" Count="4" />
       <LineId Id="6586" Count="0" />
       <LineId Id="6584" Count="0" />
       <LineId Id="4246" Count="1" />
@@ -813,24 +814,9 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="7311" Count="2" />
       <LineId Id="7284" Count="0" />
       <LineId Id="3591" Count="0" />
-      <LineId Id="3547" Count="0" />
-      <LineId Id="4504" Count="0" />
-      <LineId Id="3549" Count="0" />
-      <LineId Id="5191" Count="0" />
-      <LineId Id="3519" Count="0" />
-      <LineId Id="6367" Count="0" />
-      <LineId Id="4323" Count="0" />
-      <LineId Id="6368" Count="0" />
-      <LineId Id="4325" Count="0" />
-      <LineId Id="4493" Count="0" />
-      <LineId Id="6363" Count="0" />
-      <LineId Id="6369" Count="0" />
-      <LineId Id="6366" Count="0" />
-      <LineId Id="6365" Count="0" />
-      <LineId Id="4326" Count="0" />
-      <LineId Id="4324" Count="0" />
       <LineId Id="3784" Count="0" />
       <LineId Id="1499" Count="0" />
+      <LineId Id="8133" Count="1" />
       <LineId Id="1501" Count="0" />
       <LineId Id="1527" Count="0" />
       <LineId Id="4283" Count="0" />
@@ -847,7 +833,6 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="1547" Count="1" />
       <LineId Id="4272" Count="1" />
       <LineId Id="6381" Count="0" />
-      <LineId Id="2867" Count="1" />
       <LineId Id="1524" Count="1" />
       <LineId Id="4284" Count="1" />
       <LineId Id="6382" Count="0" />
@@ -858,6 +843,7 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="1509" Count="0" />
       <LineId Id="4294" Count="0" />
       <LineId Id="4299" Count="0" />
+      <LineId Id="8136" Count="1" />
       <LineId Id="3533" Count="0" />
       <LineId Id="7783" Count="0" />
       <LineId Id="3541" Count="0" />
@@ -867,8 +853,6 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="3928" Count="0" />
       <LineId Id="6383" Count="1" />
       <LineId Id="7476" Count="0" />
-      <LineId Id="6022" Count="0" />
-      <LineId Id="7477" Count="0" />
       <LineId Id="3535" Count="0" />
       <LineId Id="3540" Count="0" />
       <LineId Id="3539" Count="0" />
@@ -907,8 +891,10 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="7090" Count="0" />
       <LineId Id="7093" Count="4" />
       <LineId Id="7091" Count="0" />
+      <LineId Id="8119" Count="6" />
       <LineId Id="7098" Count="3" />
       <LineId Id="7103" Count="4" />
+      <LineId Id="8126" Count="6" />
       <LineId Id="7132" Count="0" />
       <LineId Id="7092" Count="0" />
       <LineId Id="3530" Count="1" />
@@ -938,23 +924,28 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="6773" Count="2" />
       <LineId Id="3293" Count="0" />
     </LineIds>
-    <LineIds Name="TelescopeControl.gotopumping">
-      <LineId Id="6" Count="13" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
     <LineIds Name="TelescopeControl.gototelescope">
-      <LineId Id="31" Count="4" />
-      <LineId Id="29" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="11" Count="7" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="19" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="41" Count="1" />
+      <LineId Id="45" Count="9" />
+      <LineId Id="107" Count="1" />
+      <LineId Id="110" Count="1" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="87" Count="4" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="93" Count="2" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="97" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.hometelescope">
@@ -968,38 +959,46 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.parktelescope">
-      <LineId Id="16" Count="0" />
-      <LineId Id="18" Count="3" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="46" Count="2" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="42" Count="2" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="90" Count="1" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="105" Count="1" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="78" Count="1" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="58" Count="1" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="61" Count="0" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="69" Count="4" />
-      <LineId Id="67" Count="1" />
-      <LineId Id="74" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="31" Count="3" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="119" Count="2" />
+      <LineId Id="123" Count="4" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="129" Count="1" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="140" Count="2" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="151" Count="1" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="156" Count="2" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="117" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="169" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.poweron">
       <LineId Id="99" Count="14" />
@@ -1017,7 +1016,13 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="172" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.slewtelescope">
-      <LineId Id="6" Count="12" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="11" Count="7" />
       <LineId Id="21" Count="0" />
       <LineId Id="25" Count="1" />
       <LineId Id="19" Count="1" />
