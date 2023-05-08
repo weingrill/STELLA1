@@ -464,6 +464,9 @@ VAR_STAT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[gototelescope := Stage;
+IF reset OR error THEN
+	Stage := 0;
+END_IF
 CASE Stage OF
 	0:
 		ElevationControl.position := elevation_calc;
@@ -482,27 +485,27 @@ CASE Stage OF
 				Stage := 50;
 		END_IF
 	50:
-		IF NOT ElevationControl.ElevationAxis.Busy OR
-		   ElevationControl.ElevationAxis.MoveDone THEN
+		IF ElevationControl.ElevationAxis.MoveDone THEN
 			ElevationControl.MoveAxis := FALSE;
 		END_IF
-		IF NOT AzimuthElevationControl.AzimuthAxis.Busy OR
-		   AzimuthElevationControl.AzimuthAxis.MoveDone THEN
+		IF AzimuthElevationControl.AzimuthAxis.MoveDone THEN
 			AzimuthElevationControl.MoveAxis := FALSE;
 		END_IF
-		IF NOT DerotatorControl.DerotatorAxis.Busy OR 
-		   DerotatorControl.DerotatorAxis.MoveDone THEN
+		IF DerotatorControl.DerotatorAxis.MoveDone THEN
 			DerotatorControl.MoveAxis := FALSE;
 		END_IF
-		IF NOT sliding OR stopped THEN // all axis standstill
+		IF NOT sliding AND stopped THEN // all axis standstill
 			Stage := 100;
 		END_IF
 	100:
+		ElevationControl.MoveAxis := FALSE;
+		AzimuthElevationControl.MoveAxis := FALSE;
+		DerotatorControl.MoveAxis := FALSE;
 		goto := FALSE;
 		gototelescope := 100;
 		Stage := 0;
 END_CASE
-GoToEvent(Trigger := Stage <> LastStage, FormatString := 'GoTo progress: %s', OnMessage := USINT_TO_STRING(Stage));
+GoToEvent(Trigger := Stage > LastStage, FormatString := 'GoTo progress: %s', OnMessage := USINT_TO_STRING(Stage));
 LastStage := Stage;]]></ST>
       </Implementation>
     </Method>
@@ -546,6 +549,9 @@ VAR_STAT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[parktelescope := Stage;
+IF reset OR error THEN
+	Stage := 0;
+END_IF
 CASE Stage OF
 	0: 
 		gohome := 	FALSE;
@@ -557,8 +563,8 @@ CASE Stage OF
 		END_IF
 		// disable filterwheel
 		FilterWheelControl.Enable := FALSE;
-		Stage := 25;
-	25:
+		Stage := 20;
+	20:
 		ElevationControl.position := elevation_park;
 		ElevationControl.velocity := 10.0;
 		ElevationControl.MoveAxis := TRUE;
@@ -568,25 +574,36 @@ CASE Stage OF
 		DerotatorControl.position := derotator_park;
 		DerotatorControl.Velocity := 10.0;
 		DerotatorControl.MoveAxis := TRUE;
-		Stage := 50;
-	50:
-		IF NOT ElevationControl.ElevationAxis.Busy AND 
-			ElevationControl.ElevationAxis.MoveDone AND 
-			NOT AzimuthElevationControl.AzimuthAxis.Busy AND
-			AzimuthElevationControl.AzimuthAxis.MoveDone THEN 
-				ElevationControl.enable := FALSE;
-				AzimuthElevationControl.Enable := FALSE;
+		IF ElevationControl.ElevationAxis.Busy AND
+			AzimuthElevationControl.AzimuthAxis.Busy AND
+			DerotatorControl.DerotatorAxis.Busy THEN
+				Stage := 40;
 		END_IF
-		IF NOT DerotatorControl.DerotatorAxis.Busy AND 
-			DerotatorControl.DerotatorAxis.MoveDone THEN
-				DerotatorControl.enable := FALSE;
+	40:
+		IF ElevationControl.ElevationAxis.MoveDone THEN
+			ElevationControl.MoveAxis := FALSE;
 		END_IF
-		IF NOT ElevationControl.enable AND 
-		   NOT AzimuthElevationControl.Enable AND 
-		   NOT DerotatorControl.enable THEN
-			Stage := 75;
+		IF AzimuthElevationControl.AzimuthAxis.MoveDone THEN
+			AzimuthElevationControl.MoveAxis := FALSE;
 		END_IF
-	75:
+		IF DerotatorControl.DerotatorAxis.MoveDone THEN
+			DerotatorControl.MoveAxis := FALSE;
+		END_IF
+		IF NOT sliding THEN // all axis standstill
+			Stage := 60;
+		END_IF
+	60:
+		IF stopped THEN 
+			ElevationControl.enable := FALSE;
+			AzimuthElevationControl.Enable := FALSE;
+			DerotatorControl.enable := FALSE;
+			Stage := 80;
+		END_IF
+		
+		ElevationControl.MoveAxis := FALSE;
+		AzimuthElevationControl.MoveAxis := FALSE;
+		DerotatorControl.MoveAxis := FALSE;
+	80:
 		IF HydraulicsControl.brake_closed THEN
 			CoverControl.close := TRUE;			
 		END_IF
@@ -598,7 +615,7 @@ CASE Stage OF
 			parktelescope := 100;
 			Stage := 0;	
 END_CASE
-ParkEvent(Trigger := Stage <> LastStage, FormatString := 'Parking progress: %s', OnMessage := USINT_TO_STRING(Stage));
+ParkEvent(Trigger := Stage > LastStage, FormatString := 'Parking progress: %s', OnMessage := USINT_TO_STRING(Stage));
 LastStage := Stage;]]></ST>
       </Implementation>
     </Method>
@@ -926,23 +943,24 @@ DerotatorControl.Tracking := 		TRUE;
     </LineIds>
     <LineIds Name="TelescopeControl.gototelescope">
       <LineId Id="96" Count="0" />
+      <LineId Id="117" Count="1" />
+      <LineId Id="116" Count="0" />
       <LineId Id="41" Count="1" />
       <LineId Id="45" Count="9" />
       <LineId Id="107" Count="1" />
       <LineId Id="110" Count="1" />
       <LineId Id="109" Count="0" />
       <LineId Id="55" Count="0" />
-      <LineId Id="70" Count="0" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="71" Count="0" />
+      <LineId Id="70" Count="1" />
       <LineId Id="74" Count="1" />
-      <LineId Id="106" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="81" Count="0" />
       <LineId Id="84" Count="0" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="87" Count="4" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="90" Count="1" />
       <LineId Id="56" Count="0" />
+      <LineId Id="113" Count="2" />
       <LineId Id="93" Count="2" />
       <LineId Id="43" Count="0" />
       <LineId Id="97" Count="0" />
@@ -960,6 +978,7 @@ DerotatorControl.Tracking := 		TRUE;
     </LineIds>
     <LineIds Name="TelescopeControl.parktelescope">
       <LineId Id="115" Count="0" />
+      <LineId Id="198" Count="2" />
       <LineId Id="166" Count="0" />
       <LineId Id="118" Count="0" />
       <LineId Id="122" Count="0" />
@@ -973,21 +992,21 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="144" Count="0" />
       <LineId Id="131" Count="0" />
       <LineId Id="140" Count="2" />
-      <LineId Id="135" Count="0" />
+      <LineId Id="191" Count="3" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="204" Count="7" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="212" Count="1" />
+      <LineId Id="202" Count="0" />
       <LineId Id="134" Count="0" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="177" Count="0" />
-      <LineId Id="179" Count="0" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="137" Count="0" />
+      <LineId Id="136" Count="1" />
       <LineId Id="149" Count="0" />
+      <LineId Id="214" Count="1" />
       <LineId Id="139" Count="0" />
-      <LineId Id="150" Count="0" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="151" Count="1" />
-      <LineId Id="148" Count="0" />
-      <LineId Id="181" Count="1" />
-      <LineId Id="153" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="196" Count="1" />
+      <LineId Id="195" Count="0" />
       <LineId Id="116" Count="0" />
       <LineId Id="156" Count="2" />
       <LineId Id="184" Count="0" />
