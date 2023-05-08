@@ -72,11 +72,11 @@ TcNc-Lib, siehe SPS-Funktion AxisSetAcceptBlockedDriveSignal in der TwinCAT  PLC
 position := LIMIT(calibration_position - 460.0, position, calibration_position);
 
 // WARNING: Homing disables the limit Switches!
-
+(*
 MC_SetAcceptBlockedDriveSignal(
 	Axis := GVL_Telescope.DerotatorAxisRef,
 	Enable := HomeAxis);
-
+*)
 // home on enable (forced)
 IF enable THEN
 	HomeAxis := TRUE;
@@ -136,7 +136,7 @@ END_IF
 
 derotator_torque := GVL_Telescope.Derotator_torque / 10.0;
 
-TorqueError(IN := ABS(derotator_torque) > 16.0);
+TorqueError(IN := ABS(derotator_torque) > 10.0);
 
 DerotatorEvent(	
 	Trigger := 		Error, 
