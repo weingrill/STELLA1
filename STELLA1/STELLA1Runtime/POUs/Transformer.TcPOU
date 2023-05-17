@@ -22,7 +22,7 @@ VAR
 	// timer to measure the startup time
 	power_timer:		FB_timer;
 	// timeout for the startup
-	startup_timeout:	TIME := T#2S;
+	startup_timeout:	TIME := T#5S;
 	// error state
 	power_error_state:	SR;
 	// restart inhibitor
