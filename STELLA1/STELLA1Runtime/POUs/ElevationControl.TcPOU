@@ -3,24 +3,26 @@
   <POU Name="ElevationControl" Id="{c0371b19-3d1d-4f20-bd19-ce60539d69cd}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ElevationControl
 VAR_INPUT
+	// enable the axis
+	enable: 	BOOL;
+	// reset an error
+	reset:		BOOL;
 	// increase the eleveation
 	up:			BOOL;
 	// decrease the elevation
 	down:		BOOL;
-	// reset an error
-	reset:		BOOL;
-	// enable the axis
-	enable: 	BOOL;
 	// set position of the axis in degrees
 	position:	LREAL;
 	// set the Velocity of the axis
 	velocity:	LREAL;
 	// move axis command
 	MoveAxis:	BOOL;
-	// calibrate the focus axis
+	// calibrate the axis
 	HomeAxis:	BOOL;
 	// enable tracking
 	Tracking:	BOOL;
+	// stop the Axis
+	StopAxis:	BOOL;
 END_VAR
 VAR_OUTPUT
 	// axis is ready to operate
@@ -42,8 +44,8 @@ VAR
 	ElevationAxis:			FB_Axis2;
 	ElevationCalibration: 	MC_SetPosition;
 	// auto-reset commutation errors
-	fbSoEReset: 			FB_SoEReset;
-	bSoEReset:	 			BOOL;
+	//fbSoEReset: 			FB_SoEReset;
+	//bSoEReset:	 			BOOL;
 	// delay until commutator angle is measured
 	readydelay:				TON;
 	// disable trigger for hydraulics
@@ -51,6 +53,7 @@ VAR
 	// store last position
 	getlastposition:		BOOL := TRUE;
 	ElevationAxisEvent: 	FB_Eventlog;
+	ElevationDiagnosticEvent: 	FB_Eventlog;
 	ElevationBrakeEvent: 	FB_Eventlog;
 	HighElevationEvent: 	FB_Eventlog;
 	LowElevationEvent:		FB_Eventlog;
@@ -64,7 +67,7 @@ VAR
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 42.1281; //43.000
+	calibration_position:	LREAL := 43.806122; //42.1281; //43.000
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
@@ -88,12 +91,7 @@ IF Enable THEN
 END_IF
 
 enable_trigger(CLK := enable);
-
-// if an error occurs on te enabled axis we close the brake
-IF Enable AND error THEN
-	Enable := FALSE;
-END_IF
-
+// close the brake on the falling edge of the enable signal
 IF enable_trigger.Q THEN
 	HydraulicsControl.close_brake();
 END_IF
@@ -105,7 +103,6 @@ END_IF
 Calibrated := ElevationAxis.Calibrated;
 
 IF HomeAxis THEN
-//	position := homing_position;
 	position := calibration_position;
 	MoveAxis := FALSE;
 	Tracking := FALSE;
@@ -128,6 +125,7 @@ ElevationAxis(
 	Reset := 			reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis :=			HomeAxis,
+	StopAxis :=			StopAxis,
 	Tracking :=			Tracking,
 	Position := 		position, 
 	Velocity :=			Velocity,
@@ -164,7 +162,7 @@ END_IF
 IF Calibrated THEN
 	last_position := actual_position;
 END_IF
-	
+(*	
 bSoEReset := GVL_Telescope.Elevation_diagnostic = 16#0000F10B OR GVL_Telescope.Elevation_diagnostic = 16#0000F601;
 
 IF bSoEReset THEN
@@ -179,7 +177,7 @@ IF bSoEReset THEN
 		Reset := TRUE;
 	END_IF
 END_IF 
-
+*)
 readydelay(IN :=  HydraulicsControl.brake_open, PT := T#6000MS, Q=> ready);
 
 ReadParameter(	Axis := GVL_Telescope.ElevationAxisRef, 
@@ -192,13 +190,22 @@ IF ReadParameter.Valid THEN
 END_IF
 
 elevation_torque := GVL_Telescope.Elevation_torque / 10.0;
-torque_timer(IN := ABS(elevation_torque) > 60.0, PT := T#1000MS);
+torque_timer(IN := ABS(elevation_torque) > 50.0, PT := T#1000MS);
 		
 ElevationAxisEvent(	Trigger := Error, 
 				Level := ADSLOG_MSGTYPE_ERROR,
 				FormatString := 'Elevation Axis Error: %s',
 				OnMessage := NCError_TO_STRING(ErrorID));
 
+ElevationDiagnosticEvent(	
+	Trigger := 		GVL_Telescope.Elevation_diagnostic <> 16#0000D012 AND 
+					GVL_Telescope.Elevation_diagnostic <> 16#0000D013 AND 
+					GVL_Telescope.Elevation_diagnostic <> 16#0000D014, 
+	Level := 		ADSLOG_MSGTYPE_ERROR,
+	FormatString :=	'Elevation Axis Diagnostic Error: %s',
+	OnMessage := 	NCError_TO_STRING(GVL_Telescope.Elevation_diagnostic));
+
+				
 HighElevationEvent(	Trigger := Calibrated AND actual_position > 85.0, 
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := 'High Elevation: %s',
@@ -241,18 +248,14 @@ CalibrationEvent(
       <LineId Id="238" Count="0" />
       <LineId Id="1253" Count="1" />
       <LineId Id="707" Count="0" />
-      <LineId Id="702" Count="0" />
-      <LineId Id="251" Count="0" />
-      <LineId Id="708" Count="0" />
-      <LineId Id="704" Count="0" />
-      <LineId Id="1255" Count="3" />
+      <LineId Id="1256" Count="2" />
       <LineId Id="705" Count="0" />
       <LineId Id="252" Count="0" />
       <LineId Id="254" Count="1" />
       <LineId Id="558" Count="1" />
       <LineId Id="626" Count="0" />
       <LineId Id="257" Count="0" />
-      <LineId Id="1036" Count="1" />
+      <LineId Id="1037" Count="0" />
       <LineId Id="769" Count="1" />
       <LineId Id="259" Count="0" />
       <LineId Id="772" Count="0" />
@@ -269,6 +272,7 @@ CalibrationEvent(
       <LineId Id="128" Count="0" />
       <LineId Id="184" Count="2" />
       <LineId Id="1335" Count="0" />
+      <LineId Id="1487" Count="0" />
       <LineId Id="562" Count="0" />
       <LineId Id="187" Count="1" />
       <LineId Id="1336" Count="0" />
@@ -309,7 +313,12 @@ CalibrationEvent(
       <LineId Id="827" Count="0" />
       <LineId Id="156" Count="2" />
       <LineId Id="160" Count="0" />
+      <LineId Id="1405" Count="0" />
+      <LineId Id="1407" Count="1" />
+      <LineId Id="1413" Count="1" />
+      <LineId Id="1409" Count="2" />
       <LineId Id="697" Count="0" />
+      <LineId Id="1406" Count="0" />
       <LineId Id="693" Count="3" />
       <LineId Id="692" Count="0" />
       <LineId Id="698" Count="3" />
