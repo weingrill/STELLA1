@@ -4,9 +4,7 @@
     <Declaration><![CDATA[PROGRAM HydraulicsControl
 VAR_INPUT
 	// start the hydraulics
-	manual_start:		BOOL := FALSE;
-	// stop the hydraulics
-	manual_stop: 		BOOL;
+	enable:		BOOL := FALSE;
 	// reset any hydraulics error
 	reset: 		BOOL;
 	// manual override to start the suction pump
@@ -25,6 +23,7 @@ VAR_OUTPUT
 	suction_failure:	BOOL;
 	// main pump is running but suction has a timeout
 	hydraulics_failure:	BOOL;
+	main_pump_failure: BOOL;
 	// oil is low
 	oil_low:			BOOL;
 	// oil is high (unused?)
@@ -51,14 +50,12 @@ VAR
 	iopen_brake:	BOOL := FALSE;
 	// command to open the brake
 	iclose_brake: BOOL;
-	// internal command to start pump
-	istart:	BOOL := FALSE;
-	// internal command to stop pump
-	istop:	BOOL;
 	// monitors the pressure of the pump is running
 	pressure_watchdog:	TON;
 	// monitors the activation of the suction pump
 	suction_watchdog: TON;
+	// monitors the activation of the main pump
+	main_pump_watchdog:	TON;
 	// watch the hydraulics and suction pumps
 	hydraulics_watchdog: TON;
 	// the suction pump is activated for at least 55s when maximum is reached
@@ -74,7 +71,7 @@ VAR
 	// error state (set dominant)
 	error_state:	SR;
 	// timer to shut off hydraulics after break was closed
-	hydraulics_off_timer:	TOF  := (PT := T#10S);
+	hydraulics_off_timer:	TOF  := (PT := T#30S);
 	off_trigger:	F_TRIG;
 	HydraulicsLog,
 	PumpLog,
@@ -113,43 +110,29 @@ oil_hot := GVL_Hydraulics.oil_overtemperature;
 pump_running := GVL_Hydraulics.pump_running;
 suction_running := GVL_Hydraulics.suction_running;
 
-IF manual_stop THEN
-	manual_start := FALSE;
-END_IF
-
-IF istop THEN
-	istart := FALSE;
-END_IF
-error_state(SET1 := pressure_failure OR	suction_failure OR hydraulics_failure OR oil_low,
+error_state(SET1 := pressure_failure OR	suction_failure OR hydraulics_failure OR oil_low OR main_pump_failure,
 			RESET := reset,
 			Q1 => error);
 
-oil_pump_state(SET := manual_start OR istart,
-				RESET1 := manual_stop OR istop OR error OR NOT Transformer.power_ok OR pump_manual_stop);
+oil_pump_state(SET := enable,
+				RESET1 := NOT enable OR error OR pump_manual_stop);
 
 GVL_Hydraulics.oil_pump_enable := oil_pump_state.Q1;
 
-IF NOT pump_running THEN
-	manual_stop := FALSE;
-	istop := FALSE;
-END_IF
 (* This section controls the hydraulic brake responsible for azimuth and elevation. 
 Especially the elevation is imbalanced if not in the position control loop. 
 The brake must only be opened, if the elevation drive is activated concurrently.
 *)
-// reset the open_brake command if the close_brake is active
 
+
+// close the brake if the pump is not running	
+IF iclose_brake OR NOT pump_running THEN 
+	iopen_brake := FALSE;
+END_IF
 
 // wait for pressure to build up (hack for oil_pressure_ok)
 brake_open_delay(IN := pump_running AND oil_pressure_OK,
 				PT := T#3S);
-//manually or remotly open brake. Close brake on limit switch. Wait n seconds after pump is on
-//hold the brake, if we reach the az-limit	
-// close the brake if the pump is not running	
-
-IF iclose_brake OR NOT pump_running THEN 
-	iopen_brake := FALSE;
-END_IF
 		
 brake_state(SET := brake_open_delay.Q AND iopen_brake AND MAIN.brake_clearing,
 			RESET1 := GVL_Telescope.azimut_limit_switch 
@@ -158,6 +141,7 @@ brake_state(SET := brake_open_delay.Q AND iopen_brake AND MAIN.brake_clearing,
 					  OR NOT MAIN.brake_clearing,
 			Q1 => GVL_Telescope.brake_azimuth_eve);
 
+// signal that the brake is open after one second
 brake_opened_delay(	IN :=brake_state.Q1, 
 					PT := T#1000MS,
 					Q => brake_open);
@@ -166,12 +150,12 @@ brake_closed := NOT brake_open;
 IF brake_closed THEN
 	iclose_brake := FALSE;
 END_IF
+// turn off the hydraulics if the brake is closed and the pump is still running
 hydraulics_off_timer(IN := brake_open AND pump_running );
 off_trigger(CLK := hydraulics_off_timer.Q);
 
 IF off_trigger.Q THEN
-	istart := FALSE;
-	istop := TRUE;
+	enable := FALSE;
 END_IF
 
 (* This is the end of the brake control section *)
@@ -197,19 +181,10 @@ hydraulics_watchdog(IN := pump_running AND NOT suction_running,
 						PT := T#140S,
 						Q => hydraulics_failure);
 
-(*
-oil_low := NOT GVL_Hydraulics.oil_low;
-oil_high := NOT GVL_Hydraulics.oil_high;
-oil_warning := GVL_Hydraulics.oil_reserve;
-// Michi Email 22.10.2020 True = OK
-oil_pressure_OK := GVL_Hydraulics.oil_pressure_OK;
-oil_filter_dirty := NOT GVL_Hydraulics.oilfilter_dirty;
-oil_cold := NOT GVL_Hydraulics.oil_undertemperature;
-oil_hot := GVL_Hydraulics.oil_overtemperature;
-pump_running := GVL_Hydraulics.pump_running;
-suction_running := GVL_Hydraulics.suction_running;
+main_pump_watchdog(IN := GVL_Hydraulics.oil_pump_enable AND NOT pump_running,
+					PT := T#10S,
+					Q => main_pump_failure);
 
-*)
 StatusWord.0 := oil_low;
 StatusWord.1 := oil_high;
 StatusWord.2 := oil_warning;
@@ -239,9 +214,9 @@ END_IF
 
 
 				  				  
-HydraulicsLog(Trigger := pressure_failure,
+HydraulicsLog(Trigger := pressure_failure OR main_pump_failure,
 				Level := ADSLOG_MSGTYPE_ERROR,
-				FormatString := 'oil pressure: %s',
+				FormatString := 'Main hydraulics pump / pressure: %s',
 				OnMessage := 'FAILURE',
 				OffMessage := 'OK',
 				OffLevel := ADSLOG_MSGTYPE_HINT);
@@ -299,7 +274,7 @@ BrakeWarning(	Trigger := brake_open,
 				OnMessage := 'Brake is open.',
 				OffMessage := 'Brake is closed.');
 
-BrakeHydraulicsWarning(Trigger := NOT manual_start AND iopen_brake,
+BrakeHydraulicsWarning(Trigger := NOT enable AND iopen_brake,
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := '%s',
 				OnMessage := 'Cannot open brake without running hydraulics.');
@@ -324,7 +299,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// start the pump
-istart := TRUE;
+enable := TRUE;
 // open the brake
 IF oil_pressure_OK THEN
 	iopen_brake := TRUE;
@@ -333,7 +308,25 @@ RETURN(brake_open);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="HydraulicsControl">
-      <LineId Id="2699" Count="208" />
+      <LineId Id="2699" Count="18" />
+      <LineId Id="2725" Count="7" />
+      <LineId Id="3095" Count="0" />
+      <LineId Id="2738" Count="3" />
+      <LineId Id="2744" Count="0" />
+      <LineId Id="2999" Count="0" />
+      <LineId Id="2750" Count="0" />
+      <LineId Id="2752" Count="2" />
+      <LineId Id="3003" Count="0" />
+      <LineId Id="3000" Count="2" />
+      <LineId Id="2755" Count="6" />
+      <LineId Id="3004" Count="0" />
+      <LineId Id="2762" Count="8" />
+      <LineId Id="3005" Count="0" />
+      <LineId Id="2771" Count="4" />
+      <LineId Id="2777" Count="23" />
+      <LineId Id="3098" Count="3" />
+      <LineId Id="2801" Count="0" />
+      <LineId Id="2815" Count="92" />
       <LineId Id="708" Count="0" />
     </LineIds>
     <LineIds Name="HydraulicsControl.close_brake">
