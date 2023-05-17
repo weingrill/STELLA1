@@ -21,6 +21,8 @@ VAR_INPUT
 	HomeAxis:	BOOL;
 	// tracking flag
 	Tracking:	BOOL;
+	// stop the Axis
+	StopAxis:	BOOL;
 END_VAR
 VAR_OUTPUT
 	// error flag
@@ -69,16 +71,9 @@ SPS-Interface:
 TcNc-Lib, siehe SPS-Funktion AxisSetAcceptBlockedDriveSignal in der TwinCAT  PLC Library: NC.
 *)
 
-position := LIMIT(calibration_position - 460.0, position, calibration_position);
+position := LIMIT(-70, position, 380);
 
-// WARNING: Homing disables the limit Switches!
-(*
-MC_SetAcceptBlockedDriveSignal(
-	Axis := GVL_Telescope.DerotatorAxisRef,
-	Enable := HomeAxis);
-*)
-// home on enable (forced)
-IF enable THEN
+IF enable AND NOT DerotatorAxis.Calibrated THEN
 	HomeAxis := TRUE;
 END_IF
 
@@ -96,10 +91,11 @@ DeRotatorAxis(
 	Reset := 			Reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis :=			HomeAxis,
+	StopAxis :=			StopAxis,
 	HomingMode :=		MC_ForceCalibration,
 	Position := 		position, 
 	Velocity :=			Velocity,
-	Enable_Positive := 	NOT GVL_Telescope.Derotator_inputs.0 OR HomeAxis,
+	Enable_Positive := 	NOT GVL_Telescope.Derotator_inputs.0,
 	Enable_Negative := 	NOT GVL_Telescope.Derotator_inputs.1,
 	Jog_Forward := 		right,
 	Jog_Backwards := 	left,
@@ -170,13 +166,6 @@ CalibrationEvent(
       <LineId Id="169" Count="0" />
       <LineId Id="171" Count="0" />
       <LineId Id="146" Count="0" />
-      <LineId Id="143" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="141" Count="0" />
-      <LineId Id="147" Count="0" />
-      <LineId Id="145" Count="0" />
-      <LineId Id="569" Count="0" />
-      <LineId Id="566" Count="0" />
       <LineId Id="275" Count="0" />
       <LineId Id="567" Count="1" />
       <LineId Id="164" Count="0" />
@@ -192,6 +181,7 @@ CalibrationEvent(
       <LineId Id="23" Count="0" />
       <LineId Id="93" Count="2" />
       <LineId Id="511" Count="0" />
+      <LineId Id="624" Count="0" />
       <LineId Id="312" Count="0" />
       <LineId Id="431" Count="0" />
       <LineId Id="11" Count="3" />
