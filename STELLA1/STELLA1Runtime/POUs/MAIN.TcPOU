@@ -9,8 +9,6 @@ VAR
 	error:				BOOL;
 	// manual, panel or remote reset
 	reset:				BOOL;
-	// hydraulics warning 
-	warning:			BOOL;
 	// start hydraulics
 	start:				BOOL;
 	// stop hydraulics 
@@ -29,8 +27,6 @@ VAR
 	error_lamp: 		FB_BLINK;
 	power_lamp:			FB_BLINK;
 	sound_horn:			FB_Horn;
-	// watchdog for trafo softstarter
-	power_watchdog: 	TON;
 	// main cabinet temperature in degrees
 	cabinet_temperature:	REAL;
 	// measures time between soft start command and power available
@@ -48,8 +44,8 @@ VAR
 	MQTTTimer : 		TON := (PT:=T#5S);
 	GetHostName:		FB_GetHostName;
 	HostName: 			STRING(255);
-	LightSwitch:		FB_ButtonEnable;
-	Lightbutton: 		BOOL;
+//	LightSwitch:		FB_ButtonEnable;
+//	Lightbutton: 		BOOL;
 	bExecute:			BOOL := TRUE;
 	cabinet_temperature_warning:	SR;
 	cabinet_temperature_critical:	SR;
@@ -90,12 +86,10 @@ IF reset THEN
 END_IF
 
 IF start THEN
-	HydraulicsControl.manual_start := TRUE;
-	// SimpleLog(Message := 'manual Hydraulics start');
+	HydraulicsControl.enable := TRUE;
 END_IF
 IF stop THEN
-	HydraulicsControl.manual_stop := TRUE;
-	// SimpleLog(Message := 'manual Hydraulics stop');
+	HydraulicsControl.enable := FALSE;
 END_IF
 
 // telescope is ready when power available
@@ -219,7 +213,9 @@ TemperatureCriticalEvent(
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="655" Count="40" />
+      <LineId Id="655" Count="33" />
+      <LineId Id="690" Count="2" />
+      <LineId Id="694" Count="1" />
       <LineId Id="888" Count="2" />
       <LineId Id="699" Count="13" />
       <LineId Id="718" Count="1" />
