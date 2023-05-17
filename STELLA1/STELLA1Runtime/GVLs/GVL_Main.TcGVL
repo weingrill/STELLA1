@@ -5,7 +5,7 @@
 //TODO update to current RoboTel IOs
 VAR_GLOBAL
 	//DIN1 0.0
-	phase_available		AT%I*: BOOL;
+	//phase_available		AT%I*: BOOL;
 	// not implemented on stella
 	trafo_bypassed		AT%I*: BOOL;
 	//not implemented on RoboTel
@@ -41,9 +41,9 @@ VAR_GLOBAL
 	ups_battery_temperature AT%I*: UINT;
 	ups_output_voltage		AT%I*: UINT;
 	ups_output_current		AT%I*: UINT;
-	L1L2_voltage			AT%I*: REAL;
-	L2L3_voltage			AT%I*: REAL;
-	L3L1_voltage			AT%I*: REAL;
+	//L1L2_voltage			AT%I*: REAL;
+	//L2L3_voltage			AT%I*: REAL;
+	//L3L1_voltage			AT%I*: REAL;
 	isRoboTel:		BOOL;
 END_VAR]]></Declaration>
   </GVL>
