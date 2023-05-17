@@ -11,14 +11,10 @@ VAR_INPUT
 	limit_close: 		BOOL;
 END_VAR
 VAR_OUTPUT
-	error,
-	warning: BOOL;
-//	Ready_to_enable:	BOOL;
+	error:				BOOL;
 	Ready:				BOOL;
 	Moving_negative:	BOOL;
 	Moving_positive:	BOOL;
-//	Digital_input1:		BOOL;
-//	Digital_input2:		BOOL;
 	timeout:			BOOL;
 END_VAR
 VAR
