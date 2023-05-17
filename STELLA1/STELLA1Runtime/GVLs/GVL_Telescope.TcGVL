@@ -15,8 +15,6 @@ VAR_GLOBAL
 	temperature_bearing1	AT%I*: INT;
 	// BT14
 	temperature_bearing2	AT%I*: INT;
-	// BT15
-	temperature_cabinet		AT%I*: INT;
 
 	//DOUT6 0.5
 	brake_azimuth_eve	AT%Q*: BOOL;
