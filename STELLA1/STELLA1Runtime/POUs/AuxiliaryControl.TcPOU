@@ -4,16 +4,11 @@
     <Declaration><![CDATA[PROGRAM AuxiliaryControl
 VAR
 	// start delay for the dehumidifier to prevent overcurrent
-	DeHumidifierDelay:	TON;
-	DeHumidifier:		BOOL;
 	pressure_voltage,
 	pressure_Dewar,
 	temperature_Dewar: REAL;
 END_VAR
-VAR CONSTANT
-	humidity_high:	REAL := 75.0;
-	humidity_low:	REAL := 65.0;
-END_VAR]]></Declaration>
+]]></Declaration>
     <Implementation>
       <ST><![CDATA[// turn off dehumidifier if dome is open
 pressure_voltage := F_YREAL(GVL_Auxiliary.pressure_Dewar, 0, 32767, 0.0, 10.0);
