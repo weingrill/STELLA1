@@ -23,6 +23,10 @@ CASE ErrorID OF
 	16#4B07:	NCError_TO_STRING := 'Timeout axis function block';
 	16#4B09:	NCError_TO_STRING := 'Axis is not ready';
 	16#4B0A:	NCError_TO_STRING := 'Error during referencing';
+	16#ECD0:	NCError_TO_STRING := 'Positive limit switch warning.';				
+	16#ED43:	NCError_TO_STRING := 'Under-voltage - DC link.';				
+	16#F601:	NCError_TO_STRING := 'Calibrate commutation offset error.';				
+
 ELSE
 	NCError_TO_STRING := DWORD_TO_HEXSTR(ErrorID, 4, FALSE);
 END_CASE]]></ST>
@@ -39,6 +43,9 @@ END_CASE]]></ST>
       <LineId Id="20" Count="0" />
       <LineId Id="50" Count="1" />
       <LineId Id="24" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="59" Count="0" />
       <LineId Id="11" Count="1" />
       <LineId Id="10" Count="0" />
     </LineIds>
