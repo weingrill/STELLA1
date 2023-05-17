@@ -3,8 +3,6 @@
   <POU Name="CoverControl" Id="{c323d474-9f57-40fd-ba67-b4ebd08c9f7c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM CoverControl
 VAR_INPUT
-	// enables all cover drivers
-	enable:		BOOL;
 	// resets all drives after an error has occured
 	reset:		BOOL;
 	// open the cover in proper order
@@ -39,14 +37,14 @@ VAR_OUTPUT
 	Cover1_error: BOOL;
 	Cover2_error: BOOL;
 	Cover3_error: BOOL;
-	Ready:		BOOL;
 END_VAR
 VAR
 	// delay timer for opening cover2
 	open2_delay: 	TON := (PT:=T#1S);;
 	// dely timer for closing cover3
 	close3_delay : 	TON := (PT:=T#3S);;
-	
+	// trigger for error
+	error_trigger:	SR;
 	//error event for cover1
 	Cover1_Event,
 	Cover2_Event,
@@ -108,7 +106,9 @@ isopen := cover3_opened AND cover2_opened AND cover1_opened;
 // we are closed, if all covers are closed
 isclosed := cover2_closed AND cover3_closed AND cover1_closed;
 // error indicates an axis error on any axis
-Error := (Cover1_error AND NOT GVL_Main.isRoboTel) OR Cover2_error OR Cover3_error;
+error_trigger(SET1 := Cover1_error OR Cover2_error OR Cover3_error,
+				RESET := reset,
+				Q1 => error);
 //Warning := Cover1_control.Warning OR Cover2_control.Warning OR Cover3_control.Warning;
 
 IF isclosed THEN
@@ -212,6 +212,7 @@ Covers_closed_event(Trigger := isclosed,
       <LineId Id="143" Count="0" />
       <LineId Id="423" Count="0" />
       <LineId Id="256" Count="0" />
+      <LineId Id="1232" Count="1" />
       <LineId Id="628" Count="0" />
       <LineId Id="627" Count="0" />
       <LineId Id="373" Count="0" />
