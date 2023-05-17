@@ -44,7 +44,7 @@ DateTime2JD := jdn
 			+ (epoch.wHour-12.0)/24.0
 			+ (epoch.wMinute/1440.0) 
 			+ (epoch.wSecond/86400.0)
-			+ (DWORD_TO_REAL(epoch.wMilliseconds)/86400000.0);
+			+ (DWORD_TO_LREAL(epoch.wMilliseconds)/86400000.0);
 
 
 ]]></ST>
