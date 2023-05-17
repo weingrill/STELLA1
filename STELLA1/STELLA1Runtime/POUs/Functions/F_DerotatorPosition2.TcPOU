@@ -11,12 +11,14 @@ VAR_INPUT
 	declination: LREAL;
 	// latitude in degrees
 	latitude:	LREAL;
+	// sign for elevation
+	sign:	LREAL := 1.0;
 END_VAR
 VAR
 	// parallactic angle
 	sinpa, de, az, el, la: LREAL;
 	parallactic_angle:	LREAL;
-	zenith_distance: LREAL;
+	//zenith_distance: LREAL;
 END_VAR
 VAR CONSTANT
 	d2r:	LREAL := PI/180.0;
@@ -37,8 +39,8 @@ ELSE
 	// WARNING: arbitrary definition
 	parallactic_angle := 0.0;
 END_IF
-zenith_distance := 90.0 - elevation;
-F_DerotatorPosition2 := parallactic_angle + azimuth - zenith_distance;]]></ST>
+//zenith_distance := 90.0 - elevation;
+F_DerotatorPosition2 := MODABS(parallactic_angle + sign * elevation, 360.0);]]></ST>
     </Implementation>
     <LineIds Name="F_DerotatorPosition2">
       <LineId Id="95" Count="12" />
