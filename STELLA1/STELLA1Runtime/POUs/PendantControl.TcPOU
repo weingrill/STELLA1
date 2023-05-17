@@ -29,9 +29,7 @@ VAR
 	horn:			BOOL;
 	// counter for filter position
 	Filter_position:	USINT;
-	CoverEnable: FB_ButtonEnable;
-	NasmythEnable: FB_ButtonEnable;
-	FocusEnable: FB_ButtonEnable;
+	FocusEnable: 		FB_ButtonEnable;
 	DerotatorEnable:	FB_ButtonEnable;
 	ElevationEnable: 	FB_ButtonEnable;
 	AzimuthEnable: 		FB_ButtonEnable;
@@ -310,8 +308,7 @@ CASE Selection OF
 		IF manual THEN
 			HydraulicsEnable(
 				SET := enable, 
-				Q := Hydraulicscontrol.manual_start);
-			Hydraulicscontrol.manual_stop := NOT Hydraulicscontrol.manual_start;
+				Q := Hydraulicscontrol.enable);
 			Hydraulicscontrol.reset := reset;
 			
 			IF up THEN
@@ -355,7 +352,8 @@ GVL_pendant_control.lamp_error := lamp_error;]]></ST>
       <LineId Id="3539" Count="1" />
       <LineId Id="3542" Count="0" />
       <LineId Id="3538" Count="0" />
-      <LineId Id="3392" Count="78" />
+      <LineId Id="3392" Count="74" />
+      <LineId Id="3468" Count="2" />
       <LineId Id="3472" Count="2" />
       <LineId Id="3476" Count="11" />
       <LineId Id="121" Count="0" />
