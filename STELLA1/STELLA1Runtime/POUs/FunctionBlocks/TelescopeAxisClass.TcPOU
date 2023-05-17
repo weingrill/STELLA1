@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="TelescopeAxisClass" Id="{082bc49c-bad2-46fa-946a-470461a87bf2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TelescopeAxisClass
+VAR_INPUT
+	// enable the axis
+	enable: 	BOOL;
+	// reset an error
+	reset:		BOOL;
+	// increase the position
+	up:			BOOL;
+	// decrease the position
+	down:		BOOL;
+	// set position of the axis in degrees
+	position:	LREAL;
+	// set the Velocity of the axis
+	velocity:	LREAL;
+	// move axis command
+	MoveAxis:	BOOL;
+	// calibrate the axis
+	HomeAxis:	BOOL;
+	// enable tracking
+	Tracking:	BOOL;
+	// stop the Axis
+	StopAxis:	BOOL;
+END_VAR
+VAR_OUTPUT
+	// axis is ready to operate
+	Ready:			BOOL;
+	// drive error condition
+	error: 			BOOL;
+	// warning condition
+	warning:		BOOL;
+	// actual position of the elevation axis
+	actual_position: 	LREAL;
+	// error ID of the elevation axis
+	ErrorID: 		UDINT;
+	// axis is calibrated
+	Calibrated:		BOOL;
+	// time to reach target position
+	slewtime:		LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="TelescopeAxisClass">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
