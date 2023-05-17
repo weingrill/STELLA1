@@ -39,7 +39,7 @@ VAR
 	FocusUnlocked:		BOOL;
 	FocusCalibration:	MC_SetPosition;
 	MQTTTimer : 		TON := (PT:=T#5S);
-	getlastposition:	BOOL := TRUE;
+	//getlastposition:	BOOL := TRUE;
 	FocusAxisEvent:		FB_EventLog;
 	CalibrationEvent:	FB_EventLog;
 	last_position:		LREAL := -1.0;
@@ -96,7 +96,7 @@ IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
 	END_IF
 END_IF
 
-
+(*
 IF HomeAxis THEN
 	IF last_calibrationposition > 0.0 THEN
 		// calibrate on stored position
@@ -107,6 +107,11 @@ IF HomeAxis THEN
 		HomingMode := MC_DefaultHoming;
 		position := homing_position;
 	END_IF
+END_IF
+*)
+IF HomeAxis THEN
+	HomingMode := MC_DefaultHoming;
+	position := homing_position;
 END_IF
 
 // deactivate limit switches on homing
@@ -230,7 +235,11 @@ CalibrationEvent(
       <LineId Id="874" Count="0" />
       <LineId Id="872" Count="1" />
       <LineId Id="866" Count="0" />
-      <LineId Id="381" Count="4" />
+      <LineId Id="381" Count="0" />
+      <LineId Id="945" Count="1" />
+      <LineId Id="949" Count="1" />
+      <LineId Id="948" Count="0" />
+      <LineId Id="382" Count="3" />
       <LineId Id="378" Count="0" />
       <LineId Id="847" Count="0" />
       <LineId Id="90" Count="0" />
