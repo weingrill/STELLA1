@@ -61,6 +61,8 @@ VAR_OUTPUT
 	Homing:		BOOL;
 	// axis is Accelerating or Decelerating
 	InRamp:		BOOL;
+	// axis is tracking on position
+	isTracking:	BOOL;
 	//	error condition
 	Error: 		BOOL;
 	// number of error
@@ -89,13 +91,13 @@ VAR
 	//wasEnabled:		BOOL;
 	// Direction fot Axis_SetpointFeed
 	Direction:		DINT;
-	Acceleration:	LREAL := 0.1;
-	EndTracking:	F_TRIG;
 	PositionDifference:	LREAL;
 	TrackPosition:		LREAL;
 	TrackVelocity:		LREAL;
 	TrackAcceleration:	LREAL;
-	TrackTimeScale:		LREAL:=0.1;
+	TrackTimeScale:		LREAL := 0.1;
+	PositionLimit:		LREAL := 1.0;
+	PositionScale:		LREAL := 0.0;
 END_VAR
 
 VAR_IN_OUT
@@ -122,20 +124,18 @@ Axis_Reset(
 	Done => 	ResetDone);
 
 (* Tracking section ********************************************** *)
-(*
-IF Tracking THEN
-	IF ABS(AbsolutePosition - Position) > 0.01 THEN
-		Tracking := FALSE;
-		Velocity := 1;
-		MoveAxis := TRUE;
-	ELSE
-		MoveAxis := FALSE;
-	END_IF
-END_IF
-*)
 
-PositionDifference := LIMIT(-0.1, Position - ActualPosition, 0.1);
-TrackPosition := AbsolutePosition + PositionDifference;
+IF Tracking THEN
+	PositionScale := PositionScale + 0.01;
+	// limit Positionscale to 1.0
+	PositionScale := MIN(PositionScale, 1.0);
+ELSE
+	PositionScale := 0.0;
+END_IF
+
+
+PositionDifference := LIMIT(-PositionLimit, Position - AbsolutePosition, PositionLimit);
+TrackPosition := AbsolutePosition + PositionScale*PositionDifference;
 TrackVelocity := LIMIT(-10.0, PositionDifference / TrackTimeScale, 10.0);
 TrackAcceleration := LIMIT(-10.0, (TrackVelocity - AxisRef.NcToPlc.ActVelo) / TrackTimeScale, 10.0);
 IF TrackVelocity = 0 OR TrackAcceleration = 0 THEN
@@ -146,6 +146,7 @@ ELSE
 	Direction := 1;
 END_IF
 
+isTracking := Tracking AND ABS(PositionDifference) < 1E-3;
 IF Tracking AND Ready AND Calibrated AND NOT StopAxis THEN
 	Axis_SetpointEnable.Execute := TRUE;
 ELSIF NOT Axis_SetpointEnable.Busy AND Axis_SetpointEnable.Done THEN
@@ -337,19 +338,24 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="39" Count="1" />
       <LineId Id="2023" Count="0" />
       <LineId Id="1620" Count="0" />
-      <LineId Id="2028" Count="9" />
+      <LineId Id="2028" Count="1" />
+      <LineId Id="2036" Count="0" />
+      <LineId Id="2268" Count="0" />
+      <LineId Id="2267" Count="0" />
+      <LineId Id="2265" Count="1" />
+      <LineId Id="2037" Count="0" />
       <LineId Id="2024" Count="0" />
       <LineId Id="1812" Count="0" />
       <LineId Id="1415" Count="0" />
-      <LineId Id="2140" Count="0" />
-      <LineId Id="2144" Count="0" />
-      <LineId Id="2147" Count="0" />
+      <LineId Id="2261" Count="0" />
+      <LineId Id="2259" Count="1" />
       <LineId Id="1301" Count="0" />
       <LineId Id="2143" Count="0" />
       <LineId Id="2142" Count="0" />
       <LineId Id="1417" Count="0" />
       <LineId Id="1419" Count="1" />
       <LineId Id="1418" Count="0" />
+      <LineId Id="2256" Count="0" />
       <LineId Id="2148" Count="2" />
       <LineId Id="2152" Count="1" />
       <LineId Id="2151" Count="0" />
