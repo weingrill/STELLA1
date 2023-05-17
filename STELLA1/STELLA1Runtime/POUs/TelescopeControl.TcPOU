@@ -521,9 +521,14 @@ END_VAR]]></Declaration>
 ElevationControl.MoveAxis := TRUE;
 AzimuthElevationControl.position := azimuth_home;
 AzimuthElevationControl.MoveAxis := TRUE;
+DerotatorControl.position := 180.0;
+DerotatorControl.MoveAxis := TRUE;
 IF ElevationControl.ElevationAxis.MoveDone AND 
-	AzimuthElevationControl.AzimuthAxis.MoveDone THEN
+	AzimuthElevationControl.AzimuthAxis.MoveDone AND 
+	DerotatorControl.DerotatorAxis.MoveDone THEN
 	gohome := FALSE;
+	elevation := elevation_current;
+	azimuth := azimuth_current;
 	hometelescope := TRUE;
 ELSE
 	hometelescope := FALSE;
@@ -767,18 +772,48 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[ElevationControl.position := 		elevation_calc;
+        <ST><![CDATA[// Elevation
+ElevationControl.position := elevation_calc;
+IF NOT ElevationControl.Tracking THEN
+	ElevationControl.velocity := 10.0;
+	ElevationControl.MoveAxis := TRUE;
+	IF NOT ElevationControl.ElevationAxis.Busy AND ElevationControl.ElevationAxis.MoveDone THEN
+		ElevationControl.MoveAxis := FALSE;
+		ElevationControl.velocity := ElevationVelocity;
+		ElevationControl.Tracking := TRUE;
+	END_IF
+ELSE
+	ElevationControl.velocity := ElevationVelocity;
+END_IF
+
+// Azimuth
 AzimuthElevationControl.position := azimuth_calc;
-DerotatorControl.position := 		derotation_calc;
+IF NOT AzimuthElevationControl.Tracking THEN
+	AzimuthElevationControl.velocity := 10.0;
+	AzimuthElevationControl.MoveAxis := TRUE;
+	IF NOT AzimuthElevationControl.AzimuthAxis.Busy AND AzimuthElevationControl.AzimuthAxis.MoveDone THEN
+		AzimuthElevationControl.MoveAxis := FALSE;
+		AzimuthElevationControl.velocity := AzimuthVelocity;
+		AzimuthElevationControl.Tracking := TRUE;
+	END_IF
+ELSE
+	AzimuthElevationControl.velocity := AzimuthVelocity;
+END_IF
 
-DerotatorControl.Velocity := 		DerotatorVelocity;
-ElevationControl.velocity := 		ElevationVelocity;
-AzimuthElevationControl.velocity := AzimuthVelocity;
-
-ElevationControl.Tracking := 		TRUE;
-AzimuthElevationControl.Tracking := TRUE;
-DerotatorControl.Tracking := 		TRUE;
-	
+// Derotator
+DerotatorControl.position := derotation_calc;
+IF NOT DerotatorControl.Tracking THEN
+	DerotatorControl.Velocity := 10.0;
+	DerotatorControl.MoveAxis := TRUE;
+	IF NOT DerotatorControl.DerotatorAxis.Busy AND DerotatorControl.DerotatorAxis.MoveDone THEN
+		DerotatorControl.MoveAxis := FALSE;
+		DerotatorControl.Velocity := DerotatorVelocity;
+		DerotatorControl.Tracking := TRUE;
+	END_IF
+ELSE
+	DerotatorControl.Velocity := DerotatorVelocity;
+END_IF
+		
 ]]></ST>
       </Implementation>
     </Method>
@@ -1012,9 +1047,13 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.hometelescope">
-      <LineId Id="6" Count="4" />
+      <LineId Id="6" Count="3" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="10" Count="0" />
       <LineId Id="17" Count="0" />
+      <LineId Id="41" Count="0" />
       <LineId Id="11" Count="0" />
+      <LineId Id="37" Count="1" />
       <LineId Id="20" Count="0" />
       <LineId Id="18" Count="1" />
       <LineId Id="12" Count="0" />
@@ -1126,11 +1165,27 @@ DerotatorControl.Tracking := 		TRUE;
       <LineId Id="6" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.tracktelescope">
-      <LineId Id="6" Count="2" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="9" Count="2" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="12" Count="3" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="68" Count="7" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="83" Count="10" />
+      <LineId Id="26" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

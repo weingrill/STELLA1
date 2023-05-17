@@ -95,7 +95,7 @@ VAR
 	TrackPosition:		LREAL;
 	TrackVelocity:		LREAL;
 	TrackAcceleration:	LREAL;
-	TrackTimeScale:		LREAL := 0.1;
+	TrackTimeScale:		LREAL := 0.01;
 	PositionLimit:		LREAL := 1.0;
 	PositionScale:		LREAL := 0.0;
 END_VAR
@@ -126,7 +126,7 @@ Axis_Reset(
 (* Tracking section ********************************************** *)
 
 IF Tracking THEN
-	PositionScale := PositionScale + 0.01;
+	PositionScale := PositionScale + 0.001;
 	// limit Positionscale to 1.0
 	PositionScale := MIN(PositionScale, 1.0);
 ELSE
