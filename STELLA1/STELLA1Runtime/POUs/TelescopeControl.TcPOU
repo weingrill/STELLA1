@@ -76,7 +76,8 @@ VAR
 	power_timeout:	TON;
 	// tracking delay
 	tracking_delay:	TON;
-	
+	// telescope is parked
+	isparked:		BOOL;
 	TCSpowerEvent,
 	TCSgohomeEvent,
 	TCSparkEvent,
@@ -176,7 +177,7 @@ slewtime := MAX(MAX(ElevationControl.slewtime, AzimuthElevationControl.slewtime)
 			
 IF error THEN
 	gohome := 	FALSE;
-	park  := 	FALSE;
+	// park  := 	FALSE;
 	track := 	FALSE;
 	goto := 	FALSE;
 	slew := 	FALSE;
@@ -235,9 +236,8 @@ END_IF
 poweronwarning(IN := power OR (NOT ElevationControl.enable AND HydraulicsControl.brake_open), PT := T#250MS);
 //poweron_reset(IN := power AND NOT PendantControl.manual, PT := T#50MS);
 // park the telescope after 12 hours
-power_timeout(IN := TCS_command = E_TCSCommand.no_command, PT := T#12H);
+power_timeout(IN := TCS_command = E_TCSCommand.no_command AND NOT isparked, PT := T#12H);
 IF power_timeout.Q THEN
-	power := FALSE;
 	park := TRUE;
 END_IF
 
@@ -269,28 +269,6 @@ END_IF
 // set TCS_command according to state variables ordered by precedence
 IF power THEN
 	TCS_command := E_TCSCommand.poweron;
-ELSIF track THEN
-	TCS_command := E_TCSCommand.track;
-	goto := FALSE;
-	slew := FALSE;
-ELSIF goto THEN
-	TCS_command := E_TCSCommand.goto;
-	track := FALSE;
-	slew := FALSE;
-ELSIF gohome THEN
-	TCS_command := E_TCSCommand.gohome;
-	goto := FALSE;
-	track := FALSE;
-	slew := FALSE;
-ELSIF slew THEN
-	TCS_command := E_TCSCommand.slew;
-	goto := FALSE;
-	track := FALSE;
-ELSIF park THEN
-	TCS_command := E_TCSCommand.park;
-	goto := FALSE;
-	track := FALSE;
-	slew := FALSE;
 ELSIF stop THEN
 	TCS_command := E_TCSCommand.stop;
 	goto := FALSE;
@@ -298,6 +276,28 @@ ELSIF stop THEN
 	slew := FALSE;
 	gohome := FALSE;
 	park := FALSE;
+ELSIF park THEN
+	TCS_command := E_TCSCommand.park;
+	goto := FALSE;
+	track := FALSE;
+	slew := FALSE;
+ELSIF gohome THEN
+	TCS_command := E_TCSCommand.gohome;
+	goto := FALSE;
+	track := FALSE;
+	slew := FALSE;
+ELSIF goto THEN
+	TCS_command := E_TCSCommand.goto;
+	track := FALSE;
+	slew := FALSE;
+ELSIF slew THEN
+	TCS_command := E_TCSCommand.slew;
+	goto := FALSE;
+	track := FALSE;
+ELSIF track THEN
+	TCS_command := E_TCSCommand.track;
+	goto := FALSE;
+	slew := FALSE;
 ELSE
 	TCS_command := E_TCSCommand.no_command;
 	ElevationControl.MoveAxis := FALSE;
@@ -454,6 +454,7 @@ VAR_INPUT
 END_VAR
 VAR
 	GoToEvent:	FB_Eventlog;
+	command_timeout:	TON;
 END_VAR
 VAR_STAT
 	Stage:		USINT := 0;
@@ -461,6 +462,13 @@ VAR_STAT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[gototelescope := Stage;
+command_timeout(IN := Stage < 100, PT := T#600S);
+IF command_timeout.Q THEN
+	error := TRUE;
+	errorid := 16#10;
+	goto := FALSE;
+	Stage := 0;
+END_IF
 IF reset OR error THEN
 	Stage := 0;
 END_IF
@@ -482,15 +490,21 @@ CASE Stage OF
 				Stage := 50;
 		END_IF
 	50:
-		IF ElevationControl.ElevationAxis.MoveDone THEN
+		IF NOT ElevationControl.ElevationAxis.Busy AND ElevationControl.ElevationAxis.MoveDone THEN
 			ElevationControl.MoveAxis := FALSE;
 		END_IF
-		IF AzimuthElevationControl.AzimuthAxis.MoveDone THEN
+		IF NOT AzimuthElevationControl.AzimuthAxis.Busy AND AzimuthElevationControl.AzimuthAxis.MoveDone THEN
 			AzimuthElevationControl.MoveAxis := FALSE;
 		END_IF
-		IF DerotatorControl.DerotatorAxis.MoveDone THEN
+		IF NOT DerotatorControl.DerotatorAxis.Busy AND DerotatorControl.DerotatorAxis.MoveDone THEN
 			DerotatorControl.MoveAxis := FALSE;
 		END_IF
+		IF NOT ElevationControl.MoveAxis AND 
+           NOT AzimuthElevationControl.MoveAxis AND 
+		   NOT DerotatorControl.MoveAxis THEN
+		   Stage := 75;
+		END_IF
+	75:
 		IF NOT sliding AND stopped THEN // all axis standstill
 			Stage := 100;
 		END_IF
@@ -501,7 +515,6 @@ CASE Stage OF
 		azimuth := azimuth_calc;
 		elevation := elevation_calc;
 		goto := FALSE;
-		gototelescope := 100;
 		Stage := 0;
 END_CASE
 GoToEvent(Trigger := Stage > LastStage, FormatString := 'GoTo progress: %s', OnMessage := USINT_TO_STRING(Stage));
@@ -515,9 +528,17 @@ END_VAR
 
 VAR
 	HomeEvent: FB_Eventlog;
+	command_timeout: TON;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[ElevationControl.position := elevation_home;
+        <ST><![CDATA[command_timeout(IN := NOT hometelescope, PT := T#600S);
+IF command_timeout.Q THEN
+	error := TRUE;
+	errorid := 16#30;
+	hometelescope :=TRUE;
+END_IF
+
+ElevationControl.position := elevation_home;
 ElevationControl.MoveAxis := TRUE;
 AzimuthElevationControl.position := azimuth_home;
 AzimuthElevationControl.MoveAxis := TRUE;
@@ -546,6 +567,7 @@ VAR_INPUT
 END_VAR
 VAR
 	ParkEvent:	FB_Eventlog;
+	command_timeout:	TON;
 END_VAR
 VAR_STAT
 	Stage:		USINT := 0;
@@ -553,8 +575,17 @@ VAR_STAT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[parktelescope := Stage;
+command_timeout(IN := Stage < 100, PT := T#600S);
+IF command_timeout.Q THEN
+	error := TRUE;
+	errorid := 16#20;
+	Stage := 0;
+END_IF
 IF reset OR error THEN
 	Stage := 0;
+END_IF
+IF isparked THEN
+	Stage := 100;
 END_IF
 CASE Stage OF
 	0: 
@@ -565,6 +596,14 @@ CASE Stage OF
 		Focuscontrol.position := 75.0;
 		// disable filterwheel
 		FilterWheelControl.Enable := FALSE;
+		IF Error THEN // emergency park
+			HydraulicsControl.close_brake();
+			ElevationControl.enable := FALSE;
+			AzimuthElevationControl.Enable := FALSE;
+			DerotatorControl.enable := FALSE;	
+			CoverControl.close := TRUE;	
+			Stage := 80;
+		END_IF
 		Stage := 20;
 	20:
 		ElevationControl.position := elevation_park;
@@ -613,6 +652,7 @@ CASE Stage OF
 			Stage := 100;
 		END_IF
 	100:
+			isparked := TRUE;
 			park := FALSE;
 			parktelescope := 100;
 			Stage := 0;	
@@ -639,6 +679,10 @@ ELSIF NOT Transformer.power_OK THEN
 ELSIF NOT Transformer.phase_available THEN
 	powerfailure := TRUE;
 	TCSpowerEvent.OnMessage := 'failure: hydraulics power failure';
+	power := FALSE;
+ELSIF error THEN
+	powerfailure := TRUE;
+	TCSpowerEvent.OnMessage := 'Generic error during power on occured.';
 	power := FALSE;
 ELSE
 	powerfailure := FALSE;		
@@ -675,6 +719,7 @@ END_IF
 // start calibration of focus after elevation has been calibrated
 // this avoids imbalance by the M2 mirror on the elvation during its calibration
 IF ElevationControl.Calibrated AND NOT FocusControl.Calibrated THEN
+	FocusControl.enable := TRUE;
 	FocusControl.HomeAxis := TRUE;
 END_IF
 
@@ -682,9 +727,11 @@ IF CoverControl.isopen AND
 	ElevationControl.Calibrated AND
 	AzimuthElevationControl.calibrated AND
 	DerotatorControl.Calibrated AND
-	FilterWheelControl.Calibrated THEN
+	FilterWheelControl.Calibrated AND
+	FocusControl.Calibrated THEN
 	power := FALSE;
 	poweron := TRUE;
+	isparked := FALSE;
 	// slew the telescope to the home position
 	gohome := TRUE;
 ELSE
@@ -698,6 +745,7 @@ VAR_INPUT
 END_VAR
 VAR
 	SlewEvent:	FB_Eventlog;
+	command_timeout: TON;
 END_VAR
 VAR_STAT
 	Stage:		USINT := 0;
@@ -705,6 +753,13 @@ VAR_STAT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[slewtelescope := Stage;
+command_timeout(IN := Stage < 100, PT := T#600S);
+IF command_timeout.Q THEN
+	error := TRUE;
+	errorid := 16#40;
+	slew := FALSE;
+	Stage := 0;
+END_IF
 IF reset OR error THEN
 	Stage := 0;
 END_IF
@@ -883,9 +938,7 @@ END_IF
       <LineId Id="4242" Count="0" />
       <LineId Id="6610" Count="0" />
       <LineId Id="6608" Count="1" />
-      <LineId Id="6611" Count="0" />
-      <LineId Id="7931" Count="0" />
-      <LineId Id="6612" Count="0" />
+      <LineId Id="6611" Count="1" />
       <LineId Id="6606" Count="1" />
       <LineId Id="7305" Count="0" />
       <LineId Id="7291" Count="1" />
@@ -909,26 +962,16 @@ END_IF
       <LineId Id="3784" Count="0" />
       <LineId Id="1499" Count="0" />
       <LineId Id="8133" Count="1" />
-      <LineId Id="1501" Count="0" />
-      <LineId Id="1527" Count="0" />
-      <LineId Id="4283" Count="0" />
-      <LineId Id="6377" Count="0" />
-      <LineId Id="1528" Count="1" />
-      <LineId Id="4282" Count="0" />
-      <LineId Id="6378" Count="0" />
+      <LineId Id="8568" Count="6" />
+      <LineId Id="8563" Count="4" />
       <LineId Id="1513" Count="0" />
       <LineId Id="1526" Count="0" />
       <LineId Id="4275" Count="1" />
       <LineId Id="6379" Count="0" />
+      <LineId Id="8579" Count="3" />
       <LineId Id="6374" Count="2" />
       <LineId Id="6380" Count="0" />
-      <LineId Id="1547" Count="1" />
-      <LineId Id="4272" Count="1" />
-      <LineId Id="6381" Count="0" />
-      <LineId Id="1524" Count="1" />
-      <LineId Id="4284" Count="1" />
-      <LineId Id="6382" Count="0" />
-      <LineId Id="4286" Count="1" />
+      <LineId Id="8575" Count="3" />
       <LineId Id="1511" Count="0" />
       <LineId Id="1519" Count="0" />
       <LineId Id="4290" Count="1" />
@@ -1022,6 +1065,9 @@ END_IF
     </LineIds>
     <LineIds Name="TelescopeControl.gototelescope">
       <LineId Id="96" Count="0" />
+      <LineId Id="140" Count="2" />
+      <LineId Id="144" Count="2" />
+      <LineId Id="143" Count="0" />
       <LineId Id="117" Count="1" />
       <LineId Id="116" Count="0" />
       <LineId Id="41" Count="1" />
@@ -1036,17 +1082,25 @@ END_IF
       <LineId Id="81" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="87" Count="1" />
+      <LineId Id="157" Count="2" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="162" Count="0" />
       <LineId Id="112" Count="0" />
       <LineId Id="90" Count="1" />
       <LineId Id="56" Count="0" />
       <LineId Id="113" Count="2" />
       <LineId Id="128" Count="1" />
-      <LineId Id="93" Count="2" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="95" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.hometelescope">
+      <LineId Id="42" Count="3" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="50" Count="0" />
       <LineId Id="6" Count="3" />
       <LineId Id="39" Count="1" />
       <LineId Id="10" Count="0" />
@@ -1062,7 +1116,10 @@ END_IF
     </LineIds>
     <LineIds Name="TelescopeControl.parktelescope">
       <LineId Id="115" Count="0" />
+      <LineId Id="232" Count="3" />
+      <LineId Id="237" Count="1" />
       <LineId Id="198" Count="2" />
+      <LineId Id="252" Count="2" />
       <LineId Id="166" Count="0" />
       <LineId Id="118" Count="0" />
       <LineId Id="122" Count="0" />
@@ -1070,6 +1127,12 @@ END_IF
       <LineId Id="123" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="127" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="231" Count="0" />
+      <LineId Id="229" Count="1" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="226" Count="1" />
       <LineId Id="133" Count="0" />
       <LineId Id="132" Count="0" />
       <LineId Id="128" Count="0" />
@@ -1099,14 +1162,19 @@ END_IF
       <LineId Id="187" Count="0" />
       <LineId Id="183" Count="0" />
       <LineId Id="155" Count="0" />
-      <LineId Id="188" Count="1" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="189" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="169" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.poweron">
-      <LineId Id="99" Count="14" />
+      <LineId Id="99" Count="11" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="199" Count="2" />
+      <LineId Id="111" Count="2" />
       <LineId Id="117" Count="0" />
       <LineId Id="120" Count="0" />
       <LineId Id="166" Count="0" />
@@ -1119,18 +1187,24 @@ END_IF
       <LineId Id="144" Count="4" />
       <LineId Id="150" Count="3" />
       <LineId Id="188" Count="0" />
-      <LineId Id="155" Count="2" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="156" Count="1" />
       <LineId Id="167" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="168" Count="3" />
+      <LineId Id="196" Count="0" />
       <LineId Id="175" Count="1" />
+      <LineId Id="206" Count="0" />
       <LineId Id="190" Count="0" />
       <LineId Id="189" Count="0" />
       <LineId Id="173" Count="1" />
       <LineId Id="172" Count="0" />
     </LineIds>
     <LineIds Name="TelescopeControl.slewtelescope">
-      <LineId Id="60" Count="5" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="99" Count="6" />
+      <LineId Id="61" Count="4" />
       <LineId Id="71" Count="1" />
       <LineId Id="59" Count="0" />
       <LineId Id="8" Count="0" />
