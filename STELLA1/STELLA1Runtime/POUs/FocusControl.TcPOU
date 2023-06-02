@@ -32,6 +32,7 @@ END_VAR
 
 VAR
 	FocusDelay:			TON;
+	BrakeDelay:			TOF;
 	FocusAxis:			FB_Axis2;
 	actual_position:	LREAL;
 	Focus_max:			LREAL;
@@ -69,25 +70,24 @@ GVL_Telescope.focus_unlock := FocusUnlock OR enable;
 
 // wait until the focus is unlocked for n milliseconds
 FocusDelay(IN := GVL_Telescope.focus_unlock, PT := T#500MS, Q => FocusUnlocked);
+// wait for brake until we are at rest
+BrakeDelay(IN := NOT FocusAxis.Busy AND FocusAxis.MoveDone AND FocusAxis.StandStill, PT := T#1000MS);
 
 // if we are on automatic mode then position the filterwheel
 IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
 	IF FocusAxis.Calibrated THEN
-		IF position <> last_position THEN
+		IF ABS(position - actual_position) > tolerance THEN
 			IF FocusAxis.Ready THEN
 				MoveAxis := TRUE;
 			ELSE
 				Enable := TRUE;
 			END_IF
 		END_IF
-		IF ABS(position - actual_position) > tolerance THEN
-			;
-		END_IF
-		IF FocusAxis.MoveDone AND FocusAxis.StandStill THEN
-			position := actual_position;
-			last_position := position;
+		IF BrakeDelay.Q THEN
+			last_position := actual_position;
 			Enable := FALSE;
 		END_IF
+		
 	ELSE // not calibrated
 		position := calibration_position;
 		IF FocusAxis.Ready THEN
@@ -96,19 +96,6 @@ IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
 	END_IF
 END_IF
 
-(*
-IF HomeAxis THEN
-	IF last_calibrationposition > 0.0 THEN
-		// calibrate on stored position
-		HomingMode := MC_ForceCalibration;
-		position := last_calibrationposition;
-	ELSE
-		// calibrate on limit switch
-		HomingMode := MC_DefaultHoming;
-		position := homing_position;
-	END_IF
-END_IF
-*)
 IF HomeAxis THEN
 	HomingMode := MC_DefaultHoming;
 	position := homing_position;
@@ -215,27 +202,16 @@ CalibrationEvent(
       <LineId Id="436" Count="1" />
       <LineId Id="112" Count="0" />
       <LineId Id="110" Count="0" />
+      <LineId Id="1007" Count="0" />
+      <LineId Id="1006" Count="0" />
       <LineId Id="832" Count="1" />
-      <LineId Id="803" Count="1" />
-      <LineId Id="834" Count="0" />
-      <LineId Id="837" Count="2" />
-      <LineId Id="841" Count="0" />
-      <LineId Id="835" Count="1" />
-      <LineId Id="805" Count="0" />
+      <LineId Id="803" Count="2" />
+      <LineId Id="1008" Count="3" />
       <LineId Id="812" Count="2" />
       <LineId Id="824" Count="0" />
-      <LineId Id="840" Count="0" />
-      <LineId Id="815" Count="8" />
-      <LineId Id="802" Count="0" />
-      <LineId Id="377" Count="0" />
-      <LineId Id="379" Count="0" />
-      <LineId Id="864" Count="0" />
-      <LineId Id="869" Count="2" />
-      <LineId Id="865" Count="0" />
-      <LineId Id="874" Count="0" />
-      <LineId Id="872" Count="1" />
-      <LineId Id="866" Count="0" />
-      <LineId Id="381" Count="0" />
+      <LineId Id="815" Count="1" />
+      <LineId Id="1013" Count="0" />
+      <LineId Id="817" Count="6" />
       <LineId Id="945" Count="1" />
       <LineId Id="949" Count="1" />
       <LineId Id="948" Count="0" />

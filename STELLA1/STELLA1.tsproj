@@ -1797,8 +1797,9 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="23">
 						<DrvPara>
-							<Analog VeloReferenz="10.2713178" TorqueSetpointScale="10" ScaleFactorActTorque="0.2"/>
+							<Analog VeloReferenz="10.2713178" VeloScale="10" TorqueSetpointScale="10" ScaleFactorActTorque="10"/>
 							<TimeComp TaskDelayCycles="1"/>
+							<ParameterChanged>268</ParameterChanged>
 						</DrvPara>
 						<Vars VarGrpType="1">
 							<Name>Eingänge</Name>
@@ -1871,7 +1872,8 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
-							<PID PosKp="20" CtrlOutputLimit="1"/>
+							<PosDiffControl Range="1"/>
+							<PID PosKp="10" CtrlOutputLimit="1"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -9379,6 +9381,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			<Variable>TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)^DRV Info data 1^Info data 1</Variable>
 			<Variable>TINC^NC-Task 1 SAF^Axes^FilterWheel^Drive^Inputs^In^nState8</Variable>
 			<Variable>TINC^NC-Task 1 SAF^Axes^Elevation^Outputs^ToPlc^HomingState</Variable>
+			<Variable>TINC^NC-Task 1 SAF^Axes^Fokus^Outputs^ToPlc^PosDiff</Variable>
+			<Variable>TINC^NC-Task 1 SAF^Axes^Fokus^Outputs^ToPlc^SetTorque</Variable>
+			<Variable>TINC^NC-Task 1 SAF^Axes^Fokus^Outputs^ToPlc^ActTorque</Variable>
 		</SymbolWatch>
 	</Project>
 	<Mappings>
