@@ -345,7 +345,8 @@ ready := homed AND
 	CoverControl.isopen AND 
 	ElevationControl.enable AND
 	AzimuthElevationControl.enable AND
-	DerotatorControl.enable AND NOT error;
+	DerotatorControl.enable AND HydraulicsControl.brake_open AND 
+    NOT error;
 
 IF NOT error THEN
 	reset := FALSE;
@@ -1009,6 +1010,7 @@ END_IF
       <LineId Id="7950" Count="1" />
       <LineId Id="7949" Count="0" />
       <LineId Id="6942" Count="0" />
+      <LineId Id="8718" Count="0" />
       <LineId Id="7472" Count="3" />
       <LineId Id="7933" Count="0" />
       <LineId Id="7133" Count="0" />
