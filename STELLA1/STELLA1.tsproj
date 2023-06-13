@@ -1700,7 +1700,7 @@ External Setpoint Generation:
 				<Cpu CpuId="1"/>
 			</Settings>
 			<Licenses>
-				<Target CustomOrder="66100685"/>
+				<Target BkhfOrder="F2VY7-R1Bj2" CustomOrder="66100685"/>
 			</Licenses>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
@@ -1730,6 +1730,7 @@ External Setpoint Generation:
 					<AxisPara>
 						<Dynamic AccelerationMaximum="100" DecelerationMaximum="100" Acceleration="4.5" Deceleration="4.5" Jerk="13.5"/>
 						<Velo RefSearch="0.2" RefSync="0.2" SlowManual="0.1" FastManual="0.5" Maximum="3"/>
+						<TargetPosControl Range="0.1"/>
 						<OtherSettings AllowMotionCmdToSlave="true" PulseDistancePos="1" PulseDistanceNeg="1"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
@@ -1799,7 +1800,6 @@ External Setpoint Generation:
 						<DrvPara>
 							<Analog VeloReferenz="10.2713178" VeloScale="10" TorqueSetpointScale="10" ScaleFactorActTorque="10"/>
 							<TimeComp TaskDelayCycles="1"/>
-							<ParameterChanged>268</ParameterChanged>
 						</DrvPara>
 						<Vars VarGrpType="1">
 							<Name>Eingänge</Name>
@@ -1899,6 +1899,7 @@ External Setpoint Generation:
 						<Dynamic AccelerationMaximum="20" DecelerationMaximum="20" Acceleration="10.0226" Deceleration="10.0226" Jerk="12.0694"/>
 						<Velo RefSearch="1" RefSync="0.5" SlowManual="0.5" FastManual="5" Fast="11.7222517903646" Maximum="11.7223"/>
 						<PositionAreaControl Range="10"/>
+						<TargetPosControl Range="0.1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
@@ -2357,6 +2358,7 @@ External Setpoint Generation:
 						<General UnitName="°" UnitFlags="#x00000004"/>
 						<Dynamic AccelerationMaximum="1500" DecelerationMaximum="1500" Acceleration="15" Deceleration="15" Jerk="45"/>
 						<Velo RefSearch="5" RefSync="5" SlowManual="1" FastManual="10" Fast="103.833333333333" Maximum="100"/>
+						<TargetPosControl Range="1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
@@ -2423,7 +2425,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
 						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
-							<Analog VeloReferenz="114.216666666667" VeloScale="32" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="114.216666666667" VeloScale="32" PosScale="5" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -2481,6 +2483,8 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
+							<PosDiffControl Range="1"/>
+							<PID PosKp="5"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -9378,12 +9382,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			</Device>
 		</Io>
 		<SymbolWatch>
-			<Variable>TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)^DRV Info data 1^Info data 1</Variable>
-			<Variable>TINC^NC-Task 1 SAF^Axes^FilterWheel^Drive^Inputs^In^nState8</Variable>
-			<Variable>TINC^NC-Task 1 SAF^Axes^Elevation^Outputs^ToPlc^HomingState</Variable>
-			<Variable>TINC^NC-Task 1 SAF^Axes^Fokus^Outputs^ToPlc^PosDiff</Variable>
-			<Variable>TINC^NC-Task 1 SAF^Axes^Fokus^Outputs^ToPlc^SetTorque</Variable>
-			<Variable>TINC^NC-Task 1 SAF^Axes^Fokus^Outputs^ToPlc^ActTorque</Variable>
+			<Variable>TINC^NC-Task 1 SAF^Axes^FilterWheel^Outputs^ToPlc^PosDiff</Variable>
 		</SymbolWatch>
 	</Project>
 	<Mappings>

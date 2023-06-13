@@ -1,55 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
-  <GlobalTextList Name="GlobalTextList" Id="{ba2c6469-4f7d-4901-9d8c-b13a9d0c5f42}">
+  <GlobalTextList Name="GlobalTextList" Id="{7a3e1494-aefa-440b-90f5-cfa7323d21aa}">
     <XmlArchive>
       <Data>
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
-              <v n="TextID">"195"</v>
+              <v n="TextID">"272"</v>
+              <v n="TextDefault">"busy"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"879"</v>
               <v n="TextDefault">"Error"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"617"</v>
-              <v n="TextDefault">"phase"</v>
+              <v n="TextID">"548"</v>
+              <v n="TextDefault">"GoHome"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"704"</v>
+              <v n="TextID">"867"</v>
+              <v n="TextDefault">"GoTo"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"273"</v>
+              <v n="TextDefault">"park"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"919"</v>
               <v n="TextDefault">"Power"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"472"</v>
-              <v n="TextDefault">"Ready"</v>
+              <v n="TextID">"120"</v>
+              <v n="TextDefault">"ready"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"123"</v>
-              <v n="TextDefault">"Remote"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"38"</v>
+              <v n="TextID">"685"</v>
               <v n="TextDefault">"Reset"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"540"</v>
-              <v n="TextDefault">"Start"</v>
+              <v n="TextID">"777"</v>
+              <v n="TextDefault">"slew"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"2"</v>
-              <v n="TextDefault">"Stop"</v>
+              <v n="TextID">"717"</v>
+              <v n="TextDefault">"sliding"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"155"</v>
+              <v n="TextDefault">"stopped"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"362"</v>
+              <v n="TextDefault">"track"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"364"</v>
+              <v n="TextDefault">"tracking"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{9285d4bb-06de-4a19-be6c-8ed9376aec69}</v>
-          <v n="GuidReInit">{31912cdc-008f-4e3f-bae1-e2fce019a76e}</v>
-          <v n="GuidExitX">{782dfb14-d9fb-48c3-8210-cdb315148454}</v>
+          <v n="GuidInit">{3eaa3e87-2c03-4e86-b21f-f561e33584a6}</v>
+          <v n="GuidReInit">{8178c32b-b709-4bf7-a620-1373eb1817f5}</v>
+          <v n="GuidExitX">{b6568e76-f362-406f-921f-7bd6a6efc2a5}</v>
         </o>
       </Data>
       <TypeList>
