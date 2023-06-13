@@ -78,7 +78,7 @@ IF fbMessageQueue.nQueuedMessages > 0 THEN
 		ADSLOGSTR( ADSLOG_MSGTYPE_HINT OR ADSLOG_MSGTYPE_LOG, 'MQTT %s', sPayloadRcv);
 		IF sTopicRcv = sTopicSub THEN
 			influxMessage(  sPayload := sPayloadRcv, measurement => measurement, parameter => parameter, value => value);
-			IF measurement = 'command' THEN
+			IF NOT PendantControl.manual AND measurement = 'command' THEN
 				IF parameter = 'power' THEN
 					TelescopeControl.power := STRING_TO_BOOL(value);
 				ELSIF parameter = 'park' THEN
@@ -99,8 +99,10 @@ IF fbMessageQueue.nQueuedMessages > 0 THEN
 					NasmythControl.left := STRING_TO_USINT(value) = 1;
 					NasmythControl.right := STRING_TO_USINT(value) = 2;
 				ELSIF parameter = 'rightascension' THEN
+					TelescopeControl.track := FALSE;
 					TelescopeControl.rightascension := STRING_TO_LREAL(value);
 				ELSIF parameter = 'declination' THEN
+					TelescopeControl.track := FALSE;
 					TelescopeControl.declination := STRING_TO_LREAL(value);
 				ELSIF parameter = 'elevation' THEN
 					TelescopeControl.elevation := STRING_TO_LREAL(value);
@@ -111,6 +113,7 @@ IF fbMessageQueue.nQueuedMessages > 0 THEN
 				ELSIF parameter = 'filter' THEN
 					FilterWheelControl.filter_position := STRING_TO_USINT(value);
 				ELSIF parameter = 'derotator' THEN
+					TelescopeControl.track := FALSE;
 					TelescopeControl.derotator_offset := STRING_TO_LREAL(value);
 				ELSIF parameter = 'elevationoffset' THEN
 					TelescopeControl.elevation_offset := STRING_TO_LREAL(value);
@@ -217,9 +220,15 @@ published := fbMqttClient.Publish(
     <LineIds Name="FB_MQTTCommunication">
       <LineId Id="308" Count="68" />
       <LineId Id="457" Count="0" />
-      <LineId Id="377" Count="7" />
+      <LineId Id="377" Count="0" />
+      <LineId Id="483" Count="0" />
+      <LineId Id="378" Count="1" />
+      <LineId Id="484" Count="0" />
+      <LineId Id="380" Count="4" />
       <LineId Id="453" Count="3" />
-      <LineId Id="394" Count="1" />
+      <LineId Id="394" Count="0" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="395" Count="0" />
       <LineId Id="421" Count="3" />
       <LineId Id="427" Count="0" />
       <LineId Id="387" Count="6" />
