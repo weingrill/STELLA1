@@ -24,6 +24,8 @@ see https://gitlab.aip.de/bmk10k/telescope_firmware/snippets/5
 	stop:		BOOL;	
 	// initiates reset on all axis
 	reset:		BOOL;
+	// automatic tracking after goto
+	autotrack:	BOOL := TRUE;
 	// apparent right ascension, degrees, double
 	rightascension:		LREAL := (4.0 + 35.0/60.0 + 54.09/3600.0) *15.0;	
 	// apparent declination, degrees, double
@@ -120,6 +122,8 @@ VAR_OUTPUT
 	slewtime:			LREAL; 
 	// True: telescope is calibrated
 	homed:				BOOL;
+	// telescope does not accept further commands
+	busy:				BOOL;
 END_VAR
 VAR CONSTANT
 // STELLA1
@@ -181,6 +185,8 @@ IF error THEN
 	track := 	FALSE;
 	goto := 	FALSE;
 	slew := 	FALSE;
+ELSE
+	errorid := 0;
 END_IF
 
 IF ElevationControl.error THEN
@@ -203,8 +209,17 @@ derotation_calc := F_DerotatorPosition2(azimuth_calc, elevation_calc, declinatio
 // apply offsets
 elevation_calc := elevation_calc + elevation_offset;
 azimuth_calc := azimuth_calc + azimuth_offset;
-derotation_calc := derotation_calc  + derotator_offset;
-
+IF F_DerotatorVelocity(elevation_calc, azimuth_calc, latitude) < 0.0 AND
+	derotation_calc + derotator_offset < 0.0 THEN
+	derotation_calc := derotation_calc  + derotator_offset + 360.0;
+ELSE
+	derotation_calc := derotation_calc  + derotator_offset;	
+END_IF
+IF derotation_calc >= 380.0 THEN
+	derotation_calc := derotation_calc - 360.0;
+ELSIF derotation_calc <= -70.0 THEN
+	derotation_calc := derotation_calc + 360.0;
+END_IF
 // get current coordinates	
 azimuth_current := AzimuthElevationControl.act_position;
 elevation_current := ElevationControl.actual_position;
@@ -322,9 +337,9 @@ ELSIF TCS_command = E_TCSCommand.track THEN
 	tracktelescope();
 END_IF
  
-sliding := ElevationControl.ElevationAxis.InMotion OR ElevationControl.ElevationAxis.InRamp OR
+sliding := NOT tracking AND (ElevationControl.ElevationAxis.InMotion OR ElevationControl.ElevationAxis.InRamp OR
 			AzimuthElevationControl.AzimuthAxis.InMotion OR AzimuthElevationControl.AzimuthAxis.InRamp OR
-			DerotatorControl.DerotatorAxis.InMotion OR DerotatorControl.DerotatorAxis.InRamp;
+			DerotatorControl.DerotatorAxis.InMotion OR DerotatorControl.DerotatorAxis.InRamp);
 
 // signal must be stable for 3000MS			
 tracking_delay(in := ElevationControl.ElevationAxis.isTracking AND 
@@ -348,6 +363,10 @@ ready := homed AND
 	DerotatorControl.enable AND HydraulicsControl.brake_open AND 
     NOT error;
 
+busy := ElevationControl.ElevationAxis.Busy OR
+			AzimuthElevationControl.AzimuthAxis.Busy OR
+			DerotatorControl.DerotatorAxis.Busy;
+	
 IF NOT error THEN
 	reset := FALSE;
 END_IF
@@ -357,7 +376,11 @@ IF SafetyHandling.Emergency_stop THEN
 	AzimuthElevationControl.enable := FALSE;
 	DerotatorControl.enable := FALSE;
 END_IF
-
+IF sliding OR track OR tracking THEN
+	MQTTTimer.PT := T#1000MS;
+ELSE
+	MQTTTimer.PT := T#5000MS;
+END_IF
 MQTTTimer(IN:=TRUE);
 IF MQTTTimer.Q THEN // publish new payload every second
 	MQTTTimer(IN:=FALSE);
@@ -369,9 +392,7 @@ IF MQTTTimer.Q THEN // publish new payload every second
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'HourAngle', LREAL_TO_STRING(hourangle_calc));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'RightAscension', LREAL_TO_STRING(rightascension_calc));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Declination', LREAL_TO_STRING(declination_calc));
-	IF errorid > 0 THEN
-		MAIN.MQTTClient.Publish('telescope', 'dome', 'errorid',		UDINT_TO_STRING(errorid));
-	END_IF
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'errorid',		UDINT_TO_STRING(errorid));
 END_IF
 
 StatusWord.0 := error;
@@ -387,6 +408,7 @@ StatusWord.9 := track;
 StatusWord.10 := goto;
 StatusWord.11 := slew;
 StatusWord.12 := stop;
+StatusWord.13 := busy;
 
 IF StatusWord<>LastStatus THEN // publish new payload every second
 	LastStatus := StatusWord;
@@ -403,6 +425,7 @@ IF StatusWord<>LastStatus THEN // publish new payload every second
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'goto',		BOOL_TO_STRING(goto));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'slew',		BOOL_TO_STRING(slew));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'stop',		BOOL_TO_STRING(stop));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'busy',		BOOL_TO_STRING(busy));
 END_IF
 
 
@@ -516,6 +539,8 @@ CASE Stage OF
 		azimuth := azimuth_calc;
 		elevation := elevation_calc;
 		goto := FALSE;
+		// enable automatic tracking
+		track := autotrack;
 		Stage := 0;
 END_CASE
 GoToEvent(Trigger := Stage > LastStage, FormatString := 'GoTo progress: %s', OnMessage := USINT_TO_STRING(Stage));
@@ -733,6 +758,8 @@ IF CoverControl.isopen AND
 	power := FALSE;
 	poweron := TRUE;
 	isparked := FALSE;
+	// rest filterwheel until reactivation on filter change
+	FilterWheelControl.Enable := FALSE;
 	// slew the telescope to the home position
 	gohome := TRUE;
 ELSE
@@ -903,6 +930,7 @@ END_IF
       <LineId Id="6598" Count="0" />
       <LineId Id="4330" Count="0" />
       <LineId Id="6587" Count="4" />
+      <LineId Id="8725" Count="1" />
       <LineId Id="6586" Count="0" />
       <LineId Id="8274" Count="0" />
       <LineId Id="4246" Count="1" />
@@ -918,8 +946,17 @@ END_IF
       <LineId Id="7969" Count="0" />
       <LineId Id="3301" Count="0" />
       <LineId Id="7962" Count="0" />
-      <LineId Id="7965" Count="0" />
+      <LineId Id="8735" Count="0" />
+      <LineId Id="8748" Count="0" />
+      <LineId Id="8736" Count="0" />
+      <LineId Id="8738" Count="0" />
+      <LineId Id="8742" Count="0" />
+      <LineId Id="8737" Count="0" />
       <LineId Id="7979" Count="0" />
+      <LineId Id="8743" Count="0" />
+      <LineId Id="8745" Count="0" />
+      <LineId Id="8747" Count="0" />
+      <LineId Id="8744" Count="0" />
       <LineId Id="7964" Count="0" />
       <LineId Id="3302" Count="1" />
       <LineId Id="7978" Count="0" />
@@ -1011,13 +1048,21 @@ END_IF
       <LineId Id="7949" Count="0" />
       <LineId Id="6942" Count="0" />
       <LineId Id="8718" Count="0" />
-      <LineId Id="7472" Count="3" />
+      <LineId Id="8727" Count="0" />
+      <LineId Id="8729" Count="1" />
+      <LineId Id="7472" Count="0" />
+      <LineId Id="8728" Count="0" />
+      <LineId Id="7473" Count="2" />
       <LineId Id="7933" Count="0" />
       <LineId Id="7133" Count="0" />
       <LineId Id="7934" Count="0" />
       <LineId Id="7936" Count="1" />
       <LineId Id="7935" Count="0" />
-      <LineId Id="4662" Count="3" />
+      <LineId Id="4662" Count="0" />
+      <LineId Id="8731" Count="0" />
+      <LineId Id="8733" Count="1" />
+      <LineId Id="8732" Count="0" />
+      <LineId Id="4663" Count="2" />
       <LineId Id="4837" Count="1" />
       <LineId Id="8414" Count="0" />
       <LineId Id="4841" Count="0" />
@@ -1026,16 +1071,16 @@ END_IF
       <LineId Id="4855" Count="0" />
       <LineId Id="4857" Count="0" />
       <LineId Id="8416" Count="0" />
-      <LineId Id="7316" Count="0" />
-      <LineId Id="8417" Count="0" />
       <LineId Id="4656" Count="0" />
       <LineId Id="7090" Count="0" />
       <LineId Id="7093" Count="4" />
       <LineId Id="7091" Count="0" />
       <LineId Id="8119" Count="6" />
+      <LineId Id="8723" Count="0" />
       <LineId Id="7098" Count="3" />
       <LineId Id="7103" Count="4" />
       <LineId Id="8126" Count="6" />
+      <LineId Id="8724" Count="0" />
       <LineId Id="7132" Count="0" />
       <LineId Id="7092" Count="0" />
       <LineId Id="3530" Count="1" />
@@ -1094,6 +1139,8 @@ END_IF
       <LineId Id="113" Count="2" />
       <LineId Id="128" Count="1" />
       <LineId Id="93" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="173" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="97" Count="0" />
@@ -1198,6 +1245,8 @@ END_IF
       <LineId Id="196" Count="0" />
       <LineId Id="175" Count="1" />
       <LineId Id="206" Count="0" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="211" Count="0" />
       <LineId Id="190" Count="0" />
       <LineId Id="189" Count="0" />
       <LineId Id="173" Count="1" />
