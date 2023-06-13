@@ -149,7 +149,7 @@ ELSE
 	Direction := 1;
 END_IF
 
-isTracking := Tracking AND ABS(PositionDifference) < 1.5E-3;
+isTracking := Tracking AND Positionscale >= 1.0; // ABS(PositionDifference) < 1.5E-3;
 IF Tracking AND Ready AND Calibrated AND NOT StopAxis THEN
 	Axis_SetpointEnable.Execute := TRUE;
 ELSIF NOT Axis_SetpointEnable.Busy AND Axis_SetpointEnable.Done THEN
