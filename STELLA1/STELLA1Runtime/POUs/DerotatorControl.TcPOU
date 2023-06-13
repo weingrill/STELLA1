@@ -51,7 +51,11 @@ VAR
 	CalibrationEvent:	FB_EventLog;
 	// percentage of the derotator torque
 	derotator_torque:	REAL;
+	// read slewtime
 	ReadParameter:		MC_ReadParameter;
+	// diagnostic error code reset
+	bSoEReset: BOOL;
+	fbSoEReset: 		FB_SoEReset;
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
@@ -130,6 +134,18 @@ IF ReadParameter.Valid THEN
 	slewtime := ReadParameter.Value;
 END_IF
 
+IF bSoEReset THEN
+	fbSoEReset(
+		Axis := GVL_Telescope.DerotatorAxisRef,
+		Execute := TRUE,
+		Timeout := DEFAULT_ADS_TIMEOUT);
+ 	IF NOT fbSoEReset.Busy THEN
+		fbSoEReset(Axis := GVL_Telescope.DerotatorAxisRef, Execute := FALSE);
+		bSoEReset := FALSE;
+		Reset := TRUE;
+	END_IF
+END_IF
+
 derotator_torque := GVL_Telescope.Derotator_torque / 10.0;
 
 TorqueError(IN := ABS(derotator_torque) > 10.0);
@@ -196,6 +212,10 @@ CalibrationEvent(
       <LineId Id="448" Count="0" />
       <LineId Id="450" Count="6" />
       <LineId Id="449" Count="0" />
+      <LineId Id="681" Count="0" />
+      <LineId Id="683" Count="1" />
+      <LineId Id="686" Count="7" />
+      <LineId Id="682" Count="0" />
       <LineId Id="314" Count="0" />
       <LineId Id="316" Count="0" />
       <LineId Id="366" Count="1" />
