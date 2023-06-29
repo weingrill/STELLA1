@@ -7,14 +7,6 @@ VAR_GLOBAL
 	temperature_mirror2		AT%I*: INT;
 	// BT10
 	temperature_mirror1		AT%I*: INT;
-	// BT11
-	temperature_mirror3		AT%I*: INT;
-	// BT12
-	temperature_tube		AT%I*: INT;
-	// BT13
-	temperature_bearing1	AT%I*: INT;
-	// BT14
-	temperature_bearing2	AT%I*: INT;
 
 	//DOUT6 0.5
 	brake_azimuth_eve	AT%Q*: BOOL;
@@ -52,6 +44,8 @@ VAR_GLOBAL
 	
 	// digitale inputs der Endlagen
 	Derotator_inputs		AT%I*: WORD;
+	// diagnostic number
+	Derotator_diagnostic	AT%I*: UDINT;
 	// derotator torque feedback
 	Derotator_torque		AT%I*: INT;
 	
