@@ -71,10 +71,10 @@ brake_clearing := GVL_Main.brake_clearing OR remote_brake_clearing;
 reset := GVL_Main.reset_switch OR GVL_pendant_control.reset_switch OR remote_reset;		
 brake_clearing := NOT GVL_Main.brake_clearing;
 cabinet_temperature := INT_TO_REAL(GVL_Main.main_cabinet_temperature) / 10.0;
-cabinet_temperature_warning(SET1 := cabinet_temperature > 40.0,
-							RESET := cabinet_temperature < 35.0);
-cabinet_temperature_critical(SET1 := cabinet_temperature > 50.0,
+cabinet_temperature_warning(SET1 := cabinet_temperature > 50.0,
 							RESET := cabinet_temperature < 40.0);
+cabinet_temperature_critical(SET1 := cabinet_temperature > 60.0,
+							RESET := cabinet_temperature < 50.0);
 IF key_switch THEN
 	Transformer.start();
 ELSE
@@ -105,7 +105,6 @@ AzimuthElevationControl();	//
 DerotatorControl();	//
 FilterWheelControl();	//
 FocusControl();
-AuxiliaryControl(); //
 MQTTClient();
 Transformer();
 
@@ -217,7 +216,9 @@ TemperatureCriticalEvent(
       <LineId Id="690" Count="2" />
       <LineId Id="694" Count="1" />
       <LineId Id="888" Count="2" />
-      <LineId Id="699" Count="13" />
+      <LineId Id="699" Count="9" />
+      <LineId Id="943" Count="0" />
+      <LineId Id="711" Count="1" />
       <LineId Id="718" Count="1" />
       <LineId Id="722" Count="2" />
       <LineId Id="728" Count="1" />
