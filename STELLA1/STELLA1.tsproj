@@ -1896,10 +1896,10 @@ External Setpoint Generation:
 					<Name>Derotator</Name>
 					<AxisPara>
 						<General UnitName="°"/>
-						<Dynamic AccelerationMaximum="20" DecelerationMaximum="20" Acceleration="10.0226" Deceleration="10.0226" Jerk="12.0694"/>
+						<Dynamic AccelerationMaximum="20" DecelerationMaximum="20" Acceleration="3" Deceleration="3" Jerk="2"/>
 						<Velo RefSearch="1" RefSync="0.5" SlowManual="0.5" FastManual="5" Fast="11.7222517903646" Maximum="11.7223"/>
 						<PositionAreaControl Range="10"/>
-						<TargetPosControl Range="0.1"/>
+						<TargetPosControl Enable="false" Range="1" Time="0.1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
@@ -1967,7 +1967,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="9">
 						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00030100">
-							<Analog VeloReferenz="12.894476969401" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="12.894476969401" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -2025,7 +2025,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
-							<PosDiffControl Range="10"/>
+							<PosDiffControl Range="1" Time="0.1"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -2052,6 +2052,7 @@ External Setpoint Generation:
 						<General UnitName="°"/>
 						<Dynamic AccelerationMaximum="10" DecelerationMaximum="10" Acceleration="3" Deceleration="3" Jerk="1"/>
 						<Velo RefSearch="2" RefSync="1" SlowManual="1" FastManual="5" Fast="798" Maximum="10"/>
+						<TargetPosControl Range="1" Time="0.1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
@@ -2178,7 +2179,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
-							<PosDiffControl Range="10"/>
+							<PosDiffControl Range="3" Time="0.1"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -2205,6 +2206,7 @@ External Setpoint Generation:
 						<General UnitName="°"/>
 						<Dynamic AccelerationMaximum="10" DecelerationMaximum="10" Acceleration="3" Deceleration="3" Jerk="2"/>
 						<Velo RefSearch="0.5" RefSync="0.5" SlowManual="1" FastManual="3" Fast="1026" Maximum="10"/>
+						<TargetPosControl Range="1" Time="0.1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
@@ -2331,7 +2333,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
-							<PosDiffControl Range="10"/>
+							<PosDiffControl Range="1" Time="0.1"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -2514,21 +2516,6 @@ External Setpoint Generation:
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
-						<Var>
-							<Name>GVL_Auxiliary.Dewar_temperature_error</Name>
-							<Comment><![CDATA[ Dewar Temperature sensor error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Auxiliary.pressure_Dewar</Name>
-							<Comment><![CDATA[ dewar pressure 0..10V Pfeiffer ]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Auxiliary.temperature_Dewar</Name>
-							<Comment><![CDATA[ dewar raw temperature]]></Comment>
-							<Type>INT</Type>
-						</Var>
 						<Var>
 							<Name>GVL_FilterWheel.bCalibrationCam</Name>
 							<Type>BOOL</Type>
@@ -2733,26 +2720,6 @@ DIN3 0.2]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.temperature_mirror3</Name>
-							<Comment><![CDATA[ BT11]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.temperature_tube</Name>
-							<Comment><![CDATA[ BT12]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.temperature_bearing1</Name>
-							<Comment><![CDATA[ BT13]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.temperature_bearing2</Name>
-							<Comment><![CDATA[ BT14]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Telescope.azimut_limit_switch</Name>
 							<Comment><![CDATA[ DIN28 3.3 (absolute)]]></Comment>
 							<Type>BOOL</Type>
@@ -2862,6 +2829,11 @@ DIN3 0.2]]></Comment>
 						<Var>
 							<Name>GVL_Telescope.FocusAxisRef.NcToPlc</Name>
 							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.Derotator_diagnostic</Name>
+							<Comment><![CDATA[ diagnostic number]]></Comment>
+							<Type>UDINT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -8288,7 +8260,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<SyncMan>001880002600010001000000800080008000001826010000</SyncMan>
 						<SyncMan>001a80002200010002000000800080008000001a22010000</SyncMan>
 						<SyncMan>00100c002400010003000000000000000000001024010000</SyncMan>
-						<SyncMan>00111c002200010004000000000000000000001122010000</SyncMan>
+						<SyncMan>001120002200010004000000000000000000001122010000</SyncMan>
 						<SyncMan>002000002400010005000000000000000000002024010000</SyncMan>
 						<SyncMan>002400002000010006000000000000000000002420010000</SyncMan>
 						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
@@ -8360,6 +8332,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<MBoxUserCmdData>020005000c0000002d000000000000000000000000000000000000000000000003400082000000000000000056656c6f636974792066696c74657220313a204761696e20617420696e66696e697465206672657175656e637900</MBoxUserCmdData>
 						<MBoxUserCmdData>020005004c0000001e0000000000000000000000000000000000000000000000034001820000000040004000010000000000000064000000000000000a0000000000000000000000000000001e0000000000004000000000000000000000000000000000000000000000000043757272656e7420636f6d6d616e642076616c75652066696c746572203000</MBoxUserCmdData>
 						<MBoxUserCmdData>02000500480000002800000000000000000000000000000000000000000000000340a580000000003c003c000100010064000000f401b80b0000000000000000f4016400f401f40104000500e1009600b80b84030000000000000000000000000000000000000000436f6d6d75746174696f6e206f66667365742063616c6962726174696f6e20706172616d6574657200</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000002d0000000000000000000000000000000000000000000000034031820000000002004269706f6c617220706f736974696f6e20636f6e74726f6c6c6572206f7574707574206c696d69746174696f6e00</MBoxUserCmdData>
 						<Pdo Name="AT 1" Index="#x0010" Flags="#x0001" SyncMan="3">
 							<Entry Name="Drive status word" BitLen="16" Index="#x0087" Flags="#x00000800">
 								<Type>UINT</Type>
@@ -8375,6 +8348,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							</Entry>
 							<Entry Name="Digital inputs, state" BitLen="16" Index="#x8321">
 								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Diagnostic number" BitLen="32" Index="#x0186">
+								<Type>UDINT</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="AT 2" Index="#x1010" Flags="#x0001" SyncMan="3">
@@ -9529,8 +9505,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GVL_Telescope.Azimuth_torque" VarB="AT^Torque/force feedback value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Derotator(AX5203-0000-0210)">
-				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_inputs" VarB="AT 2^Digital inputs, state"/>
-				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_torque" VarB="AT 2^Torque/force feedback value"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_diagnostic" VarB="AT 1^Diagnostic number"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_inputs" VarB="AT 1^Digital inputs, state"/>
+				<Link VarA="PlcTask Inputs^GVL_Telescope.Derotator_torque" VarB="AT 1^Torque/force feedback value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Elevation (AX5125-0000-0214)">
 				<Link VarA="PlcTask Inputs^GVL_Telescope.Elevation_diagnostic" VarB="AT^Diagnostic number"/>
