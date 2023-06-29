@@ -63,6 +63,8 @@ VAR_OUTPUT
 	InRamp:		BOOL;
 	// axis is tracking on position
 	isTracking:	BOOL;
+	// axis in target position
+	InPosition:	BOOL;
 	//	error condition
 	Error: 		BOOL;
 	// number of error
@@ -80,7 +82,7 @@ VAR
 	Axis_Reset:		MC_Reset;
 	Axis_Move:		MC_MoveAbsolute;
 	Axis_Modulo:	MC_MoveModulo;
-	Axis_Position:	MC_ReadActualPosition;
+	//Axis_Position:	MC_ReadActualPosition;
 	Axis_Stop:		MC_Stop;
 	Axis_Status:	MC_ReadStatus;
 	Axis_Home:		MC_Home;
@@ -95,8 +97,8 @@ VAR
 	TrackPosition:		LREAL;
 	TrackVelocity:		LREAL;
 	TrackAcceleration:	LREAL;
-	TrackTimeScale:		LREAL := 0.01;
-	PositionLimit:		LREAL := 1.0;
+	TrackTimeScale:		LREAL := 0.01; // PlcTaskSystemInfo
+	PositionLimit:		LREAL := 0.01;
 	PositionScale:		LREAL := 0.0;
 END_VAR
 
@@ -131,8 +133,8 @@ IF Tracking THEN
 	PositionScale := MIN(PositionScale, 1.0);
 	PositionDifference := LIMIT(-PositionLimit, Position - AbsolutePosition, PositionLimit);
 	TrackPosition := AbsolutePosition + PositionScale*PositionDifference;
-	TrackVelocity := LIMIT(-10.0, PositionDifference / TrackTimeScale, 10.0);
-	TrackAcceleration := LIMIT(-10.0, (TrackVelocity - AxisRef.NcToPlc.ActVelo) / TrackTimeScale, 10.0);
+	TrackVelocity := LIMIT(-1.0, PositionDifference / TrackTimeScale, 1.0);
+	TrackAcceleration := LIMIT(-1.0, (TrackVelocity - AxisRef.NcToPlc.ActVelo) / TrackTimeScale, 1.0);
 ELSE
 	PositionScale := 0.0;
 	TrackPosition := AbsolutePosition;
@@ -205,11 +207,11 @@ Axis_Home(
 	HomingMode :=		HomingMode,
 	bCalibrationCam := 	bCalibrationCam,
 	Done => 			HomeDone);	
-	
+(*	
 IF (MoveDone OR HomeDone OR JogDone) AND NOT Axis_Status.StandStill THEN
 	StopAxis := TRUE;
 END_IF
-
+*)
 IF MoveDone AND (NOT Axis_Modulo.Busy OR NOT Axis_Move.Busy) THEN
 	MoveAxis := FALSE;
 END_IF
@@ -238,16 +240,16 @@ Axis_Stop(
 	Axis := 	AxisRef,
 	Execute := 	StopAxis AND StopAllowed,
 	Done => 	StopDone);
-
+(*
 Axis_Position(
 	Axis := 	AxisRef,
 	Enable := 	Calibrated,
 	Position => AbsolutePosition);
-
+*)
 IF isModuloAxis THEN
 	ActualPosition := AxisRef.NcToPlc.ModuloActPos; // required e.g. for Filterwheel
 ELSE
-	ActualPosition := AbsolutePosition; //AxisRef.NcToPlc.ActPos;
+	ActualPosition := AxisRef.NcToPlc.ActPos;
 END_IF
 
 IF Axis_Power.Error THEN
@@ -282,15 +284,12 @@ IF Axis_Stop.Error THEN
 	ErrorID := Axis_Stop.ErrorID;
 END_IF
 
-Busy := 	// Axis_Power.Busy OR // always true if enabled 
-			Axis_SetpointEnable.Busy OR
+Busy := 	Axis_SetpointEnable.Busy OR
 			Axis_Reset.Busy OR 
 			Axis_Modulo.Busy OR
 			Axis_Move.Busy OR 
 			Axis_Home.Busy OR
-			Axis_Jog.Busy
-			// OR Axis_Position.Busy // always true if enabled
-			;
+			Axis_Jog.Busy;
 
 Error := 	Axis_Power.Error OR 
 			Axis_SetpointEnable.Error OR
@@ -326,7 +325,8 @@ InRamp :=	Axis_Status.Accelerating OR
 			Axis_Status.Decelerating;
 Stopping := Axis_Status.Stopping;
 StandStill := Axis_Status.StandStill;
-Homing :=	Axis_Status.Homing;]]></ST>
+Homing :=	Axis_Status.Homing;
+// InPosition := AxisRef.NcToPlc.TargetPos;]]></ST>
     </Implementation>
     <LineIds Name="FB_Axis2">
       <LineId Id="292" Count="0" />
@@ -436,12 +436,9 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="783" Count="3" />
       <LineId Id="779" Count="3" />
       <LineId Id="903" Count="0" />
-      <LineId Id="905" Count="0" />
-      <LineId Id="1517" Count="0" />
-      <LineId Id="906" Count="2" />
+      <LineId Id="905" Count="3" />
       <LineId Id="911" Count="0" />
-      <LineId Id="909" Count="1" />
-      <LineId Id="1715" Count="0" />
+      <LineId Id="909" Count="0" />
       <LineId Id="791" Count="0" />
       <LineId Id="608" Count="0" />
       <LineId Id="1518" Count="0" />
@@ -464,6 +461,7 @@ Homing :=	Axis_Status.Homing;]]></ST>
       <LineId Id="195" Count="1" />
       <LineId Id="187" Count="0" />
       <LineId Id="385" Count="1" />
+      <LineId Id="2482" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
