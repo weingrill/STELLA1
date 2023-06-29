@@ -64,6 +64,7 @@ VAR
 	// timer to trigger a warning if torque is high
 	torque_timer:			TON;
 	ReadParameter:			MC_ReadParameter;
+	DiagnosticError:		BOOL;
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
@@ -151,6 +152,16 @@ IF ElevationAxis.ResetDone THEN
 	reset := FALSE;
 END_IF
 
+IF ElevationAxis.StopDone THEN
+	StopAxis := FALSE;
+END_IF
+
+DiagnosticError := FALSE;
+IF GVL_Telescope.Elevation_diagnostic < 16#D012 AND GVL_Telescope.Elevation_diagnostic > 16#D014 THEN
+	DiagnosticError :=TRUE;
+	ErrorID := GVL_Telescope.Derotator_diagnostic;
+END_IF
+
 ElevationCalibration(Axis := GVL_Telescope.ElevationAxisRef,
 	Execute := getlastposition AND last_position>=0.0 AND NOT Calibrated,
 	Position := last_position);
@@ -198,9 +209,7 @@ ElevationAxisEvent(	Trigger := Error,
 				OnMessage := NCError_TO_STRING(ErrorID));
 
 ElevationDiagnosticEvent(	
-	Trigger := 		GVL_Telescope.Elevation_diagnostic <> 16#0000D012 AND 
-					GVL_Telescope.Elevation_diagnostic <> 16#0000D013 AND 
-					GVL_Telescope.Elevation_diagnostic <> 16#0000D014, 
+	Trigger := 		DiagnosticError, 
 	Level := 		ADSLOG_MSGTYPE_ERROR,
 	FormatString :=	'Elevation Axis Diagnostic Error: %s',
 	OnMessage := 	NCError_TO_STRING(GVL_Telescope.Elevation_diagnostic));
@@ -211,7 +220,7 @@ HighElevationEvent(	Trigger := Calibrated AND actual_position > 85.0,
 				FormatString := 'High Elevation: %s',
 				OnMessage := LREAL_TO_FMTSTR(actual_position, 2, TRUE));
 
-LowElevationEvent(	Trigger := Calibrated AND actual_position < 15.0, 
+LowElevationEvent(	Trigger := Calibrated AND actual_position < 5.0, 
 				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := 'Low Elevation: %s',
 				OnMessage := LREAL_TO_FMTSTR(actual_position, 2, TRUE));
@@ -281,6 +290,11 @@ CalibrationEvent(
       <LineId Id="192" Count="2" />
       <LineId Id="135" Count="0" />
       <LineId Id="214" Count="11" />
+      <LineId Id="1564" Count="3" />
+      <LineId Id="1570" Count="0" />
+      <LineId Id="1559" Count="1" />
+      <LineId Id="1569" Count="0" />
+      <LineId Id="1562" Count="1" />
       <LineId Id="1098" Count="0" />
       <LineId Id="1100" Count="1" />
       <LineId Id="1099" Count="0" />
@@ -314,8 +328,8 @@ CalibrationEvent(
       <LineId Id="156" Count="2" />
       <LineId Id="160" Count="0" />
       <LineId Id="1405" Count="0" />
-      <LineId Id="1407" Count="1" />
-      <LineId Id="1413" Count="1" />
+      <LineId Id="1407" Count="0" />
+      <LineId Id="1414" Count="0" />
       <LineId Id="1409" Count="2" />
       <LineId Id="697" Count="0" />
       <LineId Id="1406" Count="0" />
