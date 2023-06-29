@@ -49,13 +49,16 @@ VAR
 	TorqueWarning:		FB_EventLog;
 	// torque calibration event
 	CalibrationEvent:	FB_EventLog;
+	// diagnostic low-level event
+	DerotatorDiagnosticEvent: FB_EventLog;
 	// percentage of the derotator torque
 	derotator_torque:	REAL;
 	// read slewtime
 	ReadParameter:		MC_ReadParameter;
 	// diagnostic error code reset
-	bSoEReset: BOOL;
+	bSoEReset: 			BOOL;
 	fbSoEReset: 		FB_SoEReset;
+	DiagnosticError:	BOOL;
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
@@ -123,6 +126,17 @@ IF DeRotatorAxis.ResetDone THEN
 	reset := FALSE;
 END_IF
 
+IF DeRotatorAxis.StopDone THEN
+	StopAxis := FALSE;
+END_IF
+
+DiagnosticError := FALSE;
+IF GVL_Telescope.Derotator_diagnostic < 16#D012 AND GVL_Telescope.Derotator_diagnostic > 16#D014 THEN
+	DiagnosticError := TRUE;
+	ErrorID := GVL_Telescope.Derotator_diagnostic;
+	bSoeReset := reset;
+END_IF
+
 Ready := DeRotatorAxis.Ready;
 
 ReadParameter(	Axis := GVL_Telescope.DerotatorAxisRef, 
@@ -157,6 +171,12 @@ DerotatorEvent(
 	OnMessage := 	NCError_TO_STRING(ErrorID),
 	OffMEssage := 	'OK',
 	OffLevel := 	ADSLOG_MSGTYPE_HINT);
+	
+DerotatorDiagnosticEvent(	
+	Trigger := 		DiagnosticError, 
+	Level := 		ADSLOG_MSGTYPE_ERROR,
+	FormatString :=	'Derotator Axis Diagnostic Error: %s',
+	OnMessage := 	NCError_TO_STRING(GVL_Telescope.Derotator_diagnostic));
 	
 TorqueWarning(	
 	Trigger := 		TorqueError.Q, 
@@ -208,6 +228,13 @@ CalibrationEvent(
       <LineId Id="9" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="44" Count="10" />
+      <LineId Id="759" Count="3" />
+      <LineId Id="765" Count="0" />
+      <LineId Id="754" Count="1" />
+      <LineId Id="767" Count="0" />
+      <LineId Id="758" Count="0" />
+      <LineId Id="763" Count="0" />
+      <LineId Id="757" Count="0" />
       <LineId Id="240" Count="1" />
       <LineId Id="448" Count="0" />
       <LineId Id="450" Count="6" />
@@ -221,6 +248,8 @@ CalibrationEvent(
       <LineId Id="366" Count="1" />
       <LineId Id="55" Count="6" />
       <LineId Id="43" Count="0" />
+      <LineId Id="773" Count="0" />
+      <LineId Id="768" Count="4" />
       <LineId Id="319" Count="0" />
       <LineId Id="321" Count="3" />
       <LineId Id="327" Count="0" />
