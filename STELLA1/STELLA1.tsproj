@@ -1899,7 +1899,7 @@ External Setpoint Generation:
 						<Dynamic AccelerationMaximum="20" DecelerationMaximum="20" Acceleration="3" Deceleration="3" Jerk="2"/>
 						<Velo RefSearch="1" RefSync="0.5" SlowManual="0.5" FastManual="5" Fast="11.7222517903646" Maximum="11.7223"/>
 						<PositionAreaControl Range="10"/>
-						<TargetPosControl Enable="false" Range="1" Time="0.1"/>
+						<TargetPosControl Range="1" Time="0.1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">

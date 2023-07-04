@@ -196,7 +196,6 @@ slewtime := MAX(MAX(ElevationControl.slewtime, AzimuthElevationControl.slewtime)
 			
 IF error THEN
 	gohome := 	FALSE;
-	// park  := 	FALSE;
 	track := 	FALSE;
 	goto := 	FALSE;
 	slew := 	FALSE;
@@ -223,16 +222,12 @@ eq2hor2(alpha := rightascension,
 elevation_calc := elevation_calc + PointingModelElevation(azimuth_calc, elevation_calc, elevation_offset, AN_E, AE_E, TF);
 azimuth_calc := azimuth_calc + PointingModelAzimuth(azimuth_calc, elevation_calc, azimuth_offset, BNP, AN_A, AE_A, NPAE);
 // calculate derotator position 
-derotation_calc := F_DerotatorPosition2(azimuth_calc, elevation_calc, declination_calc, latitude, derotatation_sign);
-(*
-IF F_DerotatorVelocity(elevation_calc, azimuth_calc, latitude) < 0.0 AND
-	derotation_calc + derotator_offset < 0.0 THEN
-	derotation_calc := derotation_calc  + derotator_offset + 360.0;
-ELSE
-	derotation_calc := derotation_calc  + derotator_offset;	
-END_IF
-*)
-derotation_calc := derotation_calc  + derotator_offset;	
+derotation_calc := F_DerotatorPosition2(azimuth_calc, elevation_calc, declination_calc, latitude, derotatation_sign)  + derotator_offset;
+// calculate velocities
+DerotatorVelocity := F_Derotatorvelocity(elevation_calc, azimuth_calc, latitude);
+ElevationVelocity := F_Elevationvelocity(azimuth_calc, latitude);
+AzimuthVelocity := F_Azimuthvelocity(elevation_calc, azimuth_calc, latitude);
+
 IF derotation_calc >= 380.0 THEN
 	derotation_calc := derotation_calc - 360.0;
 ELSIF derotation_calc <= -70.0 THEN
@@ -252,34 +247,11 @@ hor2eq(alt := elevation_current,
 		altitude := altitude,
 		ra => rightascension_calc,
 		dec => declination_calc);		
-
-IF track THEN
-	DerotatorVelocity := F_Derotatorvelocity(elevation_calc, azimuth_calc, latitude);
-	ElevationVelocity := F_Elevationvelocity(azimuth_calc, latitude);
-	AzimuthVelocity := F_Azimuthvelocity(elevation_calc, azimuth_calc, latitude);
-	IF elevation_current < 5.0 OR elevation_current > 89.5 THEN 
-		track := FALSE;
-	END_IF
-	IF azimuth_current > 440.0 THEN
-		track := FALSE;
-	END_IF
-	IF derotator_current < -60.0 OR derotator_current > 370.0 THEN
-		track := FALSE;
-	END_IF
-ELSE
-	ElevationControl.Tracking := FALSE;
-	ElevationControl.Velocity := 10.0;
-	AzimuthElevationControl.Tracking := FALSE;
-	AzimuthElevationControl.Velocity := 10.0;
-	DerotatorControl.Tracking := FALSE;
-	DerotatorControl.Velocity := 10.0;
-END_IF
-		
+	
 poweronwarning(IN := power OR (NOT ElevationControl.enable AND HydraulicsControl.brake_open), PT := T#250MS);
-//poweron_reset(IN := power AND NOT PendantControl.manual, PT := T#50MS);
-// park the telescope after 12 hours
+
 power_timeout(IN := TCS_command = E_TCSCommand.no_command AND NOT isparked, PT := T#12H);
-IF power_timeout.Q THEN
+IF power_timeout.Q AND NOT isparked THEN
 	park := TRUE;
 END_IF
 
@@ -353,8 +325,10 @@ ELSE
 	ElevationControl.MoveAxis := FALSE;
 	AzimuthElevationControl.MoveAxis := FALSE;
 	DerotatorControl.MoveAxis := FALSE;
+	ElevationControl.Tracking := FALSE;
+	AzimuthElevationControl.Tracking := FALSE;
+	DerotatorControl.Tracking := FALSE;
 END_IF
-
 
 IF TCS_command = E_TCSCommand.poweron THEN
 	poweron();
@@ -615,10 +589,13 @@ IF command_timeout.Q THEN
 END_IF
 
 IF ready AND stopped AND NOT busy AND NOT tracking THEN
+	ElevationControl.velocity := 10.0;
 	ElevationControl.position := elevation_home;
 	ElevationControl.MoveAxis := TRUE;
+	AzimuthElevationControl.velocity := 10.0;
 	AzimuthElevationControl.position := azimuth_home;
 	AzimuthElevationControl.MoveAxis := TRUE;
+	DerotatorControl.Velocity := 10.0;
 	DerotatorControl.position := 180.0;
 	DerotatorControl.MoveAxis := TRUE;	
 END_IF
@@ -918,6 +895,19 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Elevation
+DerotatorVelocity := F_Derotatorvelocity(elevation_calc, azimuth_calc, latitude);
+ElevationVelocity := F_Elevationvelocity(azimuth_calc, latitude);
+AzimuthVelocity := F_Azimuthvelocity(elevation_calc, azimuth_calc, latitude);
+IF elevation_current < 5.0 OR elevation_current > 89.5 THEN 
+	track := FALSE;
+END_IF
+IF azimuth_current > 440.0 THEN
+	track := FALSE;
+END_IF
+IF derotator_current < -60.0 OR derotator_current > 370.0 THEN
+	track := FALSE;
+END_IF
+
 ElevationControl.position := elevation_calc;
 IF NOT ElevationControl.Tracking THEN
 	ElevationControl.velocity := 10.0;
@@ -991,7 +981,8 @@ END_IF
       <LineId Id="6600" Count="0" />
       <LineId Id="6598" Count="0" />
       <LineId Id="4330" Count="0" />
-      <LineId Id="6587" Count="4" />
+      <LineId Id="6587" Count="0" />
+      <LineId Id="6589" Count="2" />
       <LineId Id="8725" Count="1" />
       <LineId Id="6586" Count="0" />
       <LineId Id="8274" Count="0" />
@@ -1007,14 +998,9 @@ END_IF
       <LineId Id="3301" Count="0" />
       <LineId Id="7962" Count="0" />
       <LineId Id="8768" Count="1" />
-      <LineId Id="8943" Count="0" />
-      <LineId Id="8735" Count="0" />
-      <LineId Id="8748" Count="0" />
-      <LineId Id="8736" Count="0" />
-      <LineId Id="8738" Count="0" />
-      <LineId Id="8742" Count="0" />
-      <LineId Id="8737" Count="0" />
-      <LineId Id="8944" Count="1" />
+      <LineId Id="9117" Count="0" />
+      <LineId Id="9119" Count="2" />
+      <LineId Id="8944" Count="0" />
       <LineId Id="7979" Count="0" />
       <LineId Id="8743" Count="0" />
       <LineId Id="8745" Count="0" />
@@ -1028,19 +1014,9 @@ END_IF
       <LineId Id="2011" Count="0" />
       <LineId Id="3521" Count="4" />
       <LineId Id="3528" Count="1" />
-      <LineId Id="6202" Count="0" />
-      <LineId Id="6570" Count="1" />
-      <LineId Id="7941" Count="0" />
-      <LineId Id="7952" Count="0" />
-      <LineId Id="8924" Count="6" />
-      <LineId Id="8933" Count="0" />
-      <LineId Id="8932" Count="0" />
-      <LineId Id="6572" Count="0" />
-      <LineId Id="7954" Count="6" />
       <LineId Id="6201" Count="0" />
       <LineId Id="4075" Count="0" />
-      <LineId Id="4242" Count="0" />
-      <LineId Id="6610" Count="0" />
+      <LineId Id="9132" Count="0" />
       <LineId Id="6608" Count="1" />
       <LineId Id="6611" Count="1" />
       <LineId Id="6606" Count="1" />
@@ -1089,8 +1065,8 @@ END_IF
       <LineId Id="1519" Count="0" />
       <LineId Id="4290" Count="1" />
       <LineId Id="8415" Count="0" />
+      <LineId Id="9133" Count="2" />
       <LineId Id="1509" Count="0" />
-      <LineId Id="4294" Count="0" />
       <LineId Id="4299" Count="0" />
       <LineId Id="8136" Count="1" />
       <LineId Id="8427" Count="1" />
@@ -1233,7 +1209,12 @@ END_IF
       <LineId Id="47" Count="1" />
       <LineId Id="67" Count="0" />
       <LineId Id="50" Count="0" />
-      <LineId Id="60" Count="5" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="64" Count="1" />
       <LineId Id="59" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="10" Count="0" />
@@ -1381,6 +1362,7 @@ END_IF
     </LineIds>
     <LineIds Name="TelescopeControl.tracktelescope">
       <LineId Id="80" Count="0" />
+      <LineId Id="100" Count="12" />
       <LineId Id="94" Count="0" />
       <LineId Id="51" Count="2" />
       <LineId Id="57" Count="1" />

@@ -90,16 +90,13 @@ VAR
 	Axis_SetpointEnable:	MC_ExtSetPointGenEnable;
 	Axis_SetpointDisable:	MC_ExtSetPointGenDisable;
 	StopAllowed:	BOOL;
-	//wasEnabled:		BOOL;
-	// Direction fot Axis_SetpointFeed
-	Direction:		DINT;
+	// Direction for Axis_SetpointFeed
+	Direction:			DINT;
+	// difference between set position and measured position
 	PositionDifference:	LREAL;
 	TrackPosition:		LREAL;
 	TrackVelocity:		LREAL;
 	TrackAcceleration:	LREAL;
-	TrackTimeScale:		LREAL := 0.01; // PlcTaskSystemInfo
-	PositionLimit:		LREAL := 0.01;
-	PositionScale:		LREAL := 0.0;
 END_VAR
 
 VAR_IN_OUT
@@ -128,22 +125,18 @@ Axis_Reset(
 (* Tracking section ********************************************** *)
 
 IF Tracking THEN
-	PositionScale := PositionScale + 0.001;
-	// limit Positionscale to 1.0
-	PositionScale := MIN(PositionScale, 1.0);
-	PositionDifference := LIMIT(-PositionLimit, Position - AbsolutePosition, PositionLimit);
-	TrackPosition := AbsolutePosition + PositionScale*PositionDifference;
-	TrackVelocity := LIMIT(-1.0, PositionDifference / TrackTimeScale, 1.0);
-	TrackAcceleration := LIMIT(-1.0, (TrackVelocity - AxisRef.NcToPlc.ActVelo) / TrackTimeScale, 1.0);
+	PositionDifference := Position - ActualPosition;
+	TrackPosition := Position;
+	TrackVelocity := LIMIT(-1.0, Velocity, 1.0);
+	TrackAcceleration := 0.0;
 ELSE
-	PositionScale := 0.0;
-	TrackPosition := AbsolutePosition;
+	TrackPosition := ActualPosition;
 	TrackVelocity := 0.0;
 	TrackAcceleration := 0.0;
 END_IF
 
 
-IF TrackVelocity = 0 OR TrackAcceleration = 0 THEN
+IF TrackVelocity = 0 AND TrackAcceleration = 0 THEN
 	Direction := 0;
 ELSIF PositionDifference < 0.0 THEN
 	Direction := -1;
@@ -151,7 +144,7 @@ ELSE
 	Direction := 1;
 END_IF
 
-isTracking := Tracking AND Positionscale >= 1.0; // ABS(PositionDifference) < 1.5E-3;
+isTracking := Tracking AND ABS(PositionDifference) < 1.5E-3;
 IF Tracking AND Ready AND Calibrated AND NOT StopAxis THEN
 	Axis_SetpointEnable.Execute := TRUE;
 ELSIF NOT Axis_SetpointEnable.Busy AND Axis_SetpointEnable.Done THEN
@@ -169,8 +162,6 @@ MC_ExtSetPointGenFeed(
 	Direction :=	Direction, 
 	Axis :=			AxisRef);
 
-// stop tracking on falling edge of tracking signal
-//EndTracking(CLK := Tracking);
 Axis_SetpointDisable(Axis := AxisRef,
 	Execute := NOT Tracking);
 	
@@ -342,16 +333,16 @@ Homing :=	Axis_Status.Homing;
       <LineId Id="2023" Count="0" />
       <LineId Id="1620" Count="0" />
       <LineId Id="2028" Count="1" />
-      <LineId Id="2036" Count="0" />
-      <LineId Id="2268" Count="0" />
-      <LineId Id="2267" Count="0" />
-      <LineId Id="2371" Count="3" />
+      <LineId Id="2600" Count="0" />
+      <LineId Id="2372" Count="0" />
+      <LineId Id="2591" Count="0" />
+      <LineId Id="2589" Count="0" />
       <LineId Id="2265" Count="1" />
-      <LineId Id="2375" Count="2" />
+      <LineId Id="2376" Count="1" />
       <LineId Id="2037" Count="0" />
       <LineId Id="2024" Count="0" />
       <LineId Id="1812" Count="0" />
-      <LineId Id="1301" Count="0" />
+      <LineId Id="2590" Count="0" />
       <LineId Id="2143" Count="0" />
       <LineId Id="2142" Count="0" />
       <LineId Id="1417" Count="0" />
@@ -369,8 +360,6 @@ Homing :=	Axis_Status.Homing;
       <LineId Id="1297" Count="3" />
       <LineId Id="1296" Count="0" />
       <LineId Id="1413" Count="0" />
-      <LineId Id="1411" Count="0" />
-      <LineId Id="1294" Count="0" />
       <LineId Id="1288" Count="0" />
       <LineId Id="1291" Count="0" />
       <LineId Id="2026" Count="1" />
