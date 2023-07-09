@@ -125,8 +125,8 @@ Axis_Reset(
 (* Tracking section ********************************************** *)
 
 IF Tracking THEN
-	PositionDifference := Position - ActualPosition;
-	TrackPosition := Position;
+	PositionDifference := LIMIT(-0.001, Position - ActualPosition, 0.001);
+	TrackPosition := ActualPosition + PositionDifference;
 	TrackVelocity := LIMIT(-1.0, Velocity, 1.0);
 	TrackAcceleration := 0.0;
 ELSE
@@ -144,7 +144,7 @@ ELSE
 	Direction := 1;
 END_IF
 
-isTracking := Tracking AND ABS(PositionDifference) < 1.5E-3;
+isTracking := Tracking AND ABS(PositionDifference) < 5.0E-3;
 IF Tracking AND Ready AND Calibrated AND NOT StopAxis THEN
 	Axis_SetpointEnable.Execute := TRUE;
 ELSIF NOT Axis_SetpointEnable.Busy AND Axis_SetpointEnable.Done THEN
