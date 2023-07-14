@@ -23,13 +23,19 @@ VAR_OUTPUT
 	ha: LREAL;
 END_VAR
 VAR
-	lst, 
-	T , theta0, gmst: LREAL;
+	lst: LREAL;
 	// helper variables
 	sinalt, sinaz, cosaz, cosalt, az1, az2, az3, length,
 	// in radians
 	phi_r, tau_r, alpha_r, delta_r: LREAL;
-	//quadrant: UINT;
+	// current epoch
+	J_now: 		LREAL;
+	// enable precession
+	precess: 	BOOL := TRUE;
+	// precession function block
+	fbprecess: 	FB_PRECESS;
+	//precessed coordinates
+	alpha1, delta1:	LREAL;
 END_VAR
 VAR CONSTANT
 	d2r:	LREAL := PI/180.0;
@@ -44,15 +50,21 @@ https://squarewidget.com/astronomical-calculations-sidereal-time/
 
 *)
 lst := ct2lst(lon, jd) * 15.0; // lst in degrees
-T := ((JD - 2451545.0) / 36525.0);
-theta0 := 280.46061837 + 360.98564736629 * (JD - 2451545.0) + (0.000387933 * T * T) - (T * T * T / 38710000.0); // (12.4)
-gmst := MODABS(theta0, 360.0);
-//lst := gmst + lon; // LST in degrees
-// ha := MODABS(lst*15.0 - alpha, 360.0);
-ha := MODABS(lst - alpha, 360.0);
 
-alpha_r := alpha * d2r;
-delta_r := delta * d2r;
+J_now := (JD - 2451545.0)/365.25 + 2000.0; // compute current equinox
+IF precess THEN
+	fbprecess( ra := alpha, dec := delta, 
+	EQUINOX1 := 2000.0, EQUINOX2 := J_now, 
+	ra_precessed =>alpha1, dec_precessed => delta1);
+ELSE
+	alpha1 := alpha;
+	delta1 := delta;	
+END_IF
+
+ha := MODABS(lst - alpha1, 360.0);
+
+alpha_r := alpha1 * d2r;
+delta_r := delta1 * d2r;
 tau_r := lst*d2r - alpha_r;
 //tau_r := MODABS(lst*d2r - alpha_r, 2.0*PI);
 phi_r := lat*d2r;
@@ -99,10 +111,10 @@ END_IF]]></ST>
       <LineId Id="90" Count="1" />
       <LineId Id="82" Count="0" />
       <LineId Id="9" Count="0" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="86" Count="0" />
+      <LineId Id="250" Count="5" />
+      <LineId Id="264" Count="0" />
+      <LineId Id="266" Count="1" />
+      <LineId Id="256" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="89" Count="0" />
       <LineId Id="145" Count="0" />
