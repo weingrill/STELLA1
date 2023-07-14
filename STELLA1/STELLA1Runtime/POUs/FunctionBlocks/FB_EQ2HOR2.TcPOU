@@ -43,11 +43,11 @@ source: http://star-www.st-and.ac.uk/~fv/webnotes/chapter7.htm
 https://squarewidget.com/astronomical-calculations-sidereal-time/
 
 *)
-//lst := ct2lst(lon, jd);
+lst := ct2lst(lon, jd) * 15.0; // lst in degrees
 T := ((JD - 2451545.0) / 36525.0);
 theta0 := 280.46061837 + 360.98564736629 * (JD - 2451545.0) + (0.000387933 * T * T) - (T * T * T / 38710000.0); // (12.4)
 gmst := MODABS(theta0, 360.0);
-lst := gmst + lon; // LST in degrees
+//lst := gmst + lon; // LST in degrees
 // ha := MODABS(lst*15.0 - alpha, 360.0);
 ha := MODABS(lst - alpha, 360.0);
 
@@ -81,7 +81,7 @@ az1 := ASIN(LIMIT(-1.0, sinaz, 1.0)) * r2d;
 
 az2 := ACOS(LIMIT(-1.0, cosaz, 1.0)) * r2d;
 
-az3 := ATAN2(SIN(phi_r)*COS(tau_r) - COS(phi_r)*TAN(delta_r), SIN(tau_r)) * r2d;
+az3 := -ATAN2(SIN(tau_r), SIN(phi_r)*COS(tau_r) - COS(phi_r)*TAN(delta_r)) * r2d;
 
 IF sinaz >= 0.0 AND cosaz >=0.0 THEN // Q I
 	az := az1;
