@@ -63,16 +63,12 @@ VAR_OUTPUT
 	InRamp:		BOOL;
 	// axis is tracking on position
 	isTracking:	BOOL;
-	// axis in target position
-	InPosition:	BOOL;
 	//	error condition
 	Error: 		BOOL;
 	// number of error
 	ErrorID: 	UDINT;
 	// actual position of the axis
 	ActualPosition: LREAL;
-	// absolute position of the axis
-	AbsolutePosition:	LREAL;
 	// axis is calibrated;
 	Calibrated:	BOOL := FALSE;
 	
