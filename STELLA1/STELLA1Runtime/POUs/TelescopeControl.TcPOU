@@ -228,9 +228,9 @@ DerotatorVelocity := F_Derotatorvelocity(elevation_calc, azimuth_calc, latitude)
 ElevationVelocity := F_Elevationvelocity(azimuth_calc, latitude);
 AzimuthVelocity := F_Azimuthvelocity(elevation_calc, azimuth_calc, latitude);
 
-IF derotation_calc >= 380.0 THEN
+IF (derotation_calc > 290.0 AND DerotatorVelocity > 0.0) OR (derotation_calc > 380.0) THEN
 	derotation_calc := derotation_calc - 360.0;
-ELSIF derotation_calc <= -70.0 THEN
+ELSIF (derotation_calc < 20.0 AND DerotatorVelocity < 0.0) OR (derotation_calc < -70.0) THEN
 	derotation_calc := derotation_calc + 360.0;
 END_IF
 // get current coordinates	
@@ -516,10 +516,22 @@ IF command_timeout.Q THEN
 	errorid := 16#10;
 	goto := FALSE;
 	Stage := 0;
+	RETURN;
 END_IF
+
+IF elevation_calc<2.0 THEN
+	error := TRUE;
+	errorid := 16#15;
+	goto := FALSE;
+	Stage := 0;
+	RETURN;
+END_IF
+
 IF reset OR error THEN
 	Stage := 0;
+	RETURN;
 END_IF
+
 CASE Stage OF
 	0:	
 		IF ready AND NOT busy THEN
@@ -908,7 +920,7 @@ END_IF
 IF azimuth_current > 440.0 THEN
 	track := FALSE;
 END_IF
-IF derotator_current < -60.0 OR derotator_current > 370.0 THEN
+IF (derotator_current < -69.0 AND DerotatorVelocity<0.0) OR (derotator_current > 379.0 AND DerotatorVelocity>0.0) THEN
 	track := FALSE;
 END_IF
 
@@ -1174,9 +1186,17 @@ END_IF
       <LineId Id="96" Count="0" />
       <LineId Id="140" Count="2" />
       <LineId Id="144" Count="2" />
+      <LineId Id="206" Count="0" />
       <LineId Id="143" Count="0" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="200" Count="4" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="199" Count="0" />
       <LineId Id="117" Count="1" />
+      <LineId Id="208" Count="0" />
       <LineId Id="116" Count="0" />
+      <LineId Id="209" Count="0" />
       <LineId Id="41" Count="1" />
       <LineId Id="188" Count="0" />
       <LineId Id="185" Count="1" />
