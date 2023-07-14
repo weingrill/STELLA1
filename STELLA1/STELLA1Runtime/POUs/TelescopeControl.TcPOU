@@ -405,6 +405,10 @@ IF MQTTTimer.Q THEN // publish new payload every second
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Declination', LREAL_TO_STRING(declination_calc));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'azimuth_offset', LREAL_TO_STRING(azimuth_offset));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'elevation_offset', LREAL_TO_STRING(elevation_offset));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'derotator_torque', LREAL_TO_STRING(DerotatorControl.derotator_torque));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'elevation_torque', LREAL_TO_STRING(ElevationControl.elevation_torque));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'azimuth_torque', LREAL_TO_STRING(AzimuthElevationControl.azimuth_torque));
+	
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'errorid',		UDINT_TO_STRING(errorid));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'error',		BOOL_TO_STRING(error));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'ready',		BOOL_TO_STRING(ready));
@@ -1123,7 +1127,9 @@ END_IF
       <LineId Id="4855" Count="0" />
       <LineId Id="4857" Count="0" />
       <LineId Id="8416" Count="0" />
-      <LineId Id="8961" Count="1" />
+      <LineId Id="8961" Count="0" />
+      <LineId Id="9290" Count="3" />
+      <LineId Id="8962" Count="0" />
       <LineId Id="8934" Count="6" />
       <LineId Id="4656" Count="0" />
       <LineId Id="7090" Count="0" />
