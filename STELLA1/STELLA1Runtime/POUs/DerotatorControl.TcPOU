@@ -162,7 +162,7 @@ END_IF
 
 derotator_torque := GVL_Telescope.Derotator_torque / 10.0;
 
-TorqueError(IN := ABS(derotator_torque) > 10.0);
+TorqueError(IN := ABS(derotator_torque) > 12.0);
 
 DerotatorEvent(	
 	Trigger := 		Error, 
