@@ -43,7 +43,7 @@ END_IF
 *)
 parallactic_angle := r2d * ATAN2(SIN(az), TAN(la)*COS(el)-SIN(el)*COS(az));
 
-F_DerotatorPosition2 := parallactic_angle + sign * elevation;
+F_DerotatorPosition2 := - parallactic_angle - sign * elevation;
 IF F_DerotatorPosition2 >= 380.0 THEN
 	F_DerotatorPosition2 := F_DerotatorPosition2 - 360.0;
 ELSIF F_DerotatorPosition2 <= -70.0 THEN

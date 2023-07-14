@@ -28,7 +28,7 @@ returns the rotational velocity for the de-rotator in degrees per second
 azimuth, latitutde and elevation are converted to radians
 *)
 IF ABS(COS(elevation * d2r))> 1.0e-3 THEN
-	F_Derotatorvelocity := Omega * COS(azimuth * d2r) * COS(latitude * d2r) / COS(elevation * d2r)  - Omega *COS(latitude * d2r) * SIN(azimuth * d2r);
+	F_Derotatorvelocity := -Omega * COS(azimuth * d2r) * COS(latitude * d2r) / COS(elevation * d2r)  + Omega *COS(latitude * d2r) * SIN(azimuth * d2r);
 ELSE
 	F_Derotatorvelocity := 0.0;	
 END_IF
