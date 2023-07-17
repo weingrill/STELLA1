@@ -397,6 +397,7 @@ IF MQTTTimer.Q THEN // publish new payload every second
 	MQTTTimer(IN:=FALSE);
 
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'JulianDate', LREAL_TO_STRING(jd));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'LocalSiderialTime', LREAL_TO_STRING(lst));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Azimuth', LREAL_TO_STRING(azimuth_current));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Elevation', LREAL_TO_STRING(elevation_current));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Derotator', LREAL_TO_STRING(derotator_current));
@@ -1132,7 +1133,7 @@ END_IF
       <LineId Id="8732" Count="0" />
       <LineId Id="4663" Count="2" />
       <LineId Id="4837" Count="1" />
-      <LineId Id="8414" Count="0" />
+      <LineId Id="9294" Count="1" />
       <LineId Id="4841" Count="0" />
       <LineId Id="8424" Count="0" />
       <LineId Id="4853" Count="0" />
