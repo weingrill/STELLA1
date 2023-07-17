@@ -33,7 +33,7 @@ VAR
 	// enable precession
 	precess: 	BOOL := TRUE;
 	// precession function block
-	fbprecess: 	FB_PRECESS;
+	fbprecess: 	FB_PRECESS2;
 	//precessed coordinates
 	alpha1, delta1:	LREAL;
 END_VAR

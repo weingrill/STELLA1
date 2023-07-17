@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_PRECESS2" Id="{026515f7-6090-4d82-a4da-35887a6c46ad}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PRECESS2
+VAR_INPUT
+	// right ascension in degrees
+	ra: LREAL;
+	// declination in degrees
+	dec: LREAL;
+	// starting equinox (J2000)
+	equinox1: LREAL;
+	// target equinox (J2023 + x)
+	equinox2: LREAL;
+	// obsolete radian input
+	RADIAN:	BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	// precessed right ascension
+	ra_precessed:	LREAL;
+	// precessed declination
+	dec_precessed:	LREAL;
+END_VAR
+VAR
+	ra_rad, dec_rad: LREAL;
+	dra: LREAL; // in arcsec
+	dde: LREAL; // in arcsec
+END_VAR
+VAR CONSTANT
+	deg_to_rad : LREAL := PI/180.0;
+	sec_to_rad : LREAL := deg_to_rad/3600.0;
+	y100 : LREAL := 23.0/100.0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ra_rad := ra*deg_to_rad;
+dec_rad := dec*deg_to_rad;
+
+IF ABS(dec) < 89.5 THEN
+	dra := 46.1244 + 0.0279*y100 + (20.0431-0.0085*y100)*TAN(dec_rad)*SIN(ra_rad);
+ELSE
+	dra := 0.0;
+END_IF
+
+dde := (20.0431 - 0.0085*y100)*COS(ra_rad);
+
+ra_precessed := ra_rad/deg_to_rad + dra/3600.0;
+dec_precessed := dec_rad/deg_to_rad + dde/3600.0;]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PRECESS2">
+      <LineId Id="102" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="113" Count="1" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="105" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
