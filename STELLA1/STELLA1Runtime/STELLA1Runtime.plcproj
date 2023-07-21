@@ -119,6 +119,9 @@
     <Compile Include="POUs\FunctionBlocks\FB_HOR2EQ.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FunctionBlocks\FB_HOR2EQ2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FunctionBlocks\FB_Horn.TcPOU">
       <SubType>Code</SubType>
     </Compile>

@@ -228,6 +228,12 @@ DerotatorVelocity := F_Derotatorvelocity(elevation_calc, azimuth_calc, latitude)
 ElevationVelocity := F_Elevationvelocity(azimuth_calc, latitude);
 AzimuthVelocity := F_Azimuthvelocity(elevation_calc, azimuth_calc, latitude);
 
+IF (azimuth_calc > 310.0 AND AzimuthVelocity > 0.0) OR (azimuth_calc > 440.0) THEN
+	azimuth_calc := azimuth_calc - 360.0;
+ELSIF (azimuth_calc < 80.0 AND AzimuthVelocity < 0.0) OR (azimuth_calc < -50.0) THEN
+	azimuth_calc := azimuth_calc + 360.0;
+END_IF
+
 IF (derotation_calc > 290.0 AND DerotatorVelocity > 0.0) OR (derotation_calc > 380.0) THEN
 	derotation_calc := derotation_calc - 360.0;
 ELSIF (derotation_calc < 20.0 AND DerotatorVelocity < 0.0) OR (derotation_calc < -70.0) THEN
@@ -353,7 +359,7 @@ sliding := NOT tracking AND (ElevationControl.ElevationAxis.InMotion OR Elevatio
 // signal must be stable for 3000MS			
 tracking_delay(in := ElevationControl.ElevationAxis.isTracking AND 
 			AzimuthElevationControl.AzimuthAxis.isTracking AND
-			DerotatorControl.DerotatorAxis.isTracking,PT :=T#3000MS, Q => tracking);
+			DerotatorControl.DerotatorAxis.isTracking,PT :=T#5500MS, Q => tracking);
 			
 stopped :=  (NOT ElevationControl.enable OR ElevationControl.ElevationAxis.StandStill) AND 
 			(NOT AzimuthElevationControl.Enable OR AzimuthElevationControl.AzimuthAxis.StandStill) AND
@@ -931,6 +937,11 @@ IF NOT ElevationControl.Tracking THEN
 	ElevationControl.MoveAxis := TRUE;
 	IF NOT ElevationControl.ElevationAxis.Busy AND ElevationControl.ElevationAxis.MoveDone THEN
 		ElevationControl.MoveAxis := FALSE;
+		IF ElevationControl.ElevationAxis.isTracking THEN
+			ElevationControl.velocity := ElevationVelocity;
+		ELSE
+			ElevationControl.velocity := 3.0*ElevationVelocity;
+		END_IF
 		ElevationControl.velocity := ElevationVelocity;
 		ElevationControl.Tracking := TRUE;
 	END_IF
@@ -945,6 +956,11 @@ IF NOT AzimuthElevationControl.Tracking THEN
 	AzimuthElevationControl.MoveAxis := TRUE;
 	IF NOT AzimuthElevationControl.AzimuthAxis.Busy AND AzimuthElevationControl.AzimuthAxis.MoveDone THEN
 		AzimuthElevationControl.MoveAxis := FALSE;
+		IF AzimuthElevationControl.AzimuthAxis.isTracking THEN
+			AzimuthElevationControl.velocity := AzimuthVelocity;
+		ELSE
+			AzimuthElevationControl.velocity := 3.0*AzimuthVelocity;
+		END_IF
 		AzimuthElevationControl.velocity := AzimuthVelocity;
 		AzimuthElevationControl.Tracking := TRUE;
 	END_IF
@@ -959,6 +975,11 @@ IF NOT DerotatorControl.Tracking THEN
 	DerotatorControl.MoveAxis := TRUE;
 	IF NOT DerotatorControl.DerotatorAxis.Busy AND DerotatorControl.DerotatorAxis.MoveDone THEN
 		DerotatorControl.MoveAxis := FALSE;
+		IF DerotatorControl.DerotatorAxis.isTracking THEN
+			DerotatorControl.Velocity := DerotatorVelocity;
+		ELSE
+			DerotatorControl.Velocity := 3.0*DerotatorVelocity;
+		END_IF
 		DerotatorControl.Velocity := DerotatorVelocity;
 		DerotatorControl.Tracking := TRUE;
 	END_IF
@@ -1017,6 +1038,7 @@ END_IF
       <LineId Id="8768" Count="1" />
       <LineId Id="9117" Count="0" />
       <LineId Id="9119" Count="2" />
+      <LineId Id="9296" Count="5" />
       <LineId Id="8944" Count="0" />
       <LineId Id="7979" Count="0" />
       <LineId Id="8743" Count="0" />
@@ -1393,6 +1415,9 @@ END_IF
       <LineId Id="94" Count="0" />
       <LineId Id="51" Count="2" />
       <LineId Id="57" Count="1" />
+      <LineId Id="116" Count="1" />
+      <LineId Id="119" Count="1" />
+      <LineId Id="118" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="54" Count="0" />
@@ -1403,12 +1428,19 @@ END_IF
       <LineId Id="79" Count="0" />
       <LineId Id="82" Count="0" />
       <LineId Id="66" Count="0" />
-      <LineId Id="68" Count="7" />
+      <LineId Id="68" Count="3" />
+      <LineId Id="121" Count="1" />
+      <LineId Id="124" Count="1" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="72" Count="3" />
       <LineId Id="77" Count="1" />
       <LineId Id="96" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="25" Count="0" />
-      <LineId Id="83" Count="10" />
+      <LineId Id="83" Count="4" />
+      <LineId Id="126" Count="1" />
+      <LineId Id="129" Count="2" />
+      <LineId Id="88" Count="5" />
       <LineId Id="26" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_HOR2EQ2" Id="{20451378-e1cd-4bbe-a768-37b02cda1e45}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HOR2EQ2
+VAR_INPUT
+	//altitude (in degrees)
+	alt: 		LREAL;  
+	//azimuth angle (in degrees, measured EAST from NORTH, but see keyword WS below.) [scalar or vector]
+	az:			LREAL;
+	// Julian Date [scalar or vector], double precision
+	JD: 		LREAL;
+	// observers latitude (degrees)
+	lat:		LREAL;
+	// observers longitude (degrees)
+	lon:		LREAL;
+	// observers altitude (unused)
+	altitude:	LREAL := 0.0;
+END_VAR
+VAR_OUTPUT
+	// Right Ascension of object  (J2000) in degrees (FK5)
+	ra: 	LREAL;
+	// Declination of object (J2000) in degrees (FK5)
+	dec:	LREAL;
+	// hour angle (in degrees)
+	ha:		LREAL;
+END_VAR
+VAR
+	alt_rad, lat_rad:	LREAL;
+	az_rad:		LREAL;
+	dec_rad:	LREAL;
+	cosha, sinha, sindec:	LREAL;
+	lst: 	LREAL;
+END_VAR
+VAR CONSTANT
+	d2r:	LREAL := PI/180.0;
+	r2d:	LREAL := 180.0/PI;
+	//h2r:	LREAL := PI/12.0;
+	h2d:	LREAL := 15.0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[alt_rad := alt * d2r;
+lat_rad := lat * d2r;
+az_rad := az * d2r;
+// sin(dec) = sin(alt)*sin(phi) + cos(alt)*cos(phi)*cos(az)
+sindec := SIN(alt_rad)*SIN(lat_rad) + COS(alt_rad)*COS(lat_rad)*COS(az_rad);
+dec_rad := ASIN(sindec);
+dec := dec_rad * r2d;
+//sin(ha) = -sin(azimuth)*cos(altitude)/cos(dec)
+IF ABS( COS(dec_rad)) > 0.0 THEN
+	sinha := -SIN(az_rad) * COS(alt_rad) / COS(dec_rad);
+ELSE
+	sinha := 0.0;
+END_IF
+// cos(ha) = (sin(alt) - sin(dec)*sin(phi))/(cos(dec)*cos(phi))
+IF ABS(COS(dec_rad) * COS(lat_rad)) > 0.0 THEN
+	cosha := (SIN(alt_rad) - SIN(dec_rad)*SIN(lat_rad)) / (COS(dec_rad) * COS(lat_rad));
+ELSE
+	cosha := 0.0;
+END_IF
+
+// tan(ha) = sin(ha)/cos(ha)
+ha := ATAN2(sinha, cosha) * r2d;
+ha := MODABS(ha, 360.0);
+// ra = t - ha
+lst := ct2lst(lon, jd) * 15.0;
+ra := lst - ha;
+ra := MODABS(ra, 360.0);
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HOR2EQ2">
+      <LineId Id="303" Count="2" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="306" Count="1" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="321" Count="2" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="324" Count="1" />
+      <LineId Id="327" Count="1" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="335" Count="0" />
+      <LineId Id="315" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
