@@ -239,8 +239,8 @@ elevation_current := ElevationControl.actual_position;
 derotator_current := DerotatorControl.actual_position;
 
 // calculate equatorial coordinates
-hor2eq(alt := elevation_current, 
-		az := azimuth_current,
+hor2eq(alt := elevation_current - PointingModelElevation(azimuth_calc, elevation_calc, elevation_offset, AN_E, AE_E, TF), 
+		az := azimuth_current - PointingModelAzimuth(azimuth_calc, elevation_calc, azimuth_offset, BNP, AN_A, AE_A, NPAE),
 		jd := jd,
 		lat := latitude,
 		lon := longitude,

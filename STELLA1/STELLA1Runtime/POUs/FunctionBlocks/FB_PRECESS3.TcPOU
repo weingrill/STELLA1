@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_PRECESS3" Id="{f9999ca7-7af2-4470-beff-9e1a7f08efbc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PRECESS3
+VAR_INPUT
+	// right ascension in degrees
+	ra: LREAL;
+	// declination in degrees
+	dec: LREAL;
+	
+END_VAR
+VAR_OUTPUT
+	// precessed right ascension
+	ra_precessed:	LREAL;
+	// precessed declination
+	dec_precessed:	LREAL;
+END_VAR
+VAR
+	ra_rad, dec_rad: LREAL;
+	// starting jd (J2000)
+	jd0: LREAL;
+	// traget JD
+	jd: LREAL;
+	t, 
+	eta, 
+	z, 
+	phi,
+	A,
+	B,
+	C	: LREAL;
+END_VAR
+VAR CONSTANT
+	deg_to_rad : LREAL := PI/180.0;
+	sec_to_rad : LREAL := deg_to_rad/3600.0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// see Jean Meeus p.130
+
+ra_rad := ra*deg_to_rad;
+dec_rad := dec*deg_to_rad;
+
+// todo epoch to jd and jd0
+JD := TelescopeControl.jd;
+jd0 := 2451545.0;
+t := (jd - jd0) / 36525.0;
+
+eta :=	(2306.2181*t + 0.30188*t*t + 0.017998*t*t*t) * sec_to_rad;
+z :=	(2306.2181*t + 1.09468*t*t + 0.018203*t*t*t) * sec_to_rad;
+phi :=	(2004.3109*t - 0.42665*t*t - 0.041833*t*t*t) * sec_to_rad;
+
+A :=            COS(dec_rad) * SIN(ra_rad + eta);
+B := COS(phi) * COS(dec_rad) * COS(ra_rad + eta) - SIN(phi) * SIN(dec_rad);
+C := SIN(phi) * COS(dec_rad) * COS(ra_rad + eta) + COS(phi) * SIN(dec_rad);
+
+// tan(ra - z) == A/B
+ra_precessed := MODABS((ATAN2(A, B) + z)/deg_to_rad, 360);
+IF ABS(dec) > 89.5 THEN
+	dec_precessed := ACOS(SQRT(A*A + B*B))/deg_to_rad;
+ELSE
+	// sin(de)c = C
+	dec_precessed := ASIN(C)/deg_to_rad;	
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PRECESS3">
+      <LineId Id="149" Count="1" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="170" Count="1" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="157" Count="1" />
+      <LineId Id="162" Count="1" />
+      <LineId Id="167" Count="1" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="179" Count="1" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="105" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -8,14 +8,14 @@ VAR_INPUT
 	//azimuth angle (in degrees, measured EAST from NORTH, but see keyword WS below.) [scalar or vector]
 	az: LREAL;
 	// Julian Date [scalar or vector], double precision
-	JD: LREAL;
-	lat:	LREAL;
-	lon:	LREAL;
-	WS:	BOOL;
-	precess:	BOOL := TRUE;
-	NUTATE:		BOOL := TRUE;
-	aberration:	BOOL := TRUE;
-	refract:	BOOL := TRUE;
+	JD: 		LREAL;
+	lat:		LREAL;
+	lon:		LREAL;
+	WS:			BOOL;
+	precess:	BOOL := FALSE;
+	NUTATE:		BOOL := FALSE;
+	aberration:	BOOL := FALSE;
+	refract:	BOOL := FALSE;
 	altitude:	LREAL := 0.0;
 END_VAR
 VAR_OUTPUT

@@ -25,23 +25,23 @@ END_VAR
 VAR
 	lst: LREAL;
 	// helper variables
-	sinalt, sinaz, cosaz, cosalt, az1, az2, az3, length,
+	sinalt,
 	// in radians
 	phi_r, tau_r, alpha_r, delta_r: LREAL;
 	// current epoch
 	J_now: 		LREAL;
 	// enable precession
 	precess: 	BOOL := TRUE;
+	// enable refraction correction
+	refract:	BOOL := FALSE;
 	// precession function block
-	fbprecess: 	FB_PRECESS2;
+	fbprecess: 	FB_PRECESS3;
 	//precessed coordinates
 	alpha1, delta1:	LREAL;
 END_VAR
 VAR CONSTANT
 	d2r:	LREAL := PI/180.0;
 	r2d:	LREAL := 180.0/PI;
-	//h2r:	LREAL := PI/12.0;
-	//h2d:	LREAL := 15.0;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* 
@@ -54,7 +54,7 @@ lst := ct2lst(lon, jd) * 15.0; // lst in degrees
 J_now := (JD - 2451545.0)/365.25 + 2000.0; // compute current equinox
 IF precess THEN
 	fbprecess( ra := alpha, dec := delta, 
-	EQUINOX1 := 2000.0, EQUINOX2 := J_now, 
+	//EQUINOX1 := 2000.0, EQUINOX2 := J_now, 
 	ra_precessed =>alpha1, dec_precessed => delta1);
 ELSE
 	alpha1 := alpha;
@@ -66,44 +66,15 @@ ha := MODABS(lst - alpha1, 360.0);
 alpha_r := alpha1 * d2r;
 delta_r := delta1 * d2r;
 tau_r := lst*d2r - alpha_r;
-//tau_r := MODABS(lst*d2r - alpha_r, 2.0*PI);
 phi_r := lat*d2r;
 
-//sinalt := (SIN(delta*d2r)*SIN(lat*d2r)) + (COS(delta*d2r)*COS(lat*d2r)*COS(ha*d2r));
 sinalt := SIN(phi_r)*SIN(delta_r) + COS(phi_r)*COS(delta_r)*COS(tau_r);
 alt := ASIN(sinalt) * r2d;
-cosalt := COS(alt*d2r);
-
-IF ABS(cosalt) > 0.0 THEN
-	sinaz := -SIN(tau_r)*COS(delta_r)/cosalt;
-ELSE
-	sinaz := 0.0;
+IF refract THEN
+	alt := alt + Refraction(alt, pressure := 770.0, temperature := 10.0);
 END_IF
-
-IF ABS(cosalt*COS(phi_r)) > 0.0 THEN
-	cosaz := (SIN(delta_r) - SIN(phi_r)*sinalt)
-			/(cosalt*COS(phi_r));
-ELSE
-	cosaz := 0.0;
-END_IF
-
-length := sinaz*sinaz + cosaz*cosaz;
-
-az1 := ASIN(LIMIT(-1.0, sinaz, 1.0)) * r2d;
-
-az2 := ACOS(LIMIT(-1.0, cosaz, 1.0)) * r2d;
-
-az3 := -ATAN2(SIN(tau_r), SIN(phi_r)*COS(tau_r) - COS(phi_r)*TAN(delta_r)) * r2d;
-
-IF sinaz >= 0.0 AND cosaz >=0.0 THEN // Q I
-	az := az1;
-ELSIF sinaz < 0.0 AND cosaz >= 0.0 THEN // Q II
-	az := MODABS(-az2, 360.0);
-ELSIF sinaz < 0.0 AND cosaz < 0.0 THEN // Q III
-	az := 180 - az1;
-ELSIF sinaz >= 0.0 AND cosaz < 0.0 THEN // Q IV
-	az := az2;
-END_IF]]></ST>
+az := ATAN2(SIN(tau_r), SIN(phi_r)*COS(tau_r) - COS(phi_r)*TAN(delta_r)) * r2d + 180.0;
+]]></ST>
     </Implementation>
     <LineIds Name="FB_EQ2HOR2">
       <LineId Id="81" Count="0" />
@@ -120,34 +91,13 @@ END_IF]]></ST>
       <LineId Id="145" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="146" Count="0" />
-      <LineId Id="159" Count="1" />
-      <LineId Id="148" Count="1" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="150" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="213" Count="0" />
-      <LineId Id="203" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="206" Count="0" />
-      <LineId Id="204" Count="0" />
-      <LineId Id="207" Count="0" />
-      <LineId Id="205" Count="0" />
-      <LineId Id="209" Count="0" />
-      <LineId Id="208" Count="0" />
-      <LineId Id="143" Count="0" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="210" Count="2" />
-      <LineId Id="156" Count="1" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="139" Count="1" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="138" Count="0" />
-      <LineId Id="164" Count="4" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="271" Count="1" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="297" Count="1" />
+      <LineId Id="140" Count="0" />
       <LineId Id="153" Count="0" />
     </LineIds>
   </POU>
