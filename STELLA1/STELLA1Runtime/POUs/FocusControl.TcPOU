@@ -35,6 +35,7 @@ VAR
 	BrakeDelay:			TON;
 	FocusAxis:			FB_Axis2;
 	actual_position:	LREAL;
+	// manual override to unlock the focus
 	FocusUnlock:		BOOL;
 	FocusUnlocked:		BOOL;
 	MQTTTimer : 		TON := (PT:=T#5S);
@@ -72,7 +73,7 @@ FocusDelay(IN := GVL_Telescope.focus_unlock, PT := T#500MS, Q => FocusUnlocked);
 BrakeDelay(IN := NOT FocusAxis.Busy AND FocusAxis.StandStill, PT := T#4000MS);
 
 // if we are on automatic mode then position the filterwheel
-IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
+IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic AND NOT FocusUnlock THEN
 	IF FocusAxis.Calibrated THEN
 		IF ABS(position - actual_position) > tolerance THEN
 			IF FocusAxis.Ready THEN
@@ -154,7 +155,7 @@ END_IF
 
 Calibrated := FocusAxis.Calibrated;
 
-Ready := FocusAxis.Ready AND FocusAxis.StandStill;
+Ready := FocusAxis.Ready AND FocusAxis.StandStill OR NOT GVL_Telescope.focus_unlock;
 
 MQTTTimer(IN:=TRUE);
 IF MQTTTimer.Q THEN // publish new payload every second
