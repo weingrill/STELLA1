@@ -35,7 +35,7 @@ VAR CONSTANT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// see Jean Meeus p.130
+      <ST><![CDATA[// see Jean Meeus p.135
 
 ra_rad := ra*deg_to_rad;
 dec_rad := dec*deg_to_rad;

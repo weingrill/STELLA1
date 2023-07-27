@@ -33,7 +33,7 @@ VAR
 	// enable precession
 	precess: 	BOOL := TRUE;
 	// enable refraction correction
-	refract:	BOOL := FALSE;
+	refract:	BOOL := TRUE;
 	// precession function block
 	fbprecess: 	FB_PRECESS3;
 	//precessed coordinates

@@ -25,7 +25,7 @@
   <IsTemplate>false</IsTemplate>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
-  &lt;Window Guid="c006359c-0ff6-45e1-8bce-b4cfb61da879" LastFocused="133340760372688951" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="c006359c-0ff6-45e1-8bce-b4cfb61da879" LastFocused="133346642239210221" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="ee70601f-348b-457a-8429-53179608e64c" LastFocused="133339321530591174" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="3" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="1348eeec-47dc-4aad-a527-0548432e268a" LastFocused="133339321516962833" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="4" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="33db4309-525f-4ecf-8dc8-be81b8a9add4" LastFocused="133339322187700736" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
@@ -1233,7 +1233,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>0ce74e24-78f2-4239-8b79-dd2984ce7a73</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>628104</IndexOffset>
+          <IndexOffset>539240</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>PositionDifference</Name>
@@ -1315,7 +1315,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>888fa951-8210-4007-a04f-4a3812e3309e</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>628120</IndexOffset>
+          <IndexOffset>539256</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>TrackVelocity</Name>
@@ -1397,7 +1397,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>e9026cc2-069a-4b5c-a4e3-94bb0dfe8da8</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>628128</IndexOffset>
+          <IndexOffset>539264</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>TrackAcceleration</Name>
@@ -1643,7 +1643,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>60bd7dfc-c0a9-43bb-bdd0-67062690f8c0</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>1116936</IndexOffset>
+          <IndexOffset>590648</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>PositionDifference (1)</Name>
@@ -1725,7 +1725,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>18e2b77d-9d0e-48b8-b0b0-6fa414fdb8a0</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>461512</IndexOffset>
+          <IndexOffset>462536</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>derotation_calc</Name>
@@ -1807,7 +1807,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>ab0d1db0-8820-41fd-ab18-8e607453cdc8</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>494560</IndexOffset>
+          <IndexOffset>495680</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>derotator_current</Name>
@@ -1889,7 +1889,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>2516c380-5e6d-4c3f-bd61-c0aa99db670d</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>532704</IndexOffset>
+          <IndexOffset>463384</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>lst</Name>
@@ -1971,7 +1971,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>a39c4bb5-7770-4015-8a3b-6ec746c90123</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>532688</IndexOffset>
+          <IndexOffset>463368</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>az</Name>
@@ -2053,7 +2053,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>70bfa808-2b92-4af4-9185-2eb29c255d9e</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>532680</IndexOffset>
+          <IndexOffset>463360</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>alt</Name>
@@ -2617,7 +2617,7 @@
               <SortPriority>100</SortPriority>
               <Suffix>.svstyle</Suffix>
               <Title>ChartZoomStyle_192</Title>
-              <YZoom>false</YZoom>
+              <YZoom>true</YZoom>
             </ChartZoomStyle>
             <ChartMenuStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <ButtonSize>
