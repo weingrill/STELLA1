@@ -95,6 +95,10 @@ IF fbMessageQueue.nQueuedMessages > 0 THEN
 					TelescopeControl.stop := STRING_TO_BOOL(value);
 				ELSIF parameter = 'reset' THEN
 					TelescopeControl.reset := STRING_TO_BOOL(value);
+				ELSIF parameter = 'masterreset' THEN
+					ElevationControl.bSoEReset := STRING_TO_BOOL(value);
+					AzimuthElevationControl.bSoEReset := STRING_TO_BOOL(value);
+					DerotatorControl.bSoEReset := STRING_TO_BOOL(value);
 				ELSIF parameter = 'nasmyth' THEN
 					NasmythControl.left := STRING_TO_USINT(value) = 1;
 					NasmythControl.right := STRING_TO_USINT(value) = 2;
@@ -218,7 +222,9 @@ published := fbMqttClient.Publish(
       </Implementation>
     </Method>
     <LineIds Name="FB_MQTTCommunication">
-      <LineId Id="308" Count="68" />
+      <LineId Id="308" Count="66" />
+      <LineId Id="511" Count="3" />
+      <LineId Id="375" Count="1" />
       <LineId Id="457" Count="0" />
       <LineId Id="377" Count="0" />
       <LineId Id="483" Count="0" />

@@ -23,6 +23,8 @@ VAR_INPUT
 	Tracking:	BOOL;
 	// stop the Axis
 	StopAxis:	BOOL;
+	// reset diagnostic errors
+	bSoEReset:	 	BOOL;
 END_VAR
 VAR_OUTPUT
 	// axis is ready to operate
@@ -43,9 +45,7 @@ END_VAR
 VAR
 	ElevationAxis:			FB_Axis2;
 	ElevationCalibration: 	MC_SetPosition;
-	// auto-reset commutation errors
-	//fbSoEReset: 			FB_SoEReset;
-	//bSoEReset:	 			BOOL;
+	fbSoEReset: 			FB_SoEReset;
 	// delay until commutator angle is measured
 	readydelay:				TON;
 	// disable trigger for hydraulics
@@ -173,8 +173,6 @@ END_IF
 IF Calibrated THEN
 	last_position := actual_position;
 END_IF
-(*	
-bSoEReset := GVL_Telescope.Elevation_diagnostic = 16#0000F10B OR GVL_Telescope.Elevation_diagnostic = 16#0000F601;
 
 IF bSoEReset THEN
 	last_position := -1.0;
@@ -188,7 +186,7 @@ IF bSoEReset THEN
 		Reset := TRUE;
 	END_IF
 END_IF 
-*)
+
 readydelay(IN :=  HydraulicsControl.brake_open, PT := T#6000MS, Q=> ready);
 
 ReadParameter(	Axis := GVL_Telescope.ElevationAxisRef, 
@@ -302,16 +300,15 @@ CalibrationEvent(
       <LineId Id="612" Count="0" />
       <LineId Id="1105" Count="1" />
       <LineId Id="1108" Count="3" />
-      <LineId Id="1104" Count="0" />
-      <LineId Id="1115" Count="0" />
-      <LineId Id="1119" Count="1" />
+      <LineId Id="1645" Count="0" />
+      <LineId Id="1120" Count="0" />
       <LineId Id="1189" Count="0" />
       <LineId Id="1121" Count="3" />
       <LineId Id="1126" Count="2" />
       <LineId Id="1190" Count="0" />
       <LineId Id="1129" Count="0" />
       <LineId Id="1118" Count="0" />
-      <LineId Id="1112" Count="0" />
+      <LineId Id="1646" Count="0" />
       <LineId Id="386" Count="0" />
       <LineId Id="969" Count="0" />
       <LineId Id="971" Count="0" />

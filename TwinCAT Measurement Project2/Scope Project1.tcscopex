@@ -25,14 +25,14 @@
   <IsTemplate>false</IsTemplate>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
-  &lt;Window Guid="c006359c-0ff6-45e1-8bce-b4cfb61da879" LastFocused="133347598895533168" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="c006359c-0ff6-45e1-8bce-b4cfb61da879" LastFocused="133404083375210778" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="ee70601f-348b-457a-8429-53179608e64c" LastFocused="133339321530591174" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="3" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="1348eeec-47dc-4aad-a527-0548432e268a" LastFocused="133347695157055040" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="4" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
-  &lt;Window Guid="33db4309-525f-4ecf-8dc8-be81b8a9add4" LastFocused="133339322187700736" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
-  &lt;Window Guid="131a93fb-0d11-4d13-8c83-897932a499f4" LastFocused="133339322319771992" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="2" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="33db4309-525f-4ecf-8dc8-be81b8a9add4" LastFocused="133404083355464182" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="131a93fb-0d11-4d13-8c83-897932a499f4" LastFocused="133404067172092089" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="fbe74680-884e-48c4-9d06-2c95a1481c8e" DocumentIndexInWindowGroup="2" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;DocumentContainer Dock="5"&gt;
     &lt;SplitLayoutSystem WorkingSize="250, 400" SplitMode="0"&gt;
-      &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="fbe74680-884e-48c4-9d06-2c95a1481c8e" Collapsed="0" SelectedControl="1348eeec-47dc-4aad-a527-0548432e268a"&gt;
+      &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="fbe74680-884e-48c4-9d06-2c95a1481c8e" Collapsed="0" SelectedControl="c006359c-0ff6-45e1-8bce-b4cfb61da879"&gt;
         &lt;Controls&gt;
           &lt;Control Guid="c006359c-0ff6-45e1-8bce-b4cfb61da879" /&gt;
           &lt;Control Guid="33db4309-525f-4ecf-8dc8-be81b8a9add4" /&gt;
@@ -46,7 +46,7 @@
 &lt;/Layout&gt;</Layout>
   <MainServer>127.0.0.1.1.1</MainServer>
   <Name>Scope Project</Name>
-  <RecordTime>6000000000</RecordTime>
+  <RecordTime>18000000000</RecordTime>
   <SortPriority>100</SortPriority>
   <StopMode>AutoStop</StopMode>
   <SubMember>
@@ -81,7 +81,7 @@
           <DataType>INT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>1</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>91f82503-6cb5-44c5-bd9c-e0d4299f169a</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -163,7 +163,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>2</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>0802bef5-6d8a-4853-a114-49e4a7310b64</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -245,7 +245,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>3</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>1a65b352-f8f2-4789-9682-c1dbbf681ef8</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -327,7 +327,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>4</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>0cbb7b85-7805-4da6-8fe3-2e3291cbe7cf</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -409,7 +409,7 @@
           <DataType>INT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>5</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>7aefd361-5fba-4fb5-9c18-f66b023203b2</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -491,7 +491,7 @@
           <DataType>INT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>6</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>48cf3e48-7d58-43f1-927a-5d86d53ce157</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -573,7 +573,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>7</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>73eb644e-92b1-450f-b0ac-38bec725fff6</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -655,7 +655,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>8</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>3d2e1d7f-c39a-4cf0-8e4e-76f7abca0c4a</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -737,7 +737,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>9</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>59d30ef5-2fca-48ab-8500-a7c454089a93</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -819,7 +819,7 @@
           <DataType>INT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>10</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>24330544-640d-4b4c-b4df-2f4cdf5d4425</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -901,7 +901,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>11</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>23806b7a-12ba-4782-bf8b-9e31698180fd</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -983,7 +983,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>12</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>93543802-7de8-4238-a9a1-0c215fb1460b</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -1065,7 +1065,7 @@
           <DataType>INT16</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>13</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>fab569c9-79a9-4e88-812c-9486eec438e4</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -1147,7 +1147,7 @@
           <DataType>INT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>14</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>7c3d486b-01a7-43f5-9555-9cb4475a923b</Guid>
           <IndexGroup>61488</IndexGroup>
@@ -1229,7 +1229,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>15</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>0ce74e24-78f2-4239-8b79-dd2984ce7a73</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1311,7 +1311,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>16</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>888fa951-8210-4007-a04f-4a3812e3309e</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1393,7 +1393,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>17</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>e9026cc2-069a-4b5c-a4e3-94bb0dfe8da8</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1475,7 +1475,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>18</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>16b79bb1-0dfa-480c-a294-6b7271f9ceeb</Guid>
           <IndexGroup>16644</IndexGroup>
@@ -1557,7 +1557,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>19</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>8b5e67f6-9298-4bb7-aa17-0e63a802a050</Guid>
           <IndexGroup>16644</IndexGroup>
@@ -1639,7 +1639,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>20</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>60bd7dfc-c0a9-43bb-bdd0-67062690f8c0</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1721,7 +1721,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>21</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>18e2b77d-9d0e-48b8-b0b0-6fa414fdb8a0</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1803,7 +1803,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>22</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>ab0d1db0-8820-41fd-ab18-8e607453cdc8</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1864,252 +1864,6 @@
         </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <AmsNetId>5.122.3.233.1.1</AmsNetId>
-          <Area>None</Area>
-          <ArrayLength>0</ArrayLength>
-          <BaseSampleTime>100000</BaseSampleTime>
-          <ChannelStyleInformation />
-          <Comment></Comment>
-          <ContextMask>0</ContextMask>
-          <DataAccess>
-            <DataAccessMode>
-              <Source>TwinCAT</Source>
-              <Protocoll>ADS</Protocoll>
-              <Format>TcBinary</Format>
-              <TimeContext>Present</TimeContext>
-              <TimeTangeInfo>
-                <StartTimeStamp>0</StartTimeStamp>
-                <EndTimeStamp>0</EndTimeStamp>
-              </TimeTangeInfo>
-            </DataAccessMode>
-          </DataAccess>
-          <DataType>REAL64</DataType>
-          <DisplayColor>Black</DisplayColor>
-          <Enabled>true</Enabled>
-          <FileHandle>23</FileHandle>
-          <ForceOversampling>false</ForceOversampling>
-          <Guid>2516c380-5e6d-4c3f-bd61-c0aa99db670d</Guid>
-          <IndexGroup>16448</IndexGroup>
-          <IndexOffset>463384</IndexOffset>
-          <IsFileBased>false</IsFileBased>
-          <IsHistorical>false</IsHistorical>
-          <Name>lst</Name>
-          <Oversample>0</Oversample>
-          <RawUnit>
-            <Transformation>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <ScaleFactor>1</ScaleFactor>
-              <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString></SourceUnitString>
-              <Symbol>1</Symbol>
-              <TargetUnitString></TargetUnitString>
-              <TargetUnitValue>0</TargetUnitValue>
-            </Transformation>
-            <Unit>
-              <BaseUnitString></BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension></NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ReturnText> (None) </ReturnText>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol></Symbol>
-            </Unit>
-            <UnitOffsetResult>0</UnitOffsetResult>
-            <UnitScaleResult>1</UnitScaleResult>
-            <UserUnit>
-              <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString></BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <NameExtension></NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol></Symbol>
-              <UserPrefix>none</UserPrefix>
-            </UserUnit>
-          </RawUnit>
-          <ServerHandle>0</ServerHandle>
-          <SortPriority>10</SortPriority>
-          <SubMember />
-          <Suffix>.svacq</Suffix>
-          <SymbolBased>true</SymbolBased>
-          <SymbolName>TelescopeControl.eq2hor2.lst</SymbolName>
-          <TargetPort>851</TargetPort>
-          <TimeOffset>0</TimeOffset>
-          <Title>AdsAcquisition_212</Title>
-          <UseLocalServer>true</UseLocalServer>
-          <UseTaskSampleTime>true</UseTaskSampleTime>
-          <UTF8Encoding>false</UTF8Encoding>
-          <VariableSize>8</VariableSize>
-        </AdsAcquisition>
-        <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>5.122.3.233.1.1</AmsNetId>
-          <Area>None</Area>
-          <ArrayLength>0</ArrayLength>
-          <BaseSampleTime>100000</BaseSampleTime>
-          <ChannelStyleInformation />
-          <Comment> azimuth in degrees</Comment>
-          <ContextMask>0</ContextMask>
-          <DataAccess>
-            <DataAccessMode>
-              <Source>TwinCAT</Source>
-              <Protocoll>ADS</Protocoll>
-              <Format>TcBinary</Format>
-              <TimeContext>Present</TimeContext>
-              <TimeTangeInfo>
-                <StartTimeStamp>0</StartTimeStamp>
-                <EndTimeStamp>0</EndTimeStamp>
-              </TimeTangeInfo>
-            </DataAccessMode>
-          </DataAccess>
-          <DataType>REAL64</DataType>
-          <DisplayColor>Black</DisplayColor>
-          <Enabled>true</Enabled>
-          <FileHandle>24</FileHandle>
-          <ForceOversampling>false</ForceOversampling>
-          <Guid>a39c4bb5-7770-4015-8a3b-6ec746c90123</Guid>
-          <IndexGroup>16448</IndexGroup>
-          <IndexOffset>463368</IndexOffset>
-          <IsFileBased>false</IsFileBased>
-          <IsHistorical>false</IsHistorical>
-          <Name>az</Name>
-          <Oversample>0</Oversample>
-          <RawUnit>
-            <Transformation>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <ScaleFactor>1</ScaleFactor>
-              <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString></SourceUnitString>
-              <Symbol>1</Symbol>
-              <TargetUnitString></TargetUnitString>
-              <TargetUnitValue>0</TargetUnitValue>
-            </Transformation>
-            <Unit>
-              <BaseUnitString></BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension></NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ReturnText> (None) </ReturnText>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol></Symbol>
-            </Unit>
-            <UnitOffsetResult>0</UnitOffsetResult>
-            <UnitScaleResult>1</UnitScaleResult>
-            <UserUnit>
-              <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString></BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <NameExtension></NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol></Symbol>
-              <UserPrefix>none</UserPrefix>
-            </UserUnit>
-          </RawUnit>
-          <ServerHandle>0</ServerHandle>
-          <SortPriority>10</SortPriority>
-          <SubMember />
-          <Suffix>.svacq</Suffix>
-          <SymbolBased>true</SymbolBased>
-          <SymbolName>TelescopeControl.eq2hor2.az</SymbolName>
-          <TargetPort>851</TargetPort>
-          <TimeOffset>0</TimeOffset>
-          <Title>AdsAcquisition_212</Title>
-          <UseLocalServer>true</UseLocalServer>
-          <UseTaskSampleTime>true</UseTaskSampleTime>
-          <UTF8Encoding>false</UTF8Encoding>
-          <VariableSize>8</VariableSize>
-        </AdsAcquisition>
-        <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>5.122.3.233.1.1</AmsNetId>
-          <Area>None</Area>
-          <ArrayLength>0</ArrayLength>
-          <BaseSampleTime>100000</BaseSampleTime>
-          <ChannelStyleInformation />
-          <Comment> altitude in degrees</Comment>
-          <ContextMask>0</ContextMask>
-          <DataAccess>
-            <DataAccessMode>
-              <Source>TwinCAT</Source>
-              <Protocoll>ADS</Protocoll>
-              <Format>TcBinary</Format>
-              <TimeContext>Present</TimeContext>
-              <TimeTangeInfo>
-                <StartTimeStamp>0</StartTimeStamp>
-                <EndTimeStamp>0</EndTimeStamp>
-              </TimeTangeInfo>
-            </DataAccessMode>
-          </DataAccess>
-          <DataType>REAL64</DataType>
-          <DisplayColor>Black</DisplayColor>
-          <Enabled>true</Enabled>
-          <FileHandle>25</FileHandle>
-          <ForceOversampling>false</ForceOversampling>
-          <Guid>70bfa808-2b92-4af4-9185-2eb29c255d9e</Guid>
-          <IndexGroup>16448</IndexGroup>
-          <IndexOffset>463360</IndexOffset>
-          <IsFileBased>false</IsFileBased>
-          <IsHistorical>false</IsHistorical>
-          <Name>alt</Name>
-          <Oversample>0</Oversample>
-          <RawUnit>
-            <Transformation>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <ScaleFactor>1</ScaleFactor>
-              <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString></SourceUnitString>
-              <Symbol>1</Symbol>
-              <TargetUnitString></TargetUnitString>
-              <TargetUnitValue>0</TargetUnitValue>
-            </Transformation>
-            <Unit>
-              <BaseUnitString></BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension></NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ReturnText> (None) </ReturnText>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol></Symbol>
-            </Unit>
-            <UnitOffsetResult>0</UnitOffsetResult>
-            <UnitScaleResult>1</UnitScaleResult>
-            <UserUnit>
-              <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString></BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <NameExtension></NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol></Symbol>
-              <UserPrefix>none</UserPrefix>
-            </UserUnit>
-          </RawUnit>
-          <ServerHandle>0</ServerHandle>
-          <SortPriority>10</SortPriority>
-          <SubMember />
-          <Suffix>.svacq</Suffix>
-          <SymbolBased>true</SymbolBased>
-          <SymbolName>TelescopeControl.eq2hor2.alt</SymbolName>
-          <TargetPort>851</TargetPort>
-          <TimeOffset>0</TimeOffset>
-          <Title>AdsAcquisition_212</Title>
-          <UseLocalServer>true</UseLocalServer>
-          <UseTaskSampleTime>true</UseTaskSampleTime>
-          <UTF8Encoding>false</UTF8Encoding>
-          <VariableSize>8</VariableSize>
-        </AdsAcquisition>
-        <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>5.122.3.233.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>0</ArrayLength>
           <BaseSampleTime>20000</BaseSampleTime>
@@ -2131,7 +1885,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>26</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>0a91a54a-65ec-4197-9d65-fcc5e31de11e</Guid>
           <IndexGroup>16641</IndexGroup>
@@ -2146,15 +1900,15 @@
               <Name>None</Name>
               <ScaleFactor>1</ScaleFactor>
               <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString />
+              <SourceUnitString></SourceUnitString>
               <Symbol>1</Symbol>
-              <TargetUnitString />
+              <TargetUnitString></TargetUnitString>
               <TargetUnitValue>0</TargetUnitValue>
             </Transformation>
             <Unit>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ReturnText> (None) </ReturnText>
@@ -2165,10 +1919,10 @@
             <UnitScaleResult>1</UnitScaleResult>
             <UserUnit>
               <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
               <Name>None</Name>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ScaleFactor>1</ScaleFactor>
@@ -2213,7 +1967,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>27</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>1e243b9f-0999-47e1-8a1a-801221d98d1d</Guid>
           <IndexGroup>16641</IndexGroup>
@@ -2228,15 +1982,15 @@
               <Name>None</Name>
               <ScaleFactor>1</ScaleFactor>
               <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString />
+              <SourceUnitString></SourceUnitString>
               <Symbol>1</Symbol>
-              <TargetUnitString />
+              <TargetUnitString></TargetUnitString>
               <TargetUnitValue>0</TargetUnitValue>
             </Transformation>
             <Unit>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ReturnText> (None) </ReturnText>
@@ -2247,10 +2001,10 @@
             <UnitScaleResult>1</UnitScaleResult>
             <UserUnit>
               <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
               <Name>None</Name>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ScaleFactor>1</ScaleFactor>
@@ -2295,7 +2049,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>28</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>4807d8a6-887d-42cc-8095-41be5bba955c</Guid>
           <IndexGroup>16641</IndexGroup>
@@ -2310,15 +2064,15 @@
               <Name>None</Name>
               <ScaleFactor>1</ScaleFactor>
               <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString />
+              <SourceUnitString></SourceUnitString>
               <Symbol>1</Symbol>
-              <TargetUnitString />
+              <TargetUnitString></TargetUnitString>
               <TargetUnitValue>0</TargetUnitValue>
             </Transformation>
             <Unit>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ReturnText> (None) </ReturnText>
@@ -2329,10 +2083,10 @@
             <UnitScaleResult>1</UnitScaleResult>
             <UserUnit>
               <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
               <Name>None</Name>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ScaleFactor>1</ScaleFactor>
@@ -2377,7 +2131,7 @@
           <DataType>REAL64</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>29</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>c550a3ec-38cc-4d14-a907-7d2b87608a2c</Guid>
           <IndexGroup>16641</IndexGroup>
@@ -2392,15 +2146,15 @@
               <Name>None</Name>
               <ScaleFactor>1</ScaleFactor>
               <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString />
+              <SourceUnitString></SourceUnitString>
               <Symbol>1</Symbol>
-              <TargetUnitString />
+              <TargetUnitString></TargetUnitString>
               <TargetUnitValue>0</TargetUnitValue>
             </Transformation>
             <Unit>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ReturnText> (None) </ReturnText>
@@ -2411,10 +2165,10 @@
             <UnitScaleResult>1</UnitScaleResult>
             <UserUnit>
               <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString />
+              <BaseUnitString></BaseUnitString>
               <BaseUnitValue>0</BaseUnitValue>
               <Name>None</Name>
-              <NameExtension />
+              <NameExtension></NameExtension>
               <Offset>0</Offset>
               <Prefix>none</Prefix>
               <ScaleFactor>1</ScaleFactor>
@@ -2659,7 +2413,7 @@
                       <UserPrefix>none</UserPrefix>
                     </UserUnit>
                   </ResultingUnit>
-                  <ScaleFactor>1</ScaleFactor>
+                  <ScaleFactor>0.1</ScaleFactor>
                   <SortPriority>2</SortPriority>
                   <SubMember />
                   <Suffix>.svai</Suffix>
@@ -2724,7 +2478,7 @@
                       <UserPrefix>none</UserPrefix>
                     </UserUnit>
                   </ResultingUnit>
-                  <ScaleFactor>1</ScaleFactor>
+                  <ScaleFactor>0.1</ScaleFactor>
                   <SortPriority>2</SortPriority>
                   <SubMember />
                   <Suffix>.svai</Suffix>
@@ -2843,7 +2597,7 @@
                       <UserPrefix>none</UserPrefix>
                     </UserUnit>
                   </ResultingUnit>
-                  <ScaleFactor>1</ScaleFactor>
+                  <ScaleFactor>0.1</ScaleFactor>
                   <SortPriority>2</SortPriority>
                   <SubMember />
                   <Suffix>.svai</Suffix>
@@ -2945,7 +2699,7 @@
               <SortPriority>100</SortPriority>
               <Suffix>.svstyle</Suffix>
               <Title>ChartZoomStyle_192</Title>
-              <YZoom>false</YZoom>
+              <YZoom>true</YZoom>
             </ChartZoomStyle>
             <ChartMenuStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <ButtonSize>
@@ -6477,15 +6231,15 @@
                       <Name>None</Name>
                       <ScaleFactor>1</ScaleFactor>
                       <SourceUnitPrefix>none</SourceUnitPrefix>
-                      <SourceUnitString />
+                      <SourceUnitString></SourceUnitString>
                       <Symbol>1</Symbol>
-                      <TargetUnitString />
+                      <TargetUnitString></TargetUnitString>
                       <TargetUnitValue>0</TargetUnitValue>
                     </Transformation>
                     <Unit>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ReturnText> (None) </ReturnText>
@@ -6496,10 +6250,10 @@
                     <UnitScaleResult>1</UnitScaleResult>
                     <UserUnit>
                       <BaseName>UnitOfOne</BaseName>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
                       <Name>None</Name>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ScaleFactor>1</ScaleFactor>
@@ -6720,15 +6474,15 @@
                       <Name>None</Name>
                       <ScaleFactor>1</ScaleFactor>
                       <SourceUnitPrefix>none</SourceUnitPrefix>
-                      <SourceUnitString />
+                      <SourceUnitString></SourceUnitString>
                       <Symbol>1</Symbol>
-                      <TargetUnitString />
+                      <TargetUnitString></TargetUnitString>
                       <TargetUnitValue>0</TargetUnitValue>
                     </Transformation>
                     <Unit>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ReturnText> (None) </ReturnText>
@@ -6739,10 +6493,10 @@
                     <UnitScaleResult>1</UnitScaleResult>
                     <UserUnit>
                       <BaseName>UnitOfOne</BaseName>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
                       <Name>None</Name>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ScaleFactor>1</ScaleFactor>
@@ -6902,15 +6656,15 @@
                       <Name>None</Name>
                       <ScaleFactor>1</ScaleFactor>
                       <SourceUnitPrefix>none</SourceUnitPrefix>
-                      <SourceUnitString />
+                      <SourceUnitString></SourceUnitString>
                       <Symbol>1</Symbol>
-                      <TargetUnitString />
+                      <TargetUnitString></TargetUnitString>
                       <TargetUnitValue>0</TargetUnitValue>
                     </Transformation>
                     <Unit>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ReturnText> (None) </ReturnText>
@@ -6921,10 +6675,10 @@
                     <UnitScaleResult>1</UnitScaleResult>
                     <UserUnit>
                       <BaseName>UnitOfOne</BaseName>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
                       <Name>None</Name>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ScaleFactor>1</ScaleFactor>
@@ -7084,15 +6838,15 @@
                       <Name>None</Name>
                       <ScaleFactor>1</ScaleFactor>
                       <SourceUnitPrefix>none</SourceUnitPrefix>
-                      <SourceUnitString />
+                      <SourceUnitString></SourceUnitString>
                       <Symbol>1</Symbol>
-                      <TargetUnitString />
+                      <TargetUnitString></TargetUnitString>
                       <TargetUnitValue>0</TargetUnitValue>
                     </Transformation>
                     <Unit>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ReturnText> (None) </ReturnText>
@@ -7103,10 +6857,10 @@
                     <UnitScaleResult>1</UnitScaleResult>
                     <UserUnit>
                       <BaseName>UnitOfOne</BaseName>
-                      <BaseUnitString />
+                      <BaseUnitString></BaseUnitString>
                       <BaseUnitValue>0</BaseUnitValue>
                       <Name>None</Name>
-                      <NameExtension />
+                      <NameExtension></NameExtension>
                       <Offset>0</Offset>
                       <Prefix>none</Prefix>
                       <ScaleFactor>1</ScaleFactor>

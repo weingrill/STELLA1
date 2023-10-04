@@ -23,6 +23,8 @@ VAR_INPUT
 	Tracking:	BOOL;
 	// stop the Axis
 	StopAxis:	BOOL;
+	// diagnostic error code reset
+	bSoEReset: 			BOOL;
 END_VAR
 VAR_OUTPUT
 	// error flag
@@ -55,8 +57,6 @@ VAR
 	derotator_torque:	REAL;
 	// read slewtime
 	ReadParameter:		MC_ReadParameter;
-	// diagnostic error code reset
-	bSoEReset: 			BOOL;
 	fbSoEReset: 		FB_SoEReset;
 	DiagnosticError:	BOOL;
 END_VAR

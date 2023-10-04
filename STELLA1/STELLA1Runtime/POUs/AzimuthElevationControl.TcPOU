@@ -23,6 +23,8 @@ VAR_INPUT
 	velocity:	LREAL;
 	// stop the Axis
 	StopAxis:	BOOL;
+	// diagnostic reset
+	bSoEReset:	BOOL;
 END_VAR
 VAR_OUTPUT
 	// error state of the axis
@@ -53,10 +55,10 @@ VAR
 	CalibrationEvent:	FB_Eventlog;
 	ReadParameter:		MC_ReadParameter;
 	getlastposition:	BOOL := TRUE;
-	//bSoEReset:			BOOL;
 	azimuth_rest_timer:	TON;
 	azimuth_at_rest:	BOOL;
-	DiagnosticError:		BOOL;
+	fbSoEReset: 		FB_SoEReset;
+	DiagnosticError:	BOOL;
 END_VAR
 VAR CONSTANT
 	// reference position for homing
@@ -90,10 +92,6 @@ IF HomeAxis THEN
 	position := calibration_position;
 END_IF
 
-(*
-// move to calibration_position after homing
-HomeDelay(IN := Calibrated, PT1 := T#5S, PT2 := T#100MS);
-*)
 IF HomeDelay.Q THEN
 	position := calibration_position;
 	MoveAxis := TRUE;
@@ -146,8 +144,6 @@ AzimuthAxis(
 	Error => 			error,
 	ErrorID => 			ErrorID,
 	AxisRef :=			GVL_Telescope.AzimuthAxisRef);
-(*
-bSoEReset := GVL_Telescope.Azimuth_diagnostic = 16#0000F10B OR GVL_Telescope.Azimuth_diagnostic = 16#0000F601;
 
 IF bSoEReset THEN
 	last_position := -1.0;
@@ -162,7 +158,7 @@ IF bSoEReset THEN
 		Reset := TRUE;
 	END_IF
 END_IF 
-*)
+
 IF AzimuthAxis.MoveDone THEN
 	MoveAxis := FALSE;
 END_IF
@@ -237,9 +233,7 @@ CalibrationEvent(
       <LineId Id="244" Count="1" />
       <LineId Id="683" Count="0" />
       <LineId Id="246" Count="4" />
-      <LineId Id="624" Count="0" />
-      <LineId Id="400" Count="0" />
-      <LineId Id="393" Count="6" />
+      <LineId Id="395" Count="4" />
       <LineId Id="625" Count="0" />
       <LineId Id="287" Count="4" />
       <LineId Id="701" Count="0" />
@@ -271,8 +265,8 @@ CalibrationEvent(
       <LineId Id="40" Count="0" />
       <LineId Id="85" Count="0" />
       <LineId Id="35" Count="0" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="686" Count="2" />
+      <LineId Id="1247" Count="0" />
+      <LineId Id="688" Count="0" />
       <LineId Id="825" Count="0" />
       <LineId Id="689" Count="4" />
       <LineId Id="767" Count="0" />
