@@ -7,6 +7,12 @@ VAR
 	cycle:	USINT;
 	FBReadPressure : FB_ReadAdsSymByName;
 	FBReadTemperature: FB_ReadAdsSymByName;
+	// EL3064-1
+	raw_dewar_pressure		AT%I*: INT;
+	pressure_voltage:	REAL;
+	dewar_warning_trigger: SR;
+	dewar_error_trigger: SR;
+	DewarWarning, DewarError: FB_EventLog;
 END_VAR
 VAR_OUTPUT
 	// BT9 mirror
@@ -15,6 +21,8 @@ VAR_OUTPUT
 	temperature_mirror1:	REAL;
 	pressure:		REAL;
 	temperature:	REAL;
+	dewar_pressure:	REAL;
+	dewar_pressure_atm: REAL;
 END_VAR
 
 ]]></Declaration>
@@ -43,15 +51,34 @@ FBReadTemperature(
 IF NOT (FBReadPressure.bBusy OR FBReadPressure.bError) AND 
    NOT (FBReadTemperature.bBusy OR FBReadTemperature.bError) THEN
 	cycle := cycle + 1;
-ELSE
-	cycle := 0;
 END_IF
 
+pressure_voltage := F_YREAL(raw_dewar_pressure, 0, 32767, 0.0, 10.0);
+dewar_pressure := LREAL_TO_REAL(EXPT(10.0, F_YREAL(pressure_voltage, 2.0, 10.0, -9.0, 3.0)));
+dewar_pressure_atm := LREAL_TO_REAL(EXPT(10.0, F_YREAL(pressure_voltage, 2.0, 10.0, -7.0, 5.0)));
+
+dewar_warning_trigger(SET1 := dewar_pressure_atm > 1E-6, RESET := dewar_pressure_atm < 5E-7);
+dewar_error_trigger(SET1 := dewar_pressure_atm > 1E-5, RESET := dewar_pressure_atm < 1E-6);
+
+DewarWarning(Trigger := dewar_warning_trigger.Q1,
+				Level := ADSLOG_MSGTYPE_WARN,
+				FormatString := '%s',
+				OnMessage := 'Dewar pressure is above nominal.',
+				OffMessage := 'Dewar pressure is nominal.');
+
+DewarWarning(Trigger := dewar_error_trigger.Q1,
+				Level := ADSLOG_MSGTYPE_ERROR,
+				FormatString := '%s',
+				OnMessage := 'Dewar pressure is critical!');
+
+				
 MQTTTimer(IN:=TRUE);
 IF MQTTTimer.Q THEN // publish new payload every second
 
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Mirror1Temperature',	LREAL_TO_FMTSTR(temperature_mirror1, 2, TRUE));
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'Mirror2Temperature',	LREAL_TO_FMTSTR(temperature_mirror2, 2, TRUE));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'DewarPressureVoltage', LREAL_TO_FMTSTR(pressure_voltage, 3, TRUE));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'DewarPressure', LREAL_TO_FMTSTR(dewar_pressure_atm, 9, TRUE));
 	
 	MQTTTimer(IN:=FALSE);
 
@@ -68,12 +95,25 @@ END_IF
       <LineId Id="296" Count="4" />
       <LineId Id="295" Count="0" />
       <LineId Id="302" Count="7" />
-      <LineId Id="320" Count="5" />
+      <LineId Id="320" Count="2" />
+      <LineId Id="325" Count="0" />
+      <LineId Id="345" Count="1" />
+      <LineId Id="353" Count="1" />
+      <LineId Id="378" Count="2" />
+      <LineId Id="382" Count="0" />
+      <LineId Id="384" Count="2" />
+      <LineId Id="383" Count="0" />
+      <LineId Id="395" Count="0" />
+      <LineId Id="389" Count="0" />
+      <LineId Id="391" Count="3" />
       <LineId Id="291" Count="0" />
+      <LineId Id="390" Count="0" />
       <LineId Id="224" Count="2" />
       <LineId Id="228" Count="0" />
       <LineId Id="278" Count="0" />
-      <LineId Id="249" Count="2" />
+      <LineId Id="249" Count="0" />
+      <LineId Id="350" Count="1" />
+      <LineId Id="250" Count="1" />
       <LineId Id="184" Count="0" />
       <LineId Id="41" Count="0" />
     </LineIds>
