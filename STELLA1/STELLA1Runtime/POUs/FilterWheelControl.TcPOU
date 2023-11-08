@@ -40,6 +40,7 @@ VAR
 	FilterReadyEvent:	FB_Eventlog;
 	// last known filter position
 	last_filter_position:	USINT;
+	HomingMode:			MC_HomingMode := MC_HomingMode.MC_ForceCalibration;
 	MQTTTimer : 		TON := (PT:=T#5S);
 END_VAR
 VAR CONSTANT
@@ -60,7 +61,7 @@ filter_position := filter_position MOD filters;
 // calculate the actual filter position
 actual_filter := LREAL_TO_USINT((360.0 - act_position) * filters / 360.0) MOD filters;
 
-Ready := (filter_position = actual_filter) AND FilterWheelAxis.Standstill;
+Ready := (filter_position = actual_filter) AND (FilterWheelAxis.Standstill OR NOT Enable);
 IF Pendantcontrol.telescope_mode = E_TelescopeMode.automatic THEN
 	IF FilterWheelAxis.Calibrated THEN
 		// if we are on automatic mode then position the filterwheel
@@ -90,9 +91,9 @@ FilterWheelAxis(
 	Reset := 			Reset,
 	MoveAxis :=			MoveAxis,
 	HomeAxis :=			HomeAxis,
-	HomingMode :=		MC_ForceCalibration,
+	HomingMode :=		HomingMode,
 	Position := 		position, 
-	Velocity :=			60.0,
+	Velocity :=			30.0, //60.0,
 	Enable_Positive :=  TRUE,
 	Enable_Negative := 	TRUE,
 	Jog_Forward :=		left,
@@ -120,6 +121,7 @@ END_IF
 MQTTTimer(IN:=TRUE);
 IF actual_filter <> last_filter_position OR MQTTTimer.Q THEN
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'FilterPosition', WORD_TO_STRING(actual_filter));
+	MAIN.MQTTClient.Publish('telescope', 'dome', 'FilterWheelReady', BOOL_TO_STRING(Ready));
 	last_filter_position := actual_filter;
 	MQTTTimer(IN:=FALSE);
 END_IF
@@ -197,6 +199,7 @@ FilterReadyEvent(
       <LineId Id="654" Count="1" />
       <LineId Id="489" Count="1" />
       <LineId Id="494" Count="0" />
+      <LineId Id="704" Count="0" />
       <LineId Id="657" Count="0" />
       <LineId Id="491" Count="0" />
       <LineId Id="136" Count="0" />
