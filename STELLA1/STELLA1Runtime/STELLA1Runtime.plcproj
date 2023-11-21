@@ -343,6 +343,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <LibraryReference Include="PS_DcUpsEC,2.0,Phoenix Contact GmbH &amp; Co.KG">
+      <Namespace>PS_DcUpsEC</Namespace>
+    </LibraryReference>
     <LibraryReference Include="VisuSymbols,3.5.10.0,System">
       <Namespace>VisuSymbols</Namespace>
     </LibraryReference>

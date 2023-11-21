@@ -34,16 +34,6 @@ VAR_GLOBAL
 	//DOUT7 0.6
 	softstart_trafo		AT%Q*:BOOL;
 
-	
-	ups_input_voltage		AT%I*: UINT;
-	ups_input_current		AT%I*: UINT;
-	ups_temperature			AT%I*: UINT;
-	ups_battery_temperature AT%I*: UINT;
-	ups_output_voltage		AT%I*: UINT;
-	ups_output_current		AT%I*: UINT;
-	//L1L2_voltage			AT%I*: REAL;
-	//L2L3_voltage			AT%I*: REAL;
-	//L3L1_voltage			AT%I*: REAL;
 	isRoboTel:		BOOL;
 END_VAR]]></Declaration>
   </GVL>
