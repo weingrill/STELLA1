@@ -47,7 +47,7 @@ VAR CONSTANT
 	// total number of filters in the filter wheel
 	filters:			USINT := 24;
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 0.0;
+	calibration_position:	LREAL := 2.0;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* This program controls the filter wheel. 
