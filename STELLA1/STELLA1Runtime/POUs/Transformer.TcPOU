@@ -29,6 +29,7 @@ VAR
 	restart_inhibit:	TOF;
 	PowerEvent:			FB_EventLog;
 	PowerLog:			FB_EventLog;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -45,6 +46,7 @@ IF restart_inhibited THEN
 END_IF
 GVL_Main.softstart_trafo := softstart_trafo AND NOT error;
 
+	
 phase_available := TRUE; (*GVL_Main.L1L2_voltage > 360.0 AND
 					GVL_Main.L2L3_voltage > 360.0 AND
 					GVL_Main.L3L1_voltage > 360.0; *)
@@ -148,6 +150,7 @@ END_VAR
       <LineId Id="101" Count="2" />
       <LineId Id="16" Count="0" />
       <LineId Id="57" Count="0" />
+      <LineId Id="148" Count="0" />
       <LineId Id="53" Count="2" />
       <LineId Id="26" Count="12" />
       <LineId Id="25" Count="0" />
