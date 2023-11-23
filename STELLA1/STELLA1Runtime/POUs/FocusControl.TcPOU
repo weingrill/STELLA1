@@ -43,6 +43,7 @@ VAR
 	FocusAxisEvent:		FB_EventLog;
 	CalibrationEvent:	FB_EventLog;
 	HomingMode: 		MC_HOMINGMODE := 		MC_DefaultHoming;
+	SetPosition:		MC_SetPosition;
 END_VAR
 
 VAR CONSTANT
@@ -101,18 +102,25 @@ IF HomeAxis THEN
 	IF last_position > 0.0 THEN
 		HomingMode := MC_ForceCalibration; // MC_Direct
 		position := last_position;
+		SetPosition.Execute := TRUE;
 	ELSE
 		HomingMode := MC_DefaultHoming;
 		position := homing_position;
+		SetPosition.Execute := FALSE;
 	END_IF
-		
+ELSE
+	SetPosition.Execute := FALSE;	
 END_IF
 
 // deactivate limit switches on homing
 MC_SetAcceptBlockedDriveSignal(
 	Axis := GVL_Telescope.FocusAxisRef, 
 	Enable := HomeAxis);
-
+SetPosition(
+	Axis := GVL_Telescope.FocusAxisRef, 
+	Position := last_position);
+	
+	
 FocusAxis(	
 	Enable := 			FocusUnlocked,
 	Reset := 			reset,
@@ -151,6 +159,8 @@ END_IF
 
 IF Error THEN
 	last_position := -1.0;
+	//FocusAxis.Calibrated := FALSE;
+	Calibrated := FALSE;
 END_IF
 
 Calibrated := FocusAxis.Calibrated;
@@ -210,13 +220,19 @@ CalibrationEvent(
       <LineId Id="945" Count="1" />
       <LineId Id="1075" Count="1" />
       <LineId Id="1082" Count="0" />
+      <LineId Id="1152" Count="0" />
       <LineId Id="1078" Count="2" />
+      <LineId Id="1153" Count="0" />
       <LineId Id="1077" Count="0" />
       <LineId Id="949" Count="0" />
+      <LineId Id="1154" Count="0" />
       <LineId Id="948" Count="0" />
       <LineId Id="382" Count="3" />
       <LineId Id="378" Count="0" />
+      <LineId Id="1143" Count="0" />
+      <LineId Id="1147" Count="1" />
       <LineId Id="847" Count="0" />
+      <LineId Id="1144" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="176" Count="0" />
       <LineId Id="91" Count="1" />
@@ -236,7 +252,9 @@ CalibrationEvent(
       <LineId Id="186" Count="4" />
       <LineId Id="368" Count="0" />
       <LineId Id="370" Count="2" />
-      <LineId Id="1086" Count="3" />
+      <LineId Id="1086" Count="2" />
+      <LineId Id="1141" Count="1" />
+      <LineId Id="1089" Count="0" />
       <LineId Id="426" Count="1" />
       <LineId Id="626" Count="0" />
       <LineId Id="434" Count="0" />
