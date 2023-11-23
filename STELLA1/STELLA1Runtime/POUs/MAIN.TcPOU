@@ -48,11 +48,13 @@ VAR
 	ups: 				PS_Q4_DcUpsEC_Cyclic_2;
 	xActivate:			BOOL := TRUE;
 	arrInputPD	AT%I*:	ARRAY[0..30] OF WORD;
-	UPS_Error,
+	//UPS_Error,
 	UPS_Alarm,
 	UPS_Warning,
 	UPS_BatMode,
-	UPS_ReplaceBattery:	FB_EventLog;
+	UPS_ReplaceBattery,
+	MainsWarning,
+	MainsError:	FB_EventLog;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -224,12 +226,12 @@ TemperatureCriticalEvent(
 	Level := 		ADSLOG_MSGTYPE_ERROR,
 	FormatString :=	'Main cabinet temperature is critical:	%s!',
 	OnMessage := 	LREAL_TO_FMTSTR( cabinet_temperature, 1, TRUE),);
-	
+(*	
 UPS_Error(	
 	Trigger := 		ups.xError, 
 	Level := 		ADSLOG_MSGTYPE_ERROR,
 	OnMessage := 	'UPS has an error!');
-
+*)
 UPS_Alarm(	
 	Trigger := 		ups.xAlarm, 
 	Level := 		ADSLOG_MSGTYPE_ERROR,
@@ -250,6 +252,15 @@ UPS_ReplaceBattery(
 	Trigger := 		ups.xReplaceBattery, 
 	Level := 		ADSLOG_MSGTYPE_WARN,
 	OnMessage := 	'Replace UPS battery!');
+(* 	NeutralCurrentGuardWarning		AT%I*:	BOOL;
+	NeutralCurrentGuarError			AT%I*:	BOOL;
+	ActivePowerGuardWarning			AT%I*:	BOOL;
+	ActivePowerGuardError			AT%I*:	BOOL;
+	ApparentPowerGuardWarning		AT%I*:	BOOL;
+	ApparentPowerGuardError			AT%I*:	BOOL;
+	ActivePower						AT%I*:	REAL;
+	ActiveEnergy					AT%I*:	LINT;
+	NeutralLineCurrent				AT%I*:	REAL; *)
 
 ]]></ST>
     </Implementation>
@@ -329,6 +340,8 @@ UPS_ReplaceBattery(
       <LineId Id="1061" Count="0" />
       <LineId Id="1045" Count="8" />
       <LineId Id="1055" Count="4" />
+      <LineId Id="1131" Count="7" />
+      <LineId Id="1126" Count="0" />
       <LineId Id="1054" Count="0" />
       <LineId Id="1034" Count="0" />
     </LineIds>

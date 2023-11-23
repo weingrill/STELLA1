@@ -35,6 +35,17 @@ VAR_GLOBAL
 	softstart_trafo		AT%Q*:BOOL;
 
 	isRoboTel:		BOOL;
+	(*
+	NeutralCurrentGuardWarning		AT%I*:	BOOL;
+	NeutralCurrentGuarError			AT%I*:	BOOL;
+	ActivePowerGuardWarning			AT%I*:	BOOL;
+	ActivePowerGuardError			AT%I*:	BOOL;
+	ApparentPowerGuardWarning		AT%I*:	BOOL;
+	ApparentPowerGuardError			AT%I*:	BOOL;
+	*)
+	ActivePower						AT%I*:	REAL;
+	ActiveEnergy					AT%I*:	LINT;
+	NeutralLineCurrent				AT%I*:	REAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
