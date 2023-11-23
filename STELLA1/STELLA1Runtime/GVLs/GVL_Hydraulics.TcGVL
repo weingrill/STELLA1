@@ -20,7 +20,7 @@ VAR_GLOBAL
 	// 2.8
 	suction_running		AT%I*: BOOL;
 	//BT2
-	//oil_temperature			AT%I*: INT;
+	oil_level			AT%I*: INT;
 	
 	//DIN39 4.6
 	oilpan_maximum		AT%I*: BOOL;
