@@ -672,7 +672,7 @@ CASE Stage OF
 		track := 	FALSE;
 		goto := 	FALSE;
 		slew := 	FALSE;
-		Focuscontrol.position := 75.0;
+		Focuscontrol.position := 53.6;
 		// disable filterwheel
 		FilterWheelControl.Enable := FALSE;
 		IF Error THEN // emergency park
