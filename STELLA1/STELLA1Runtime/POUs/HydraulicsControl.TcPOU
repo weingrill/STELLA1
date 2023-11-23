@@ -70,9 +70,12 @@ VAR
 	brake_opened_delay:	TON;
 	// error state (set dominant)
 	error_state:	SR;
+	// trigger for suction pump
+	suction_trigger:	SR;
 	// timer to shut off hydraulics after break was closed
-	hydraulics_off_timer:	TOF  := (PT := T#30S);
+	hydraulics_off_timer:	TON  := (PT := T#600S);
 	off_trigger:	F_TRIG;
+	oil_level, last_oil_level:		REAL;
 	HydraulicsLog,
 	PumpLog,
 	ReserveLog,
@@ -107,6 +110,7 @@ oil_pressure_OK := GVL_Hydraulics.oil_pressure_OK;
 oil_filter_dirty := NOT GVL_Hydraulics.oilfilter_dirty;
 oil_cold := NOT GVL_Hydraulics.oil_undertemperature;
 oil_hot := GVL_Hydraulics.oil_overtemperature;
+oil_level := F_YREAL(GVL_Hydraulics.oil_level, 0, 16383, 0.0, 5.0);
 pump_running := GVL_Hydraulics.pump_running;
 suction_running := GVL_Hydraulics.suction_running;
 
@@ -151,10 +155,10 @@ IF brake_closed THEN
 	iclose_brake := FALSE;
 END_IF
 // turn off the hydraulics if the brake is closed and the pump is still running
-hydraulics_off_timer(IN := brake_open AND pump_running );
+hydraulics_off_timer(IN := brake_closed AND enable );
 off_trigger(CLK := hydraulics_off_timer.Q);
 
-IF off_trigger.Q THEN
+IF hydraulics_off_timer.Q THEN
 	enable := FALSE;
 END_IF
 
@@ -164,12 +168,12 @@ END_IF
 suction_timer(	bStart := suction_running AND NOT suction_pump_timer.Q, 
 				bStop := GVL_Hydraulics.oilpan_maximum);  
 
-suction_pump_timer(IN := Transformer.phase_available AND 
-						GVL_Hydraulics.oilpan_maximum,
-					PT := T#90S,
-					Q => GVL_Hydraulics.oil_suction_enable);
-GVL_Hydraulics.oil_suction_enable := suction_pump_timer.Q OR suction_manual;					
-suction_watchdog(IN := GVL_Hydraulics.oil_suction_enable AND NOT suction_running,
+suction_pump_timer(IN := GVL_Hydraulics.oilpan_maximum,
+					PT := T#30S);
+suction_trigger(SET1 := GVL_Hydraulics.oilpan_maximum OR oil_level>3.8,
+				RESET := oil_level<3.0);
+GVL_Hydraulics.oil_suction_enable := suction_trigger.Q1 OR suction_manual;					
+suction_watchdog(IN := (GVL_Hydraulics.oil_suction_enable AND NOT suction_running) OR GVL_Hydraulics.oilpan_maximum,
 					PT := T#10S,
 					Q => suction_failure);
 					
@@ -196,6 +200,12 @@ StatusWord.7 := brake_open;
 StatusWord.8 := GVL_Main.brake_clearing;
 StatusWord.9 := pump_running;
 StatusWord.10 := suction_running;
+IF ABS(last_oil_level - oil_level) > 0.1 THEN
+	StatusWord.11 := TRUE;
+	last_oil_level := oil_level;
+ELSE
+	StatusWord.11 := FALSE;
+END_IF
 
 IF StatusWord<>LastStatus THEN // publish new payload every second
 	LastStatus := StatusWord;
@@ -210,6 +220,7 @@ IF StatusWord<>LastStatus THEN // publish new payload every second
 	MAIN.MQTTClient.Publish('hydraulics', 'base', 'BrakeClearing',	BOOL_TO_STRING(GVL_Main.brake_clearing));
 	MAIN.MQTTClient.Publish('hydraulics', 'base', 'PumpRunning',	BOOL_TO_STRING(pump_running));
 	MAIN.MQTTClient.Publish('hydraulics', 'base', 'SuctionRunning',	BOOL_TO_STRING(suction_running));
+	MAIN.MQTTClient.Publish('hydraulics', 'base', 'OilLevel',		REAL_TO_STRING(oil_level));
 END_IF
 
 
@@ -308,7 +319,9 @@ RETURN(brake_open);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="HydraulicsControl">
-      <LineId Id="2699" Count="18" />
+      <LineId Id="2699" Count="15" />
+      <LineId Id="3191" Count="0" />
+      <LineId Id="2715" Count="2" />
       <LineId Id="2725" Count="7" />
       <LineId Id="3095" Count="0" />
       <LineId Id="2738" Count="3" />
@@ -323,10 +336,19 @@ RETURN(brake_open);]]></ST>
       <LineId Id="2762" Count="8" />
       <LineId Id="3005" Count="0" />
       <LineId Id="2771" Count="4" />
-      <LineId Id="2777" Count="23" />
+      <LineId Id="2777" Count="8" />
+      <LineId Id="2787" Count="0" />
+      <LineId Id="3195" Count="1" />
+      <LineId Id="2789" Count="11" />
       <LineId Id="3098" Count="3" />
       <LineId Id="2801" Count="0" />
-      <LineId Id="2815" Count="92" />
+      <LineId Id="2815" Count="10" />
+      <LineId Id="3381" Count="0" />
+      <LineId Id="3380" Count="0" />
+      <LineId Id="3382" Count="3" />
+      <LineId Id="2826" Count="13" />
+      <LineId Id="3288" Count="0" />
+      <LineId Id="2840" Count="67" />
       <LineId Id="708" Count="0" />
     </LineIds>
     <LineIds Name="HydraulicsControl.close_brake">
