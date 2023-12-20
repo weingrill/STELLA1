@@ -38,10 +38,15 @@ VAR
 	FilterWheelEvent:	FB_EventLog;
 	CalibratedEvent:	FB_EventLog;
 	FilterReadyEvent:	FB_Eventlog;
+	Calibration1Event:	FB_Eventlog;
+	Calibration2Event:	FB_Eventlog;
+	
 	// last known filter position
 	last_filter_position:	USINT;
 	HomingMode:			MC_HomingMode := MC_HomingMode.MC_ForceCalibration;
 	MQTTTimer : 		TON := (PT:=T#5S);
+	CalibrationTrigger1:	R_TRIG;
+	CalibrationTrigger2:	F_TRIG;
 END_VAR
 VAR CONSTANT
 	// total number of filters in the filter wheel
@@ -123,6 +128,10 @@ IF FilterWheelAxis.ResetDone THEN
 	reset := FALSE;
 END_IF
 
+CalibrationTrigger1(CLK := GVL_FilterWheel.bCalibrationCam);
+CalibrationTrigger2(CLK := GVL_FilterWheel.bCalibrationCam);
+
+
 MQTTTimer(IN:=TRUE);
 IF actual_filter <> last_filter_position OR MQTTTimer.Q THEN
 	MAIN.MQTTClient.Publish('telescope', 'dome', 'FilterPosition', WORD_TO_STRING(actual_filter));
@@ -149,7 +158,20 @@ FilterReadyEvent(
 	Trigger :=		(filter_position = actual_filter) AND Calibrated,
 	Level := 		ADSLOG_MSGTYPE_HINT,
 	FormatString :=	'Filter position %s is ready.',
-	OnMessage := 	WORD_TO_STRING(actual_filter));]]></ST>
+	OnMessage := 	WORD_TO_STRING(actual_filter));
+	
+Calibration1Event(
+	Trigger :=	CalibrationTrigger1.Q,
+	Level := 		ADSLOG_MSGTYPE_HINT,
+	FormatString :=	'Calibration raising signal triggered at position: %s',
+	OnMessage := 	LREAL_TO_STRING(act_position));
+
+Calibration2Event(
+	Trigger :=	CalibrationTrigger2.Q,
+	Level := 		ADSLOG_MSGTYPE_HINT,
+	FormatString :=	'Calibration falling signal triggered at position: %s',
+	OnMessage := 	LREAL_TO_STRING(act_position));
+	]]></ST>
     </Implementation>
     <LineIds Name="FilterWheelControl">
       <LineId Id="184" Count="0" />
@@ -207,6 +229,9 @@ FilterReadyEvent(
       <LineId Id="135" Count="0" />
       <LineId Id="129" Count="0" />
       <LineId Id="137" Count="2" />
+      <LineId Id="811" Count="1" />
+      <LineId Id="814" Count="0" />
+      <LineId Id="813" Count="0" />
       <LineId Id="654" Count="1" />
       <LineId Id="489" Count="1" />
       <LineId Id="494" Count="0" />
@@ -221,6 +246,11 @@ FilterReadyEvent(
       <LineId Id="385" Count="2" />
       <LineId Id="393" Count="0" />
       <LineId Id="395" Count="4" />
+      <LineId Id="819" Count="2" />
+      <LineId Id="823" Count="1" />
+      <LineId Id="822" Count="0" />
+      <LineId Id="826" Count="5" />
+      <LineId Id="825" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

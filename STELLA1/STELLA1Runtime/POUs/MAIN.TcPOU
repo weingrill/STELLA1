@@ -138,7 +138,8 @@ error := GVL_Telescope.azimut_limit_switch
 			OR FilterWheelControl.Error
 			OR Focuscontrol.Error
 			OR NasmythControl.error
-			OR CoverControl.Error;
+			OR CoverControl.Error
+			OR HydraulicsControl.error;
 // set control lights					
 GVL_Main.lamp_on_manual := PendantControl.manual;
 
@@ -285,6 +286,7 @@ UPS_ReplaceBattery(
       <LineId Id="711" Count="1" />
       <LineId Id="718" Count="1" />
       <LineId Id="722" Count="2" />
+      <LineId Id="1194" Count="0" />
       <LineId Id="728" Count="1" />
       <LineId Id="832" Count="0" />
       <LineId Id="829" Count="1" />
