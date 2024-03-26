@@ -106,7 +106,7 @@ Calculate LOCAL MEAN SIDEREAL TIME *)
 lmst := ct2lst(lon, jd);  // get LST (in hours) - note:this is independent of time zone  since giving jd
 lmst := lmst*h2d ; //convert LMST to degrees (btw, this is the RA of the zenith)
 // calculate local APPARENT sidereal time
-last := lmst + d_psi *COS(eps*d2r)/3600.0 ; //add correction in degrees
+last := lmst + d_psi *COS(eps)/3600.0 ; //add correction in degrees
 
 (******************************************************************************
  Find hour angle (in DEGREES) *)

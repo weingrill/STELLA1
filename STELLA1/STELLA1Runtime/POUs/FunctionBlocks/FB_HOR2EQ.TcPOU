@@ -139,7 +139,7 @@ J_now := (JD - 2451545.0)/365.25 + 2000.0 ;
 
 IF precess THEN 
 	fbprecess( ra := ra, dec := dec, 
-	EQUINOX1 := 2000.0, EQUINOX2 := J_now, 
+	EQUINOX1 := J_now, EQUINOX2 := 2000.0, // bugfix from randnotizlukas
 	ra_precessed =>ra, dec_precessed => dec);                   
 END_IF
 ]]></ST>

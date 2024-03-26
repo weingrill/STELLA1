@@ -159,7 +159,7 @@ END_IF
 DiagnosticError := FALSE;
 IF GVL_Telescope.Elevation_diagnostic < 16#D012 AND GVL_Telescope.Elevation_diagnostic > 16#D014 THEN
 	DiagnosticError :=TRUE;
-	ErrorID := GVL_Telescope.Derotator_diagnostic;
+	ErrorID := GVL_Telescope.Elevation_diagnostic;
 END_IF
 
 ElevationCalibration(Axis := GVL_Telescope.ElevationAxisRef,
