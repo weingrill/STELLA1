@@ -1233,7 +1233,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>0ce74e24-78f2-4239-8b79-dd2984ce7a73</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>539400</IndexOffset>
+          <IndexOffset>554952</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>PositionDifference</Name>
@@ -1315,7 +1315,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>888fa951-8210-4007-a04f-4a3812e3309e</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>539416</IndexOffset>
+          <IndexOffset>554968</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>TrackVelocity</Name>
@@ -1397,7 +1397,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>e9026cc2-069a-4b5c-a4e3-94bb0dfe8da8</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>539424</IndexOffset>
+          <IndexOffset>554976</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>TrackAcceleration</Name>
@@ -1643,7 +1643,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>60bd7dfc-c0a9-43bb-bdd0-67062690f8c0</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>592032</IndexOffset>
+          <IndexOffset>607584</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>PositionDifference (1)</Name>
@@ -1725,7 +1725,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>18e2b77d-9d0e-48b8-b0b0-6fa414fdb8a0</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>462536</IndexOffset>
+          <IndexOffset>478088</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>derotation_calc</Name>
@@ -1807,7 +1807,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>ab0d1db0-8820-41fd-ab18-8e607453cdc8</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>495680</IndexOffset>
+          <IndexOffset>511224</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>derotator_current</Name>
@@ -2217,7 +2217,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>4d23e0fa-9587-43f7-a3d7-92bb4236fd46</Guid>
           <IndexGroup>61472</IndexGroup>
-          <IndexOffset>638079</IndexOffset>
+          <IndexOffset>663394</IndexOffset>
           <IsFileBased>false</IsFileBased>
           <IsHistorical>false</IsHistorical>
           <Name>bCalibrationCam</Name>
