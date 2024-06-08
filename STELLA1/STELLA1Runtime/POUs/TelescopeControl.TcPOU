@@ -300,9 +300,6 @@ ELSIF stop THEN
 	slew := FALSE;
 	gohome := FALSE;
 	park := FALSE;
-	IF stopped THEN
-		stop := FALSE;
-	END_IF
 ELSIF park THEN
 	TCS_command := E_TCSCommand.park;
 	goto := FALSE;
@@ -346,27 +343,35 @@ END_IF
 IF TCS_command = E_TCSCommand.poweron THEN
 	poweron();
 	command_timeout(IN := TCS_command = E_TCSCommand.poweron, PT := T#12H);
+	TCSCTOEvent.OnMessage := 'POWER';
 ELSIF TCS_command = E_TCSCommand.stop THEN
 	stoptelescope();
 	command_timeout(IN := TCS_command = E_TCSCommand.stop, PT := T#2S);
+	TCSCTOEvent.OnMessage := 'STOP';
 ELSIF TCS_command = E_TCSCommand.park THEN
 	parktelescope();
 	command_timeout(IN := TCS_command = E_TCSCommand.park, PT := T#2M);
+	TCSCTOEvent.OnMessage := 'PARK';
 ELSIF TCS_command = E_TCSCommand.gohome THEN
 	hometelescope();
 	command_timeout(IN := TCS_command = E_TCSCommand.gohome, PT := T#2M);
+	TCSCTOEvent.OnMessage := 'GOHOME';
 ELSIF TCS_command = E_TCSCommand.goto THEN
 	gototelescope();
 	command_timeout(IN := TCS_command = E_TCSCommand.goto, PT := T#2M);
+	TCSCTOEvent.OnMessage := 'GOTO';
 ELSIF TCS_command = E_TCSCommand.slew THEN
 	slewtelescope();
 	command_timeout(IN := TCS_command = E_TCSCommand.slew, PT := T#2M);
+	TCSCTOEvent.OnMessage := 'SLEW';
 ELSIF TCS_command = E_TCSCommand.track THEN
 	tracktelescope();
 	command_timeout(IN := TCS_command = E_TCSCommand.track, PT := T#12H);
+	TCSCTOEvent.OnMessage := 'TRACK';
 ELSE
 	// disable command timeout
 	command_timeout(IN := FALSE);
+	TCSCTOEvent.OnMessage := 'NOCOMMAND';
 END_IF
  
 sliding := NOT tracking AND (ElevationControl.ElevationAxis.InMotion OR ElevationControl.ElevationAxis.InRamp OR
@@ -400,6 +405,11 @@ busy := ElevationControl.ElevationAxis.Busy OR
 		DerotatorControl.DerotatorAxis.Busy OR
 		FocusControl.FocusAxis.Busy OR
 		FilterWheelControl.FilterWheelAxis.Busy;
+		
+// unset the STOP command if telescope is already stopped
+IF stopped THEN
+	stop := FALSE;
+END_IF
 	
 IF NOT error THEN
 	reset := FALSE;
@@ -521,8 +531,8 @@ TCSreadyEvent(	Trigger := power AND ready,
 				OnMessage := 'STELLA1 startup finished');
 TCSCTOEvent(	Trigger := command_timeout.Q, 
 				Level := ADSLOG_MSGTYPE_WARN,
-				FormatString := '%s',
-				OnMessage := 'A command timeout occured!');]]></ST>
+				FormatString := 'A timeout occured during %s command!',
+				OnMessage := 'NOCOMMAND');]]></ST>
     </Implementation>
     <Method Name="gototelescope" Id="{c7053474-39ba-4cc3-ab24-2521b02cf8f4}">
       <Declaration><![CDATA[METHOD gototelescope: USINT
@@ -667,7 +677,6 @@ VAR_INPUT
 END_VAR
 VAR
 	ParkEvent:	FB_Eventlog;
-	command_timeout:	TON;
 END_VAR
 VAR_STAT
 	Stage:		USINT := 0;
@@ -675,12 +684,6 @@ VAR_STAT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[parktelescope := Stage;
-command_timeout(IN := Stage < 100, PT := T#600S);
-IF command_timeout.Q THEN
-	error := TRUE;
-	errorid := 16#20;
-	Stage := 0;
-END_IF
 IF reset OR error THEN
 	Stage := 0;
 END_IF
@@ -1105,7 +1108,6 @@ END_IF
       <LineId Id="1499" Count="0" />
       <LineId Id="8133" Count="1" />
       <LineId Id="8568" Count="6" />
-      <LineId Id="9458" Count="2" />
       <LineId Id="8563" Count="4" />
       <LineId Id="1513" Count="0" />
       <LineId Id="1526" Count="0" />
@@ -1133,22 +1135,31 @@ END_IF
       <LineId Id="4299" Count="0" />
       <LineId Id="8136" Count="1" />
       <LineId Id="9462" Count="0" />
+      <LineId Id="9481" Count="0" />
       <LineId Id="8427" Count="1" />
       <LineId Id="9463" Count="0" />
+      <LineId Id="9482" Count="0" />
       <LineId Id="3533" Count="0" />
       <LineId Id="7783" Count="0" />
       <LineId Id="9464" Count="0" />
+      <LineId Id="9484" Count="0" />
       <LineId Id="3541" Count="0" />
       <LineId Id="4239" Count="0" />
       <LineId Id="9465" Count="0" />
+      <LineId Id="9485" Count="0" />
       <LineId Id="3928" Count="0" />
       <LineId Id="6383" Count="0" />
       <LineId Id="9466" Count="0" />
+      <LineId Id="9486" Count="0" />
       <LineId Id="6384" Count="0" />
       <LineId Id="7476" Count="0" />
       <LineId Id="9467" Count="0" />
+      <LineId Id="9487" Count="0" />
       <LineId Id="8425" Count="1" />
-      <LineId Id="9469" Count="3" />
+      <LineId Id="9469" Count="0" />
+      <LineId Id="9488" Count="0" />
+      <LineId Id="9470" Count="2" />
+      <LineId Id="9480" Count="0" />
       <LineId Id="3535" Count="0" />
       <LineId Id="3540" Count="0" />
       <LineId Id="3539" Count="0" />
@@ -1174,7 +1185,11 @@ END_IF
       <LineId Id="8729" Count="1" />
       <LineId Id="7472" Count="0" />
       <LineId Id="8941" Count="1" />
+      <LineId Id="9493" Count="0" />
+      <LineId Id="9492" Count="0" />
+      <LineId Id="9489" Count="1" />
       <LineId Id="8728" Count="0" />
+      <LineId Id="9491" Count="0" />
       <LineId Id="7473" Count="2" />
       <LineId Id="7933" Count="0" />
       <LineId Id="7133" Count="0" />
@@ -1313,8 +1328,6 @@ END_IF
     </LineIds>
     <LineIds Name="TelescopeControl.parktelescope">
       <LineId Id="115" Count="0" />
-      <LineId Id="232" Count="3" />
-      <LineId Id="237" Count="1" />
       <LineId Id="198" Count="2" />
       <LineId Id="252" Count="2" />
       <LineId Id="166" Count="0" />

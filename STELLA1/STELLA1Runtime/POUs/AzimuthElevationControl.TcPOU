@@ -64,7 +64,7 @@ VAR CONSTANT
 	// reference position for homing
 	// homing_position:		LREAL := 439.0; // was 442 - -21.21 = 463.21; 463 + 24 = 439
 	// current position of the calibration cam encoder zero index. Apply an offset here if necessary
-	calibration_position:	LREAL :=  208.6273; //208.6073; // 208.7122869;//207.0092; // 208.2342; 
+	calibration_position:	LREAL :=  208.4983;//208.6273; //208.6073; // 208.7122869;//207.0092; // 208.2342; 
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;
