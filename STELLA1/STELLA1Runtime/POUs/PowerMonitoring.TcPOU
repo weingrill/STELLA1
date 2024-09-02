@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="PowerMonitoring" Id="{8c6b81b0-5d31-4dfd-9f1e-620164ef7757}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PowerMonitoring
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	phaseOK:				BOOL;
+END_VAR
+VAR
+	Overvoltage				AT%I*: BOOL;
+	Overcurrent				AT%I*: BOOL;
+	VoltageGuardWarning		AT%I*: BOOL;
+	VoltageGuardError		AT%I*: BOOL;
+	CurrentGuardWarning		AT%I*: BOOL;
+	CurrentGuardError		AT%I*: BOOL;
+	Voltage					AT%I*: REAL;
+	Current					AT%I*: REAL;
+	ActivePower				AT%I*: REAL;
+	ApparentPower			AT%I*: REAL;
+	ReactivePower			AT%I*: REAL;
+	PowerQualityFactor		AT%I*: REAL;
+	Frequency				AT%I*: REAL;
+	PowerFactor				AT%I*: REAL;
+	NeutralLineCurrent		AT%I*: REAL;
+	L1L2Voltage				AT%I*: REAL;
+	L2L3Voltage				AT%I*: REAL;
+	L3L1Voltage				AT%I*: REAL;
+	MQTTTimer: 				TON := (PT:=T#10S);
+	PowerWarningDelay:		TON := (PT:=T#100MS);
+	PowerWarningRetain:		TOF := (PT:=T#2000MS);
+	
+	PowerError:				FB_EventLog;
+	PowerWarning:			FB_EventLog;
+	NeutralCurrentEvent:			FB_EventLog;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[phaseOK := L1L2Voltage > 360.0 AND L2L3Voltage > 360.0 AND L3L1Voltage > 360.0;
+
+IF NeutralLineCurrent > 0.1 THEN
+	NeutralCurrentEvent.Trigger := TRUE;
+	NeutralCurrentEvent.OnMessage := 	'Neutral Line Current WARNING!';
+	NeutralCurrentEvent.Level := ADSLOG_MSGTYPE_WARN;
+ELSIF NeutralLineCurrent > 0.3 THEN
+	NeutralCurrentEvent.Trigger := TRUE;
+	NeutralCurrentEvent.OnMessage := 	'Neutral Line Current ERROR!';
+	NeutralCurrentEvent.Level := ADSLOG_MSGTYPE_ERROR;
+ELSE
+	NeutralCurrentEvent.Trigger := FALSE;
+END_IF
+
+PowerWarningDelay(IN := VoltageGuardWarning OR CurrentGuardWarning);
+PowerWarningRetain(IN := PowerWarningDelay.Q);
+
+// MQTT Section
+MQTTTimer(IN:=TRUE);
+IF MQTTTimer.Q OR VoltageGuardWarning OR CurrentGuardWarning THEN // publish new payload every second
+	MQTTTimer(IN:=FALSE);
+
+	MAIN.MQTTClient.Publish('telescope', 'power', 'Overvoltege',	BOOL_TO_STRING(Overvoltage));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'Overcurrent',	BOOL_TO_STRING(Overcurrent));
+
+	MAIN.MQTTClient.Publish('telescope', 'power', 'VoltageGuardWarning',	BOOL_TO_STRING(VoltageGuardWarning));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'VoltageGuardError',		BOOL_TO_STRING(VoltageGuardError));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'CurrentGuardWarning',	BOOL_TO_STRING(CurrentGuardWarning));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'CurrentGuardError',		BOOL_TO_STRING(CurrentGuardError));
+
+	MAIN.MQTTClient.Publish('telescope', 'power', 'Voltage', 		REAL_TO_STRING(Voltage));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'Current',		REAL_TO_STRING(Current));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'ActivePower',	REAL_TO_STRING(ActivePower));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'ApparentPower',	REAL_TO_STRING(ApparentPower));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'ReactivePower',	REAL_TO_STRING(ReactivePower));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'PowerQualityFactor',	REAL_TO_STRING(PowerQualityFactor));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'Frequency',		REAL_TO_STRING(Frequency));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'PowerFactor',	REAL_TO_STRING(PowerFactor));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'NeutralLineCurrent',	REAL_TO_STRING(NeutralLineCurrent));
+
+	MAIN.MQTTClient.Publish('telescope', 'power', 'L1L2Voltage',	REAL_TO_STRING(L1L2Voltage));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'L2L3Voltage',	REAL_TO_STRING(L2L3Voltage));
+	MAIN.MQTTClient.Publish('telescope', 'power', 'L3L1Voltage',	REAL_TO_STRING(L3L1Voltage));	
+END_IF
+
+// EventLog section
+PowerError(	
+	Trigger := 		VoltageGuardError OR CurrentGuardError, 
+	Level := 		ADSLOG_MSGTYPE_ERROR,
+	FormatString :=	'%s',
+	OnMessage := 	'electrical power:	ERROR!');
+	
+PowerWarning(	
+	Trigger := 		PowerWarningRetain.Q, 
+	Level := 		ADSLOG_MSGTYPE_WARN,
+	FormatString :=	'%s',
+	OnMessage := 	'electrical power:	WARNING!');
+
+NeutralCurrentEvent(
+	FormatString :=	'%s',
+	OnMessage := 	'electrical power:	WARNING!');]]></ST>
+    </Implementation>
+    <LineIds Name="PowerMonitoring">
+      <LineId Id="30" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="112" Count="1" />
+      <LineId Id="115" Count="2" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="119" Count="1" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="124" Count="2" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="33" Count="3" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="71" Count="3" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="61" Count="3" />
+      <LineId Id="79" Count="2" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="75" Count="3" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="92" Count="3" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="100" Count="4" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="107" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

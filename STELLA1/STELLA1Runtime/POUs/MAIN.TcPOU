@@ -120,7 +120,8 @@ ups(
 ups_output_voltage := ups_output_voltage / 1000.0;
 ups_output_current := ups_output_current / 1000.0;
 ups_output_power := ups_output_voltage * ups_output_current;
-		
+
+PowerMonitoring();		
 TelescopeControl();	//
 CoverControl();	//
 PendantControl();	//
@@ -277,6 +278,7 @@ UPS_ReplaceBattery(
       <LineId Id="1022" Count="0" />
       <LineId Id="1001" Count="0" />
       <LineId Id="1069" Count="1" />
+      <LineId Id="1250" Count="0" />
       <LineId Id="1068" Count="0" />
       <LineId Id="1000" Count="0" />
       <LineId Id="999" Count="0" />
