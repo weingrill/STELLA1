@@ -301,15 +301,17 @@ ELSIF stop THEN
 	gohome := FALSE;
 	park := FALSE;
 ELSIF park THEN
-	TCS_command := E_TCSCommand.park;
 	goto := FALSE;
 	track := FALSE;
 	slew := FALSE;
+	IF ready AND stopped THEN
+		TCS_command := E_TCSCommand.park;
+	END_IF
 ELSIF gohome THEN
 	goto := FALSE;
 	track := FALSE;
 	slew := FALSE;
-	IF ready AND NOT busy THEN
+	IF ready AND NOT busy AND stopped THEN
 		TCS_command := E_TCSCommand.gohome;
 	END_IF
 ELSIF goto THEN
@@ -737,19 +739,26 @@ CASE Stage OF
 			Stage := 60;
 		END_IF
 	60:
+		IF NOT ElevationControl.enable AND NOT AzimuthElevationControl.Enable AND NOT DerotatorControl.enable THEN
+			stage := 80;
+		END_IF
+		
 		IF stopped THEN 
 			ElevationControl.enable := FALSE;
 			AzimuthElevationControl.Enable := FALSE;
 			DerotatorControl.enable := FALSE;
-			Stage := 80;
 		END_IF
 		
 		ElevationControl.MoveAxis := FALSE;
 		AzimuthElevationControl.MoveAxis := FALSE;
 		DerotatorControl.MoveAxis := FALSE;
 	80:
+		IF ElevationControl.enable OR AzimuthElevationControl.Enable OR DerotatorControl.enable THEN
+			stage := 60;
+		END_IF
 		IF HydraulicsControl.brake_closed THEN
-			CoverControl.close := TRUE;			
+			CoverControl.close := TRUE;
+			HydraulicsControl.enable := FALSE;			
 		END_IF
 		IF CoverControl.isclosed THEN
 			Stage := 100;
@@ -1108,7 +1117,9 @@ END_IF
       <LineId Id="1499" Count="0" />
       <LineId Id="8133" Count="1" />
       <LineId Id="8568" Count="6" />
-      <LineId Id="8563" Count="4" />
+      <LineId Id="8563" Count="1" />
+      <LineId Id="8566" Count="1" />
+      <LineId Id="9651" Count="2" />
       <LineId Id="1513" Count="0" />
       <LineId Id="1526" Count="0" />
       <LineId Id="4276" Count="0" />
@@ -1359,15 +1370,20 @@ END_IF
       <LineId Id="212" Count="1" />
       <LineId Id="202" Count="0" />
       <LineId Id="134" Count="0" />
+      <LineId Id="268" Count="2" />
+      <LineId Id="267" Count="0" />
       <LineId Id="136" Count="1" />
       <LineId Id="149" Count="0" />
-      <LineId Id="214" Count="1" />
+      <LineId Id="214" Count="0" />
       <LineId Id="139" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="196" Count="1" />
       <LineId Id="195" Count="0" />
       <LineId Id="116" Count="0" />
-      <LineId Id="156" Count="2" />
+      <LineId Id="264" Count="2" />
+      <LineId Id="156" Count="1" />
+      <LineId Id="271" Count="0" />
+      <LineId Id="158" Count="0" />
       <LineId Id="184" Count="0" />
       <LineId Id="187" Count="0" />
       <LineId Id="183" Count="0" />
