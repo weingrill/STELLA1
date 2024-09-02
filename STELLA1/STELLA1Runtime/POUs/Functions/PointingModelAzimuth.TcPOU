@@ -37,6 +37,8 @@ ELSE // clamp values so that we do not run into DIV by zero or overflow
 	cos_elevation := 0.0017453283658982613;
 END_IF
 
+//d(az)=AOFF-BNP/cos(el)+NPAE*tan(el)+AAN*sin(az)*tan(el)-AAE*cos(az)*tan(el)
+
 PointingModelAzimuth := AOFF - BNP/cos_elevation + AN_A*SIN(azimuth * d2r)*tan_elevation - AE_A*COS(azimuth * d2r)*tan_elevation + NPAE*tan_elevation;
 ]]></ST>
     </Implementation>
@@ -46,7 +48,9 @@ PointingModelAzimuth := AOFF - BNP/cos_elevation + AN_A*SIN(azimuth * d2r)*tan_e
       <LineId Id="21" Count="1" />
       <LineId Id="31" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="68" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="67" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="40" Count="0" />
     </LineIds>
