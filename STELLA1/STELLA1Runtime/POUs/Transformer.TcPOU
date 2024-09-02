@@ -47,9 +47,7 @@ END_IF
 GVL_Main.softstart_trafo := softstart_trafo AND NOT error;
 
 	
-phase_available := TRUE; (*GVL_Main.L1L2_voltage > 360.0 AND
-					GVL_Main.L2L3_voltage > 360.0 AND
-					GVL_Main.L3L1_voltage > 360.0; *)
+phase_available := PowerMonitoring.phaseOK;
 
 PowerEvent(	
 	Trigger := 		power_failure, 
@@ -151,7 +149,7 @@ END_VAR
       <LineId Id="16" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="148" Count="0" />
-      <LineId Id="53" Count="2" />
+      <LineId Id="55" Count="0" />
       <LineId Id="26" Count="12" />
       <LineId Id="25" Count="0" />
     </LineIds>
