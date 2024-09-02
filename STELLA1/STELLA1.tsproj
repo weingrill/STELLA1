@@ -2541,13 +2541,85 @@ External Setpoint Generation:
 							<Type GUID="{9B2C29BE-B860-43F7-B5AA-545677355F79}">ARRAY [0..30] OF WORD</Type>
 						</Var>
 						<Var>
-							<Name>TelescopeAuxiliary.raw_dewar_pressure</Name>
-							<Comment><![CDATA[ EL3064-1]]></Comment>
-							<Type>INT</Type>
+							<Name>PowerMonitoring.Overvoltage</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.Overcurrent</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.VoltageGuardWarning</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.VoltageGuardError</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.CurrentGuardWarning</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.CurrentGuardError</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.Voltage</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.Current</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.ActivePower</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.ApparentPower</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.ReactivePower</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.PowerQualityFactor</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.Frequency</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.PowerFactor</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.NeutralLineCurrent</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.L1L2Voltage</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.L2L3Voltage</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.L3L1Voltage</Name>
+							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_FilterWheel.bCalibrationCam</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>TelescopeAuxiliary.raw_dewar_pressure</Name>
+							<Comment><![CDATA[ EL3064-1]]></Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Hydraulics.oil_low</Name>
@@ -2555,13 +2627,13 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc</Name>
-							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Hydraulics.oil_high</Name>
 							<Comment><![CDATA[ ?]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc</Name>
+							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Hydraulics.oil_pressure_OK</Name>
@@ -2594,19 +2666,58 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Hydraulics.oilpan_maximum</Name>
-							<Comment><![CDATA[DIN39 4.6]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Hydraulics.oil_level</Name>
 							<Comment><![CDATA[BT2]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>GVL_Hydraulics.oilpan_maximum</Name>
+							<Comment><![CDATA[DIN39 4.6]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Hydraulics.oil_reserve</Name>
 							<Comment><![CDATA[DIN40 4.7]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.trafo_bypassed</Name>
+							<Comment><![CDATA[DIN1 0.0
+phase_available		AT%I*: BOOL;
+ not implemented on stella]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.key_switch_remote</Name>
+							<Comment><![CDATA[not implemented on RoboTel
+key_switch			AT%I*: BOOL;
+DIN3 0.2]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.start_switch</Name>
+							<Comment><![CDATA[DIN4 0.3]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.stop_switch</Name>
+							<Comment><![CDATA[DIN5 0.4]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.reset_switch</Name>
+							<Comment><![CDATA[DIN8 0.7]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.brake_clearing</Name>
+							<Comment><![CDATA[DIN15 1.6]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.main_cabinet_temperature</Name>
+							<Comment><![CDATA[BT1]]></Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>GVL_pendant_control.BCD1</Name>
@@ -2622,6 +2733,26 @@ External Setpoint Generation:
 							<Name>GVL_pendant_control.BCD4</Name>
 							<Comment><![CDATA[DIN19 2.2]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ActivePower</Name>
+							<Comment><![CDATA[
+	NeutralCurrentGuardWarning		AT%I*:	BOOL;
+	NeutralCurrentGuarError			AT%I*:	BOOL;
+	ActivePowerGuardWarning			AT%I*:	BOOL;
+	ActivePowerGuardError			AT%I*:	BOOL;
+	ApparentPowerGuardWarning		AT%I*:	BOOL;
+	ApparentPowerGuardError			AT%I*:	BOOL;
+	]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.ActiveEnergy</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.NeutralLineCurrent</Name>
+							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_pendant_control.BCD8</Name>
@@ -2804,65 +2935,6 @@ External Setpoint Generation:
 							<Name>GVL_Telescope.FocusAxisRef.NcToPlc</Name>
 							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
-						<Var>
-							<Name>GVL_Main.trafo_bypassed</Name>
-							<Comment><![CDATA[DIN1 0.0
-phase_available		AT%I*: BOOL;
- not implemented on stella]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.key_switch_remote</Name>
-							<Comment><![CDATA[not implemented on RoboTel
-key_switch			AT%I*: BOOL;
-DIN3 0.2]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.start_switch</Name>
-							<Comment><![CDATA[DIN4 0.3]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.stop_switch</Name>
-							<Comment><![CDATA[DIN5 0.4]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.reset_switch</Name>
-							<Comment><![CDATA[DIN8 0.7]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.brake_clearing</Name>
-							<Comment><![CDATA[DIN15 1.6]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.main_cabinet_temperature</Name>
-							<Comment><![CDATA[BT1]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ActivePower</Name>
-							<Comment><![CDATA[
-	NeutralCurrentGuardWarning		AT%I*:	BOOL;
-	NeutralCurrentGuarError			AT%I*:	BOOL;
-	ActivePowerGuardWarning			AT%I*:	BOOL;
-	ActivePowerGuardError			AT%I*:	BOOL;
-	ApparentPowerGuardWarning		AT%I*:	BOOL;
-	ApparentPowerGuardError			AT%I*:	BOOL;
-	]]></Comment>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.NeutralLineCurrent</Name>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ActiveEnergy</Name>
-							<Type>LINT</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
@@ -2878,6 +2950,26 @@ DIN3 0.2]]></Comment>
 						<Var>
 							<Name>GVL_Hydraulics.oil_suction_enable</Name>
 							<Comment><![CDATA[DOUT5 0.4]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.lamp_power</Name>
+							<Comment><![CDATA[DOUT1 0.0]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.lamp_on_manual</Name>
+							<Comment><![CDATA[DOUT2 0.1]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.lamp_error</Name>
+							<Comment><![CDATA[DOUT3 0.2]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Main.softstart_trafo</Name>
+							<Comment><![CDATA[DOUT7 0.6]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2950,22 +3042,6 @@ DOUT9 1.0]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Telescope.AzimuthAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.ElevationAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.DerotatorAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Telescope.FocusAxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Telescope.open_cover1</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -2982,31 +3058,27 @@ DOUT9 1.0]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_Telescope.AzimuthAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.ElevationAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.DerotatorAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Telescope.FocusAxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Telescope.open_cover3</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Telescope.close_cover3</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.lamp_power</Name>
-							<Comment><![CDATA[DOUT1 0.0]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.lamp_on_manual</Name>
-							<Comment><![CDATA[DOUT2 0.1]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.lamp_error</Name>
-							<Comment><![CDATA[DOUT3 0.2]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.softstart_trafo</Name>
-							<Comment><![CDATA[DOUT7 0.6]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -3734,10 +3806,10 @@ DOUT9 1.0]]></Comment>
 								<Entry Name="Active Power" Index="#x6022" Sub="#x11">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="Apparent Power" Index="#x6022" Sub="#x12">
+								<Entry Name="PowerMonitoring.ApparentPower" Index="#x6022" Sub="#x12">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="Reactive Power" Index="#x6022" Sub="#x13">
+								<Entry Name="PowerMonitoring.ReactivePower" Index="#x6022" Sub="#x13">
 									<Type>REAL</Type>
 								</Entry>
 								<Entry Name="Power Factor" Index="#x6022" Sub="#x14">
@@ -3903,18 +3975,18 @@ DOUT9 1.0]]></Comment>
 								<Entry Name="TxPDO Toggle" Index="#xf600" Sub="#x10">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Power Quality Factor" Index="#xf600" Sub="#x11">
+								<Entry Name="PowerMonitoring.PowerQualityFactor" Index="#xf600" Sub="#x11">
 									<Type>REAL</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Total Basic" Index="#x1a1f" Flags="#x0010" SyncMan="3">
-								<Entry Name="Frequency" Index="#xf601" Sub="#x11">
+								<Entry Name="PowerMonitoring.Frequency" Index="#xf601" Sub="#x11">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="Power Factor" Index="#xf601" Sub="#x12">
+								<Entry Name="PowerMonitoring.PowerFactor" Index="#xf601" Sub="#x12">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="Calculated Neutral Line Current" Index="#xf601" Sub="#x13">
+								<Entry Name="PowerMonitoring.NeutralLineCurrent" Index="#xf601" Sub="#x13">
 									<Type>REAL</Type>
 								</Entry>
 							</Pdo>
@@ -3987,13 +4059,13 @@ DOUT9 1.0]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Total L-L Voltage" Index="#x1a24" Flags="#x0010" SyncMan="3">
-								<Entry Name="L1-L2 Voltage" Index="#xf609" Sub="#x11">
+								<Entry Name="PowerMonitoring.L1L2Voltage" Index="#xf609" Sub="#x11">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="L2-L3 Voltage" Index="#xf609" Sub="#x12">
+								<Entry Name="PowerMonitoring.L2L3Voltage" Index="#xf609" Sub="#x12">
 									<Type>REAL</Type>
 								</Entry>
-								<Entry Name="L3-L1 Voltage" Index="#xf609" Sub="#x13">
+								<Entry Name="PowerMonitoring.L3L1Voltage" Index="#xf609" Sub="#x13">
 									<Type>REAL</Type>
 								</Entry>
 							</Pdo>
@@ -10617,7 +10689,18 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Power analysis (EL3443)">
 				<Link VarA="PlcTask Inputs^GVL_Main.ActiveEnergy" VarB="Total Active^Active Energy"/>
 				<Link VarA="PlcTask Inputs^GVL_Main.ActivePower" VarB="Total Active^Active Power"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.NeutralLineCurrent" VarB="Total Basic^Calculated Neutral Line Current"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.ActivePower" VarB="L3 Power^Active Power"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.ApparentPower" VarB="L3 Power^PowerMonitoring.ApparentPower"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.Current" VarB="L3 Basic^Current"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.Frequency" VarB="Total Basic^PowerMonitoring.Frequency"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.L1L2Voltage" VarB="Total L-L Voltage^PowerMonitoring.L1L2Voltage"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.L2L3Voltage" VarB="Total L-L Voltage^PowerMonitoring.L2L3Voltage"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.L3L1Voltage" VarB="Total L-L Voltage^PowerMonitoring.L3L1Voltage"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.NeutralLineCurrent" VarB="Total Basic^PowerMonitoring.NeutralLineCurrent"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.PowerFactor" VarB="Total Basic^PowerMonitoring.PowerFactor"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.PowerQualityFactor" VarB="Total Status^PowerMonitoring.PowerQualityFactor"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.ReactivePower" VarB="L3 Power^PowerMonitoring.ReactivePower"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.Voltage" VarB="L3 Basic^Voltage"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
 				<Link VarA="PlcTask Inputs^GVL_Safety.Error" VarB="StandardInputs^TwinSafeGroup1.SafetyError_4"/>

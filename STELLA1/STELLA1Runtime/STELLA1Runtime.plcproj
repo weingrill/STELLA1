@@ -221,6 +221,9 @@
     <Compile Include="POUs\PendantControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\PowerMonitoring.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\SafetyHandling.TcPOU">
       <SubType>Code</SubType>
     </Compile>
