@@ -170,7 +170,7 @@ END_IF
 (* This is the end of the brake control section *)
 
 suction_trigger(SET1 := GVL_Hydraulics.oilpan_maximum OR oil_level>3.7,
-				RESET := oil_level<2.8);
+				RESET := oil_level<3.0);
 GVL_Hydraulics.oil_suction_enable := suction_trigger.Q1 OR suction_manual;					
 suction_watchdog(IN := GVL_Hydraulics.oil_suction_enable AND NOT suction_running,
 					PT := T#15S,

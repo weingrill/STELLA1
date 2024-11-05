@@ -36,7 +36,9 @@ la := LIMIT(-90.0, latitude, 90.0) * d2r;
 parallactic_angle := - r2d * ATAN2(SIN(az), TAN(la)*COS(el)-SIN(el)*COS(az));
 
 F_DerotatorPosition2 := parallactic_angle - sign * elevation;
-F_DerotatorPosition2 := MODABS(F_DerotatorPosition2, 360.0);
+IF F_DerotatorPosition2 <= -70.0 OR F_DerotatorPosition2 >= 380.0 THEN
+	F_DerotatorPosition2 := MODABS(F_DerotatorPosition2, 360.0);
+END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="F_DerotatorPosition2">
@@ -45,7 +47,9 @@ F_DerotatorPosition2 := MODABS(F_DerotatorPosition2, 360.0);
       <LineId Id="142" Count="0" />
       <LineId Id="107" Count="0" />
       <LineId Id="22" Count="0" />
+      <LineId Id="192" Count="0" />
       <LineId Id="167" Count="0" />
+      <LineId Id="193" Count="0" />
       <LineId Id="133" Count="0" />
     </LineIds>
   </POU>
