@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<VarLinks>
+	<OwnerA Name="InputDst" Prefix="TIPC^STELLA1Runtime^STELLA1Runtime Instance" Type="1">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Azimuth (AX5125-0000-0214)">
+			<Link VarA="GVL_Telescope.Azimuth_diagnostic" GrpA="PlcTask Inputs" TypeA="UDINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="AT^Diagnostic number"/>
+			<Link VarA="GVL_Telescope.Azimuth_inputs" GrpA="PlcTask Inputs" TypeA="WORD" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000004}" VarB="AT^Digital inputs, state"/>
+			<Link VarA="GVL_Telescope.Azimuth_torque" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AT^Torque/force feedback value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Box 74 (Uninterruptible Power Supply)">
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^BATTERY 1 ALARMS" Size="32" OffsA="304"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^BATTERY 2 ALARMS" Size="32" OffsA="336"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^BATTERY 3 ALARMS" Size="32" OffsA="368"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^BATTERY 4 ALARMS" Size="32" OffsA="400"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^BATTERY 5 ALARMS" Size="32" OffsA="432"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS ACTUAL INPUT CURRENT" Size="16" OffsA="80"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS ACTUAL INPUT VOLTAGE" Size="16" OffsA="64"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS ACTUAL OUTPUT CURRENT 1" Size="16" OffsA="112"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS ACTUAL OUTPUT VOLTAGE 1" Size="16" OffsA="96"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS BATTERY ACTUAL VOLTAGE" Size="16" OffsA="128"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS BATTERY CHARGE CURRENT" Size="16" OffsA="144"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS BATTERY TEMPERATURE" Size="16" OffsA="160"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS DEVICE TEMPERATURE" Size="16" OffsA="176"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS FUNCTIONS" Size="32"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS INTERFACE" Size="32" OffsA="32"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS SOC REMAINING TIME" Size="32" OffsA="192"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS SOC REMAINING TIME PC SHUTDOWN" Size="16" OffsA="224"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^STATUS SOH REMAINING LIFETIME" Size="16" OffsA="240"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^UPS DIAGNOSIS ALARMS" Size="32" OffsA="272"/>
+			<Link VarA="MAIN.arrInputPD" GrpA="PlcTask Inputs" TypeA="ARRAY [0..30] OF WORD" InOutA="0" GuidA="{9B2C29BE-B860-43F7-B5AA-545677355F79}" VarB="TxPDO 1^UPS PROCESS ALARMS" Size="16" OffsA="256"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Derotator(AX5203-0000-0210)">
+			<Link VarA="GVL_Telescope.Derotator_diagnostic" GrpA="PlcTask Inputs" TypeA="UDINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="AT 1^Diagnostic number"/>
+			<Link VarA="GVL_Telescope.Derotator_inputs" GrpA="PlcTask Inputs" TypeA="WORD" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000004}" VarB="AT 1^Digital inputs, state"/>
+			<Link VarA="GVL_Telescope.Derotator_torque" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AT 1^Torque/force feedback value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Elevation (AX5125-0000-0214)">
+			<Link VarA="GVL_Telescope.Elevation_diagnostic" GrpA="PlcTask Inputs" TypeA="UDINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="AT^Diagnostic number"/>
+			<Link VarA="GVL_Telescope.Elevation_inputs" GrpA="PlcTask Inputs" TypeA="WORD" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000004}" VarB="AT^Digital inputs, state"/>
+			<Link VarA="GVL_Telescope.Elevation_torque" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AT^Torque/force feedback value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Cover Limit Switches (EL1008)">
+			<Link VarA="GVL_Telescope.cover1_closed" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Telescope.cover1_closed" Size="1"/>
+			<Link VarA="GVL_Telescope.cover1_open" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Telescope.cover1_open" Size="1"/>
+			<Link VarA="GVL_Telescope.cover2_closed" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_Telescope.cover2_closed" Size="1"/>
+			<Link VarA="GVL_Telescope.cover2_open" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Telescope.cover2_open" Size="1"/>
+			<Link VarA="GVL_Telescope.cover3_closed" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 6^GVL_Telescope.cover3_closed" Size="1"/>
+			<Link VarA="GVL_Telescope.cover3_open" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 5^GVL_Telescope.cover3_open" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Hydraulics IN (EL1008)">
+			<Link VarA="GVL_Hydraulics.oil_high" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Hydraulics.oil_high" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oil_low" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Hydraulics.oil_low" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oil_overtemperature" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_Hydraulics.oil_overtemperature" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oil_pressure_OK" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Hydraulics.oil_pressure_OK" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oil_undertemperature" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 5^GVL_Hydraulics.oil_undertemperature" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oilfilter_dirty" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 6^GVL_Hydraulics.oilfilter_dirty" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^M2 M3 Limit switches (EL1008)">
+			<Link VarA="GVL_Telescope.focus_limit_far" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Telescope.focus_limit_far" Size="1"/>
+			<Link VarA="GVL_Telescope.focus_limit_near" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Telescope.focus_limit_near" Size="1"/>
+			<Link VarA="GVL_Telescope.nasmyth_limit_left" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Telescope.nasmyth_limit_left" Size="1"/>
+			<Link VarA="GVL_Telescope.nasmyth_limit_right" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_Telescope.nasmyth_limit_right" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Main Panel IN (EL1008)">
+			<Link VarA="GVL_Main.key_switch_remote" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Main.key_switch_remote" Size="1"/>
+			<Link VarA="GVL_Main.reset_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_Main.reset_switch" Size="1"/>
+			<Link VarA="GVL_Main.start_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Main.start_switch" Size="1"/>
+			<Link VarA="GVL_Main.stop_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Main.stop_switch" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Control (EL1008)">
+			<Link VarA="GVL_pendant_control.BCD1" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_pendant_control.BCD1" Size="1"/>
+			<Link VarA="GVL_pendant_control.BCD2" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_pendant_control.BCD2" Size="1"/>
+			<Link VarA="GVL_pendant_control.BCD4" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_pendant_control.BCD4" Size="1"/>
+			<Link VarA="GVL_pendant_control.BCD8" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_pendant_control.BCD8" Size="1"/>
+			<Link VarA="GVL_pendant_control.direction_down" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 7^GVL_pendant_control.direction_down" Size="1"/>
+			<Link VarA="GVL_pendant_control.direction_up" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 6^GVL_pendant_control.direction_up" Size="1"/>
+			<Link VarA="GVL_pendant_control.key_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 8^GVL_pendant_control.key_switch" Size="1"/>
+			<Link VarA="GVL_pendant_control.reset_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 5^GVL_pendant_control.reset_switch" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Control2 (EL1008)">
+			<Link VarA="GVL_pendant_control.direction_left" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_pendant_control.direction_left" Size="1"/>
+			<Link VarA="GVL_pendant_control.direction_right" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_pendant_control.direction_right" Size="1"/>
+			<Link VarA="GVL_pendant_control.start_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_pendant_control.start_switch" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Power analysis (EL3443)">
+			<Link VarA="GVL_Main.ActiveEnergy" GrpA="PlcTask Inputs" TypeA="LINT" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000C}" VarB="Total Active^Active Energy"/>
+			<Link VarA="GVL_Main.ActivePower" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Active^Active Power"/>
+			<Link VarA="PowerMonitoring.ActivePower" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^Active Power"/>
+			<Link VarA="PowerMonitoring.ApparentPower" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^PowerMonitoring.ApparentPower"/>
+			<Link VarA="PowerMonitoring.Current" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Basic^Current"/>
+			<Link VarA="PowerMonitoring.Frequency" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Basic^PowerMonitoring.Frequency"/>
+			<Link VarA="PowerMonitoring.L1L2Voltage" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total L-L Voltage^PowerMonitoring.L1L2Voltage"/>
+			<Link VarA="PowerMonitoring.L2L3Voltage" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total L-L Voltage^PowerMonitoring.L2L3Voltage"/>
+			<Link VarA="PowerMonitoring.L3L1Voltage" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total L-L Voltage^PowerMonitoring.L3L1Voltage"/>
+			<Link VarA="PowerMonitoring.NeutralLineCurrent" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Basic^PowerMonitoring.NeutralLineCurrent"/>
+			<Link VarA="PowerMonitoring.PowerFactor" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Basic^PowerMonitoring.PowerFactor"/>
+			<Link VarA="PowerMonitoring.PowerQualityFactor" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Status^PowerMonitoring.PowerQualityFactor"/>
+			<Link VarA="PowerMonitoring.ReactivePower" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^PowerMonitoring.ReactivePower"/>
+			<Link VarA="PowerMonitoring.Voltage" GrpA="PlcTask Inputs" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Basic^Voltage"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
+			<Link VarA="GVL_Safety.Error" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="StandardInputs^TwinSafeGroup1.SafetyError_4" Size="1"/>
+			<Link VarA="GVL_Safety.State" GrpA="PlcTask Inputs" TypeA="USINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000002}" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBEstop1 Info Data^State"/>
+			<Link VarA="GVL_Safety.Stop" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="StandardInputs^TwinSafeGroup1.SafetyStop_7" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Telescope Hydraulics IN (EL1008)">
+			<Link VarA="GVL_Hydraulics.oil_reserve" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Hydraulics.oil_reserve" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oilpan_maximum" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Hydraulics.oilpan_maximum" Size="1"/>
+			<Link VarA="GVL_Telescope.azimut_limit_switch" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 8^GVL_Telescope.azimut_limit_switch" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature IN (EL3202)">
+			<Link VarA="GVL_Main.main_cabinet_temperature" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="RTD Inputs Channel 1^Value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Temperature M2 M1 (EL3064)">
+			<Link VarA="GVL_Hydraulics.oil_level" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AI Standard Channel 3^GVL_Hydraulics.oil_level"/>
+			<Link VarA="GVL_Telescope.temperature_mirror1" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AI Standard Channel 2^GVL_Telescope.temperature_mirror1"/>
+			<Link VarA="GVL_Telescope.temperature_mirror2" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AI Standard Channel 1^GVL_Telescope.temperature_mirror2"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)">
+			<Link VarA="GVL_FilterWheel.bCalibrationCam" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="DRV Info data 1^Info data 1" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^Term 60 (EL3064)">
+			<Link VarA="TelescopeAuxiliary.raw_dewar_pressure" GrpA="PlcTask Inputs" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="AI Standard Channel 1^Value"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics IN (EL1008)">
+			<Link VarA="GVL_Hydraulics.pump_running" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 7^GVL_Hydraulics.pump_running" Size="1"/>
+			<Link VarA="GVL_Hydraulics.suction_running" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 8^GVL_Hydraulics.suction_running" Size="1"/>
+			<Link VarA="GVL_Main.brake_clearing" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Main.brake_clearing" Size="1"/>
+			<Link VarA="GVL_Main.trafo_bypassed" GrpA="PlcTask Inputs" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Main.trafo_bypassed" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Azimuth">
+			<Link VarA="GVL_Telescope.AzimuthAxisRef.NcToPlc" GrpA="PlcTask Inputs" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{10036166-C9D3-404B-BDD3-323034AAA7F4}" VarB="Outputs^ToPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Derotator">
+			<Link VarA="GVL_Telescope.DerotatorAxisRef.NcToPlc" GrpA="PlcTask Inputs" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{10036166-C9D3-404B-BDD3-323034AAA7F4}" VarB="Outputs^ToPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Elevation">
+			<Link VarA="GVL_Telescope.ElevationAxisRef.NcToPlc" GrpA="PlcTask Inputs" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{10036166-C9D3-404B-BDD3-323034AAA7F4}" VarB="Outputs^ToPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^FilterWheel">
+			<Link VarA="GVL_FilterWheel.FilterWheel_AxisRef.NcToPlc" GrpA="PlcTask Inputs" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{10036166-C9D3-404B-BDD3-323034AAA7F4}" VarB="Outputs^ToPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Fokus">
+			<Link VarA="GVL_Telescope.FocusAxisRef.NcToPlc" GrpA="PlcTask Inputs" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{10036166-C9D3-404B-BDD3-323034AAA7F4}" VarB="Outputs^ToPlc"/>
+		</OwnerB>
+	</OwnerA>
+	<OwnerA Name="OutputSrc" Prefix="TIPC^STELLA1Runtime^STELLA1Runtime Instance" Type="2">
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Cover Motors (EL2008)">
+			<Link VarA="GVL_Telescope.close_cover1" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_Telescope.close_cover1" Size="1"/>
+			<Link VarA="GVL_Telescope.close_cover2" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 6^GVL_Telescope.close_cover2" Size="1"/>
+			<Link VarA="GVL_Telescope.close_cover3" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 8^GVL_Telescope.close_cover3" Size="1"/>
+			<Link VarA="GVL_Telescope.nasmyth_left" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Telescope.nasmyth_left" Size="1"/>
+			<Link VarA="GVL_Telescope.nasmyth_right" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Telescope.nasmyth_right" Size="1"/>
+			<Link VarA="GVL_Telescope.open_cover1" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Telescope.open_cover1" Size="1"/>
+			<Link VarA="GVL_Telescope.open_cover2" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 5^GVL_Telescope.open_cover2" Size="1"/>
+			<Link VarA="GVL_Telescope.open_cover3" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 7^GVL_Telescope.open_cover3" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Lock and Horn (EL2008)">
+			<Link VarA="GVL_Telescope.focus_unlock" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Telescope.focus_lock" Size="1"/>
+			<Link VarA="GVL_Telescope.horn" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 8^GVL_Telescope.horn" Size="1"/>
+			<Link VarA="GVL_Telescope.nasmyth_lock" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Telescope.nasmyth_lock" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Main Panel Out (EL2008)">
+			<Link VarA="GVL_Main.lamp_error" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Main.lamp_error" Size="1"/>
+			<Link VarA="GVL_Main.lamp_on_manual" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Main.lamp_ready" Size="1"/>
+			<Link VarA="GVL_Main.lamp_power" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Main.lamp_power" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Pendant Lights (EL2008)">
+			<Link VarA="GVL_pendant_control.lamp_down" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_pendant_control.lamp_down" Size="1"/>
+			<Link VarA="GVL_pendant_control.lamp_error" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 5^GVL_pendant_control.lamp_error" Size="1"/>
+			<Link VarA="GVL_pendant_control.lamp_left" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^GVL_pendant_control.lamp_left" Size="1"/>
+			<Link VarA="GVL_pendant_control.lamp_right" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_pendant_control.lamp_right" Size="1"/>
+			<Link VarA="GVL_pendant_control.lamp_up" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_pendant_control.lamp_up" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
+			<Link VarA="GVL_Safety.ErrAck" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="StandardOutputs^TwinSafeGroup1.ErrorAcknowledgement_1" Size="1"/>
+			<Link VarA="GVL_Safety.Restart" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="StandardOutputs^TwinSafeGroup1.RestartSafety_2" Size="1"/>
+			<Link VarA="GVL_Safety.Run" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="StandardOutputs^TwinSafeGroup1.RunSafety_3" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics OUT (EL2008)">
+			<Link VarA="GVL_Hydraulics.oil_pump_enable" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 1^GVL_Hydraulics.oil_pump_enable" Size="1"/>
+			<Link VarA="GVL_Hydraulics.oil_suction_enable" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^GVL_Hydraulics.oil_suction_enable" Size="1"/>
+			<Link VarA="GVL_Main.softstart_trafo" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 8^GVL_Main.softstart_trafo" Size="1"/>
+			<Link VarA="GVL_Telescope.brake_azimuth_eve" GrpA="PlcTask Outputs" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 3^GVL_Telescope.brake_azimuth_eve" Size="1"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Azimuth">
+			<Link VarA="GVL_Telescope.AzimuthAxisRef.PlcToNc" GrpA="PlcTask Outputs" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Derotator">
+			<Link VarA="GVL_Telescope.DerotatorAxisRef.PlcToNc" GrpA="PlcTask Outputs" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Elevation">
+			<Link VarA="GVL_Telescope.ElevationAxisRef.PlcToNc" GrpA="PlcTask Outputs" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^FilterWheel">
+			<Link VarA="GVL_FilterWheel.FilterWheel_AxisRef.PlcToNc" GrpA="PlcTask Outputs" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+		<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Fokus">
+			<Link VarA="GVL_Telescope.FocusAxisRef.PlcToNc" GrpA="PlcTask Outputs" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc"/>
+		</OwnerB>
+	</OwnerA>
+</VarLinks>
