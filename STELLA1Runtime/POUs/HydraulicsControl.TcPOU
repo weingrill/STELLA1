@@ -74,6 +74,8 @@ VAR
 	hydraulics_off_timer:	TON  := (PT := T#300S);
 	off_trigger:	F_TRIG;
 	oil_level, last_oil_level:		REAL;
+	oil_level_min:		REAL := 2.5;
+	oil_level_max:		REAL := 3.5;
 	HydraulicsLog,
 	PumpLog,
 	ReserveLog,
@@ -169,8 +171,8 @@ END_IF
 
 (* This is the end of the brake control section *)
 
-suction_trigger(SET1 := GVL_Hydraulics.oilpan_maximum OR oil_level>3.7,
-				RESET := oil_level<3.0);
+suction_trigger(SET1 := GVL_Hydraulics.oilpan_maximum OR oil_level > oil_level_max,
+				RESET := oil_level < oil_level_min);
 GVL_Hydraulics.oil_suction_enable := suction_trigger.Q1 OR suction_manual;					
 suction_watchdog(IN := GVL_Hydraulics.oil_suction_enable AND NOT suction_running,
 					PT := T#15S,

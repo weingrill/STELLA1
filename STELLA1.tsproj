@@ -1690,9 +1690,6 @@ External Setpoint Generation:
 				<LBound>0</LBound>
 				<Elements>10</Elements>
 			</ArrayInfo>
-			<Hides>
-				<Hide GUID="{0D9E782F-3778-A474-E51F-4F5C8E7FF3F2}"/>
-			</Hides>
 		</DataType>
 	</DataTypes>
 	<ImageDatas>
@@ -2378,8 +2375,8 @@ External Setpoint Generation:
 					<Name>FilterWheel</Name>
 					<AxisPara>
 						<General UnitName="°" UnitFlags="#x00000004"/>
-						<Dynamic AccelerationMaximum="1500" DecelerationMaximum="1500" Acceleration="100" Deceleration="100" Jerk="100"/>
-						<Velo RefSearch="5" RefSync="2.5" SlowManual="3" FastManual="30" Fast="207.666666666667" Maximum="207.667"/>
+						<Dynamic AccelerationMaximum="1500" DecelerationMaximum="1500" Acceleration="311.5" Deceleration="311.5" Jerk="934.5"/>
+						<Velo RefSearch="2.07666666666667" RefSync="2.07666666666667" SlowManual="10.3833333333333" FastManual="62.3" Fast="207.666666666667" Maximum="207.666666666667"/>
 						<TargetPosControl Range="1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
@@ -2446,8 +2443,8 @@ External Setpoint Generation:
 						</Vars>
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
-						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
-							<Analog VeloReferenz="228.433333333333" VeloScale="30" PosScale="10" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020100">
+							<Analog VeloReferenz="228.433333333333" VeloScale="32" PosScale="10" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -6614,7 +6611,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 												<Data>0000</Data>
 											</InitCmd>
 											<InitCmd Index="28688" SubIndex="3" MotorDataLevel="0" DisableMode="0">
-												<Data>09</Data>
+												<Data>08</Data>
 											</InitCmd>
 											<InitCmd Index="28688" SubIndex="11" MotorDataLevel="0" DisableMode="0">
 												<Data>ff7f</Data>
@@ -6933,7 +6930,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<SyncMan>001080002600010001000000500080008000001026010000</SyncMan>
 									<SyncMan>801080002200010002000000500080008000801022010000</SyncMan>
 									<SyncMan>001106002400010003000000000000000600001124010000</SyncMan>
-									<SyncMan>801108002000010004000000000000000600801120010000</SyncMan>
+									<SyncMan>80110c002000010004000000000000000600801120010000</SyncMan>
 									<Fmmu>0000000000000000001100020100000001000000000000000000000000000000</Fmmu>
 									<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
 									<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -6962,6 +6959,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<MBoxUserCmdData>020003000c0000001f000000000000000000000000000000000000000000000020108015040000006400000056656c6f63697479206c6f6f702070726f706f7274696f6e616c206761696e00</MBoxUserCmdData>
 									<MBoxUserCmdData>020003000c0000001b000000000000000000000000000000000000000000000020108014040000009600000056656c6f63697479206c6f6f7020696e74656772616c2074696d6500</MBoxUserCmdData>
 									<MBoxUserCmdData>02000300090000002300000000000000000000000000000000000000000000002000800d01000000024f666673657420706f736974696f6e2061637475616c2076616c756520736f7572636500</MBoxUserCmdData>
+									<MBoxUserCmdData>02000300090000001200000000000000000000000000000000000000000000002010700301000000084d6f646573206f66206f7065726174696f6e00</MBoxUserCmdData>
 									<Pdo Name="FB Position" Index="#x1a00" Flags="#x0000" SyncMan="3">
 										<Entry Name="Position" BitLen="32" Index="#x6000" Sub="#x11">
 											<Type>UDINT</Type>
@@ -6992,7 +6990,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											<Type>UINT</Type>
 										</Entry>
 									</Pdo>
-									<Pdo Name="DRV Following error actual value" Index="#x1a06" Flags="#x0000">
+									<Pdo Name="DRV Following error actual value" Index="#x1a06" Flags="#x0000" SyncMan="3">
 										<Entry Name="Following error actual value" BitLen="32" Index="#x6010" Sub="#x06">
 											<Type>DINT</Type>
 										</Entry>
@@ -7344,7 +7342,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											<Type>UINT</Type>
 										</Entry>
 									</Pdo>
-									<Pdo Name="DRV Target velocity" Index="#x1601" InOut="1" Flags="#x0000" SyncMan="2">
+									<Pdo Name="DRV Target velocity" Index="#x1601" InOut="1" Flags="#x0000">
 										<Entry Name="Target velocity" BitLen="32" Index="#x7010" Sub="#x06">
 											<Type>DINT</Type>
 										</Entry>
@@ -7369,7 +7367,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											<Type>INT</Type>
 										</Entry>
 									</Pdo>
-									<Pdo Name="DRV Target position" Index="#x1606" InOut="1" Flags="#x0000">
+									<Pdo Name="DRV Target position" Index="#x1606" InOut="1" Flags="#x0000" SyncMan="2">
 										<Entry Name="Target position" BitLen="32" Index="#x7010" Sub="#x05">
 											<Type>UDINT</Type>
 										</Entry>
@@ -10517,15 +10515,15 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^FilterWheel">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)">
+				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="DRV Following error actual value^Following error actual value"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="DRV Statusword^Statusword"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="DRV Statusword^Statusword" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
 				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState"/>
-				<Link VarA="Drive^Inputs^In^nState8" VarB="DRV Info data 1^Info data 1"/>
 				<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="DRV Controlword^Controlword"/>
 				<Link VarA="Drive^Outputs^Out^nCtrl2" VarB="DRV Controlword^Controlword" Size="8" OffsB="8"/>
-				<Link VarA="Drive^Outputs^Out^nDataOut2" VarB="DRV Target velocity^Target velocity"/>
+				<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="DRV Target position^Target position"/>
 				<Link VarA="Enc^Inputs^In^nDataIn1" VarB="FB Position^Position"/>
 				<Link VarA="Enc^Inputs^In^nDcInputTime" VarB="InfoData^DcInputShift"/>
 				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
@@ -10722,9 +10720,6 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GVL_Hydraulics.oil_level" VarB="AI Standard Channel 3^GVL_Hydraulics.oil_level"/>
 				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror1" VarB="AI Standard Channel 2^GVL_Telescope.temperature_mirror1"/>
 				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror2" VarB="AI Standard Channel 1^GVL_Telescope.temperature_mirror2"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^FilterWheel (EL7211-0010)">
-				<Link VarA="PlcTask Inputs^GVL_FilterWheel.bCalibrationCam" VarB="DRV Info data 1^Info data 1" Size="1"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^Term 60 (EL3064)">
 				<Link VarA="PlcTask Inputs^TelescopeAuxiliary.raw_dewar_pressure" VarB="AI Standard Channel 1^Value"/>
