@@ -58,7 +58,7 @@ END_VAR]]></Declaration>
       <ST><![CDATA[(* This program controls the filter wheel. 
 The current optical filter is selected through `filter_position`.
 The number of filters is hard coded to 24.
-
+Position offset: 3285400430
 *)
 
 // limit desired filter_position to [0...filters-1]
