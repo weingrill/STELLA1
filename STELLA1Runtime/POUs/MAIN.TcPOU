@@ -52,9 +52,7 @@ VAR
 	UPS_Alarm,
 	UPS_Warning,
 	UPS_BatMode,
-	UPS_ReplaceBattery,
-	MainsWarning,
-	MainsError:	FB_EventLog;
+	UPS_ReplaceBattery: FB_EventLog;
 END_VAR
 ]]></Declaration>
     <Implementation>

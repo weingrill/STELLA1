@@ -2376,7 +2376,7 @@ External Setpoint Generation:
 					<AxisPara>
 						<General UnitName="°" UnitFlags="#x00000004"/>
 						<Dynamic AccelerationMaximum="1500" DecelerationMaximum="1500" Acceleration="311.5" Deceleration="311.5" Jerk="934.5"/>
-						<Velo RefSearch="2.07666666666667" RefSync="2.07666666666667" SlowManual="10.3833333333333" FastManual="62.3" Fast="207.666666666667" Maximum="207.666666666667"/>
+						<Velo RefSearch="2.07666666666667" RefSync="2.07666666666667" SlowManual="10.3833333333333" FastManual="62.3" Fast="207.666666666667" Maximum="207.667"/>
 						<TargetPosControl Range="1"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
@@ -2503,7 +2503,6 @@ External Setpoint Generation:
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
 							<PosDiffControl Enable="false" Range="0.2"/>
-							<PID PosKp="5"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -2730,26 +2729,6 @@ DIN3 0.2]]></Comment>
 							<Name>GVL_pendant_control.BCD4</Name>
 							<Comment><![CDATA[DIN19 2.2]]></Comment>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ActivePower</Name>
-							<Comment><![CDATA[
-	NeutralCurrentGuardWarning		AT%I*:	BOOL;
-	NeutralCurrentGuarError			AT%I*:	BOOL;
-	ActivePowerGuardWarning			AT%I*:	BOOL;
-	ActivePowerGuardError			AT%I*:	BOOL;
-	ApparentPowerGuardWarning		AT%I*:	BOOL;
-	ApparentPowerGuardError			AT%I*:	BOOL;
-	]]></Comment>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.ActiveEnergy</Name>
-							<Type>LINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Main.NeutralLineCurrent</Name>
-							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_pendant_control.BCD8</Name>
@@ -3079,6 +3058,14 @@ DOUT9 1.0]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
+					<UnrestoredVarLinks ImportTime="2025-02-17T16:53:40">
+						<OwnerA Name="InputDst" Prefix="TIPC^STELLA1Runtime^STELLA1Runtime Instance" Type="1">
+							<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Power analysis (EL3443)">
+								<Link VarA="GVL_Main.ActiveEnergy" TypeA="LINT" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000C}" VarB="Total Active^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL_Main.ActivePower" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Active^Active Power" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
@@ -5483,7 +5470,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Entry Name="Status__Moving negative" Index="#x6020" Sub="#x06">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Status__Torque reduced" Index="#x6020" Sub="#x07">
+								<Entry Name="Status__Torque reduced" Index="#x6020" Sub="#x07" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
@@ -5495,10 +5482,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Entry Name="Status__Digital input 1" Index="#x6020" Sub="#x0c" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Status__Digital input 2" Index="#x6020" Sub="#x0d">
+								<Entry Name="Status__Digital input 2" Index="#x6020" Sub="#x0d" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Status__Sync error" Index="#x6020" Sub="#x0e">
+								<Entry Name="Status__Sync error" Index="#x6020" Sub="#x0e" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
@@ -6524,7 +6511,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 												<Data>0016</Data>
 											</InitCmd>
 											<InitCmd Index="7186" SubIndex="2" MotorDataLevel="0" DisableMode="0">
-												<Data>0116</Data>
+												<Data>0616</Data>
 											</InitCmd>
 											<InitCmd Index="7186" SubIndex="3" MotorDataLevel="0" DisableMode="0">
 												<Data>0000</Data>
@@ -6548,7 +6535,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 												<Data>0000</Data>
 											</InitCmd>
 											<InitCmd Index="7187" SubIndex="0" MotorDataLevel="0" DisableMode="0">
-												<Data>03</Data>
+												<Data>04</Data>
 											</InitCmd>
 											<InitCmd Index="7187" SubIndex="1" MotorDataLevel="0" DisableMode="0">
 												<Data>001a</Data>
@@ -6560,7 +6547,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 												<Data>041a</Data>
 											</InitCmd>
 											<InitCmd Index="7187" SubIndex="4" MotorDataLevel="0" DisableMode="0">
-												<Data>0000</Data>
+												<Data>061a</Data>
 											</InitCmd>
 											<InitCmd Index="7187" SubIndex="5" MotorDataLevel="0" DisableMode="0">
 												<Data>0000</Data>
@@ -7558,58 +7545,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<CoeProfile ProfileNo="49157001"/>
 								</EtherCAT>
 							</Box>
-							<Box Id="57" BoxType="9099">
-								<Name>Klemme 57 (EL1008)</Name>
-								<ImageId>7</ImageId>
-								<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03f03052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1008 8K. Dig. Eingang 24V, 3ms" Desc="EL1008" PortABoxInfo="#x01000038">
-									<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
-									<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
-									<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6000" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6010" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6020" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6030" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6040" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6050" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6060" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-									<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-										<Entry Name="Input" Index="#x6070" Sub="#x01">
-											<Type>BIT</Type>
-										</Entry>
-									</Pdo>
-								</EtherCAT>
-							</Box>
 							<Box Id="58" BoxType="9099">
 								<Name>Klemme 58 (EL2008)</Name>
 								<ImageId>1004</ImageId>
-								<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000039">
+								<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d83052" RevisionNo="#x00120000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2008 8K. Dig. Ausgang 24V, 0.5A" Desc="EL2008" PortABoxInfo="#x01000038">
 									<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 									<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 									<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
@@ -8498,7 +8437,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											<Type>BIT</Type>
 											<Comment><![CDATA[Bit toggles everytime when new value available]]></Comment>
 										</Entry>
-										<Entry Name="Value" Index="#x6000" Sub="#x11" Flags="#x00020000">
+										<Entry Name="TelescopeAuxiliary.raw_dewar_pressure" Index="#x6000" Sub="#x11" Flags="#x00020000">
 											<Type>INT</Type>
 										</Entry>
 									</Pdo>
@@ -10685,8 +10624,6 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_pendant_control.lamp_up" VarB="Channel 1^GVL_pendant_control.lamp_up"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Power analysis (EL3443)">
-				<Link VarA="PlcTask Inputs^GVL_Main.ActiveEnergy" VarB="Total Active^Active Energy"/>
-				<Link VarA="PlcTask Inputs^GVL_Main.ActivePower" VarB="Total Active^Active Power"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.ActivePower" VarB="L3 Power^Active Power"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.ApparentPower" VarB="L3 Power^PowerMonitoring.ApparentPower"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.Current" VarB="L3 Basic^Current"/>
@@ -10722,7 +10659,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GVL_Telescope.temperature_mirror2" VarB="AI Standard Channel 1^GVL_Telescope.temperature_mirror2"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Term 54 (EK1521)^Term 55 (EK1501)^Term 60 (EL3064)">
-				<Link VarA="PlcTask Inputs^TelescopeAuxiliary.raw_dewar_pressure" VarB="AI Standard Channel 1^Value"/>
+				<Link VarA="PlcTask Inputs^TelescopeAuxiliary.raw_dewar_pressure" VarB="AI Standard Channel 1^TelescopeAuxiliary.raw_dewar_pressure"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Trafo Hydraulics IN (EL1008)">
 				<Link VarA="PlcTask Inputs^GVL_Hydraulics.pump_running" VarB="Channel 7^GVL_Hydraulics.pump_running"/>

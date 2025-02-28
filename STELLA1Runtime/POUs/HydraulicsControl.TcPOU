@@ -72,10 +72,11 @@ VAR
 	suction_trigger:	SR;
 	// timer to shut off hydraulics after break was closed
 	hydraulics_off_timer:	TON  := (PT := T#300S);
+	pan_maxiumum_trigger:	TON	:= (PT := T#10S);
 	off_trigger:	F_TRIG;
 	oil_level, last_oil_level:		REAL;
-	oil_level_min:		REAL := 2.5;
-	oil_level_max:		REAL := 3.5;
+	oil_level_min:		REAL := 1.8;
+	oil_level_max:		REAL := 2.8;
 	HydraulicsLog,
 	PumpLog,
 	ReserveLog,
@@ -90,8 +91,6 @@ VAR
 	BrakeHydraulicsWarning,
 	BrakeWarning: FB_EventLog;
 	
-	// measures the operating cycle of the suction pump
-	suction_timer : FB_Timer;
 	StatusWord, LastStatus:	UDINT;
 END_VAR
 ]]></Declaration>
@@ -116,6 +115,8 @@ oil_level := F_YREAL(GVL_Hydraulics.oil_level, 0, 16383, 0.0, 5.0);
 pump_running := GVL_Hydraulics.pump_running;
 suction_running := GVL_Hydraulics.suction_running;
 
+pan_maxiumum_trigger(IN := GVL_Hydraulics.oilpan_maximum);
+
 error_state(SET1 := pressure_failure OR	suction_failure OR hydraulics_failure OR oil_low OR main_pump_failure,
 			RESET := reset,
 			Q1 => error);
@@ -126,7 +127,7 @@ IF NOT error THEN
 END_IF
 
 oil_pump_state(SET := enable,
-				RESET1 := NOT enable OR error OR pump_manual_stop OR GVL_Hydraulics.oilpan_maximum);
+				RESET1 := NOT enable OR error OR pump_manual_stop);
 
 GVL_Hydraulics.oil_pump_enable := oil_pump_state.Q1;
 
@@ -171,6 +172,11 @@ END_IF
 
 (* This is the end of the brake control section *)
 
+// adjust maximum oil level
+IF (oil_level < oil_level_max AND GVL_Hydraulics.oilpan_maximum) OR 
+	(oil_level > oil_level_max AND NOT GVL_Hydraulics.oilpan_maximum) THEN
+	oil_level_max := oil_level;	
+END_IF
 suction_trigger(SET1 := GVL_Hydraulics.oilpan_maximum OR oil_level > oil_level_max,
 				RESET := oil_level < oil_level_min);
 GVL_Hydraulics.oil_suction_enable := suction_trigger.Q1 OR suction_manual;					
@@ -260,7 +266,7 @@ oil_low_log(Trigger := oil_low,
 				OffLevel := ADSLOG_MSGTYPE_HINT);
 
 oil_max_log(Trigger := GVL_Hydraulics.oilpan_maximum,
-				Level := ADSLOG_MSGTYPE_ERROR,
+				Level := ADSLOG_MSGTYPE_WARN,
 				FormatString := 'oil level: %s',
 				OnMessage := 'MAXIMUM',
 				OffMessage := 'OK',
@@ -342,7 +348,10 @@ RETURN(brake_open);]]></ST>
     <LineIds Name="HydraulicsControl">
       <LineId Id="2699" Count="15" />
       <LineId Id="3191" Count="0" />
-      <LineId Id="2715" Count="2" />
+      <LineId Id="2715" Count="1" />
+      <LineId Id="3599" Count="0" />
+      <LineId Id="3598" Count="0" />
+      <LineId Id="2717" Count="0" />
       <LineId Id="2725" Count="3" />
       <LineId Id="3478" Count="0" />
       <LineId Id="3477" Count="0" />
@@ -361,7 +370,12 @@ RETURN(brake_open);]]></ST>
       <LineId Id="2762" Count="8" />
       <LineId Id="3005" Count="0" />
       <LineId Id="2771" Count="4" />
-      <LineId Id="2777" Count="3" />
+      <LineId Id="2777" Count="2" />
+      <LineId Id="3606" Count="0" />
+      <LineId Id="3605" Count="0" />
+      <LineId Id="2780" Count="0" />
+      <LineId Id="3604" Count="0" />
+      <LineId Id="3600" Count="1" />
       <LineId Id="3195" Count="1" />
       <LineId Id="2789" Count="11" />
       <LineId Id="3098" Count="3" />

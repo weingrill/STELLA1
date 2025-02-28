@@ -43,9 +43,6 @@ VAR_GLOBAL
 	ApparentPowerGuardWarning		AT%I*:	BOOL;
 	ApparentPowerGuardError			AT%I*:	BOOL;
 	*)
-	ActivePower						AT%I*:	REAL;
-	ActiveEnergy					AT%I*:	LINT;
-	NeutralLineCurrent				AT%I*:	REAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
