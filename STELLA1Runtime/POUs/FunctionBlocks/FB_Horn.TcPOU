@@ -22,9 +22,9 @@ END_VAR
 	e_horn.beep:
 		ON_TIME := T#500MS;
 	e_horn.short:
-		ON_TIME := T#3000MS;
-	e_horn.long:
 		ON_TIME := T#5000MS;
+	e_horn.long:
+		ON_TIME := T#10000MS;
 END_CASE
 
 IMPULS(IN:= NOT PAUSE.Q AND NOT IMPULS.Q, PT:= ON_TIME);
