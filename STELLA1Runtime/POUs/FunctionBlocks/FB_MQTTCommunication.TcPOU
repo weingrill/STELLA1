@@ -47,7 +47,7 @@ GetHostName(sHostName => HostName);
 // set the parameters once
 IF bSetParameter THEN
     bSetParameter               := FALSE;
-    fbMqttClient.sHostName      := 'sky.stella.iac.es';
+    fbMqttClient.sHostName      := '192.168.1.74';
     fbMqttClient.nHostPort      := 1883;
     fbMqttClient.sClientId      := HostName; 
     fbMqttClient.sTopicPrefix   := ''; 
