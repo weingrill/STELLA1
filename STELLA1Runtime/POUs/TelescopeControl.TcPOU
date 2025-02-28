@@ -257,7 +257,7 @@ hor2eq(alt := elevation_current - PointingModelElevation(azimuth_calc, elevation
 		ra => rightascension_calc,
 		dec => declination_calc);		
 	
-poweronwarning(IN := power OR (NOT ElevationControl.enable AND HydraulicsControl.brake_open), PT := T#250MS);
+poweronwarning(IN := power, PT := T#10S);
 
 power_timeout(IN := TCS_command = E_TCSCommand.no_command AND NOT isparked, PT := T#12H);
 command_timeout();
