@@ -78,6 +78,10 @@ END_VAR
       <ST><![CDATA[// limit the position input to a sane value
 position := LIMIT(0.0, position, 90.0);
 
+IF Calibrated AND (actual_position > 89.0 OR actual_position < 1.0) THEN
+	Tracking := FALSE;
+END_IF
+
 //if we enable the axis, we have to open the brake first
 IF Enable THEN
 	IF NOT Calibrated THEN
@@ -109,7 +113,7 @@ IF HomeAxis THEN
 	Tracking := FALSE;
 END_IF
 
-IF MoveAxis THEN
+IF MoveAxis OR StopAxis THEN
 	Tracking := FALSE;
 END_IF
 
@@ -242,105 +246,7 @@ CalibrationEvent(
 ]]></ST>
     </Implementation>
     <LineIds Name="ElevationControl">
-      <LineId Id="379" Count="0" />
-      <LineId Id="233" Count="0" />
-      <LineId Id="706" Count="0" />
-      <LineId Id="451" Count="0" />
-      <LineId Id="234" Count="0" />
-      <LineId Id="1319" Count="1" />
-      <LineId Id="1324" Count="2" />
-      <LineId Id="1322" Count="1" />
-      <LineId Id="1321" Count="0" />
-      <LineId Id="235" Count="0" />
-      <LineId Id="238" Count="0" />
-      <LineId Id="1253" Count="1" />
-      <LineId Id="707" Count="0" />
-      <LineId Id="1256" Count="2" />
-      <LineId Id="705" Count="0" />
-      <LineId Id="252" Count="0" />
-      <LineId Id="254" Count="1" />
-      <LineId Id="558" Count="1" />
-      <LineId Id="626" Count="0" />
-      <LineId Id="257" Count="0" />
-      <LineId Id="1037" Count="0" />
-      <LineId Id="769" Count="1" />
-      <LineId Id="259" Count="0" />
-      <LineId Id="772" Count="0" />
-      <LineId Id="630" Count="0" />
-      <LineId Id="773" Count="1" />
-      <LineId Id="637" Count="0" />
-      <LineId Id="636" Count="0" />
-      <LineId Id="394" Count="0" />
-      <LineId Id="499" Count="0" />
-      <LineId Id="279" Count="0" />
-      <LineId Id="243" Count="0" />
-      <LineId Id="291" Count="1" />
-      <LineId Id="615" Count="0" />
-      <LineId Id="128" Count="0" />
-      <LineId Id="184" Count="2" />
-      <LineId Id="1335" Count="0" />
-      <LineId Id="1487" Count="0" />
-      <LineId Id="562" Count="0" />
-      <LineId Id="187" Count="1" />
-      <LineId Id="1336" Count="0" />
-      <LineId Id="189" Count="2" />
-      <LineId Id="300" Count="0" />
-      <LineId Id="192" Count="2" />
-      <LineId Id="135" Count="0" />
-      <LineId Id="214" Count="11" />
-      <LineId Id="1564" Count="3" />
-      <LineId Id="1570" Count="0" />
-      <LineId Id="1559" Count="1" />
-      <LineId Id="1569" Count="0" />
-      <LineId Id="1562" Count="1" />
-      <LineId Id="1098" Count="0" />
-      <LineId Id="1100" Count="1" />
-      <LineId Id="1099" Count="0" />
-      <LineId Id="1103" Count="0" />
-      <LineId Id="612" Count="0" />
-      <LineId Id="1105" Count="1" />
-      <LineId Id="1108" Count="3" />
-      <LineId Id="1645" Count="0" />
-      <LineId Id="1120" Count="0" />
-      <LineId Id="1189" Count="0" />
-      <LineId Id="1121" Count="3" />
-      <LineId Id="1126" Count="2" />
-      <LineId Id="1190" Count="0" />
-      <LineId Id="1129" Count="0" />
-      <LineId Id="1118" Count="0" />
-      <LineId Id="1646" Count="0" />
-      <LineId Id="386" Count="0" />
-      <LineId Id="969" Count="0" />
-      <LineId Id="971" Count="0" />
-      <LineId Id="976" Count="0" />
-      <LineId Id="972" Count="1" />
-      <LineId Id="975" Count="0" />
-      <LineId Id="974" Count="0" />
-      <LineId Id="970" Count="0" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="977" Count="0" />
-      <LineId Id="829" Count="0" />
-      <LineId Id="828" Count="0" />
-      <LineId Id="827" Count="0" />
-      <LineId Id="156" Count="2" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="1405" Count="0" />
-      <LineId Id="1407" Count="0" />
-      <LineId Id="1414" Count="0" />
-      <LineId Id="1409" Count="2" />
-      <LineId Id="697" Count="0" />
-      <LineId Id="1406" Count="0" />
-      <LineId Id="693" Count="3" />
-      <LineId Id="692" Count="0" />
-      <LineId Id="698" Count="3" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="396" Count="3" />
-      <LineId Id="837" Count="0" />
-      <LineId Id="843" Count="3" />
-      <LineId Id="842" Count="0" />
-      <LineId Id="902" Count="0" />
-      <LineId Id="904" Count="3" />
-      <LineId Id="903" Count="0" />
+      <LineId Id="1719" Count="167" />
       <LineId Id="908" Count="0" />
     </LineIds>
   </POU>

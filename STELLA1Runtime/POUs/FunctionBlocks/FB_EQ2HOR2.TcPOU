@@ -32,12 +32,22 @@ VAR
 	J_now: 		LREAL;
 	// enable precession
 	precess: 	BOOL := TRUE;
+	// enable nutation
+	nutate:		BOOL := TRUE;
+	// enable abberation
+	abberation:	BOOL := TRUE;
 	// enable refraction correction
 	refract:	BOOL := TRUE;
 	// precession function block
 	fbprecess: 	FB_PRECESS3;
+	// nutation function block
+	co_nutate: CO_NUTATE;
+	// abberration function block
+	fbaberration: CO_ABERRATION;
 	//precessed coordinates
-	alpha1, delta1:	LREAL;
+	alpha1, delta1, 
+	d_alpha2, d_delta2, 
+	d_alpha3, d_delta3:	LREAL;
 END_VAR
 VAR CONSTANT
 	d2r:	LREAL := PI/180.0;
@@ -61,6 +71,32 @@ ELSE
 	delta1 := delta;	
 END_IF
 
+IF nutate THEN
+	co_nutate(	jd := jd, 
+				ra := alpha, 
+				dec := delta, 
+				d_ra => d_alpha2, 
+				d_dec => d_delta2);
+	alpha1 := alpha1 + d_alpha2;
+	delta1 := delta1 + d_delta2;
+ELSE
+	d_alpha2 := 0.0;
+	d_delta2 := 0.0;
+END_IF
+
+IF abberation THEN
+	fbaberration(	jd := jd, 
+					ra := alpha, 
+					dec := delta, 
+					d_ra => d_alpha3, 
+					d_dec => d_delta3);
+	alpha1 := alpha1 + d_alpha3;
+	delta1 := delta1 + d_delta3;
+ELSE
+	d_alpha3 := 0.0;
+	d_delta3 := 0.0;
+END_IF
+
 ha := MODABS(lst - alpha1, 360.0);
 
 alpha_r := alpha1 * d2r;
@@ -77,27 +113,7 @@ az := ATAN2(SIN(tau_r), SIN(phi_r)*COS(tau_r) - COS(phi_r)*TAN(delta_r)) * r2d +
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_EQ2HOR2">
-      <LineId Id="81" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="90" Count="1" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="250" Count="5" />
-      <LineId Id="264" Count="0" />
-      <LineId Id="266" Count="1" />
-      <LineId Id="256" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="145" Count="0" />
-      <LineId Id="144" Count="0" />
-      <LineId Id="146" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="148" Count="0" />
-      <LineId Id="269" Count="0" />
-      <LineId Id="271" Count="1" />
-      <LineId Id="139" Count="0" />
-      <LineId Id="297" Count="1" />
-      <LineId Id="140" Count="0" />
+      <LineId Id="391" Count="55" />
       <LineId Id="153" Count="0" />
     </LineIds>
   </POU>
