@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="CO_NUTATE" Id="{c00ca5f9-58c3-4ab5-9265-a3634b18ade3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CO_NUTATE
+VAR_INPUT
+	// Julian date
+	jd:	LREAL;
+	// right ascension
+	ra: LREAL;
+	// declination
+	dec: LREAL;
+END_VAR
+VAR_OUTPUT
+	d_ra:	LREAL;
+	d_dec:	LREAL;
+	eps:	LREAL;
+	d_psi:	LREAL;
+END_VAR
+VAR
+	T, eps0, d_eps, ce, se, x,y,z, ra2, dec2: LREAL;
+	x2, y2, z2:	LREAL;
+	radius, xyproj: 	LREAL;
+	nutate:	FB_NUTATE;
+END_VAR
+VAR CONSTANT
+	d2r:	LREAL := PI/180.0;
+	d2as: 	LREAL := PI/(180.0*3600.0);
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ 
+T := (jd - 2451545.0)/36525.0; // Julian centuries FROM J2000 OF jd.
+
+// must calculate obliquity of ecliptic
+nutate(jd := jd, nut_long => d_psi, nut_obliq => d_eps );
+
+eps0 := 23.4392911*3600.0 - 46.8150*T - 0.00059*T*T + 0.001813*T*T*T;
+eps := (eps0 + d_eps)/3600.0*d2r; // true obliquity of the ecliptic in radians
+ 
+//useful numbers
+ce := COS(eps);
+se := SIN(eps);
+
+// convert ra-dec to equatorial rectangular coordinates
+x := COS(ra*d2r) * COS(dec*d2r);
+y := SIN(ra*d2r) * COS(dec*d2r);
+z := SIN(dec*d2r);
+
+// apply corrections to each rectangular coordinate
+x2 := x - (y*ce + z*se)*d_psi * d2as;
+y2 := y + (x*ce*d_psi - z*d_eps) * d2as;
+z2 := z + (x*se*d_psi + y*d_eps) * d2as;
+
+// convert back to equatorial spherical coordinates
+radius := SQRT(x2*x2 + y2*y2 + z2*z2);
+xyproj := SQRT(x2*x2 + y2*y2);
+
+ra2 := x2 * 0.0;
+dec2:= x2 * 0.0;
+// Calculate Ra and Dec in RADIANS (later convert to DEGREES)
+
+IF xyproj = 0.0 AND z <> 0.0 THEN
+	// places where xyproj:=0 (point at NCP or SCP)
+	dec2 := ASIN(z2/radius);
+	ra2 := 0.0;
+END_IF
+IF xyproj <> 0.0 THEN
+	ra2 := ATAN2(y2, x2);
+	dec2 := ASIN(z2 / radius);
+END_IF
+
+// convert to DEGREES
+ra2 := ra2 /d2r;
+dec2 := dec2 /d2r;
+
+// w := where(ra2 LT 0., Nw)
+// IF Nw GT 0 THEN ra2[w] := ra2[w] + 360.
+ra2 := MODABS(ra2, 360.0);
+
+// Return changes in ra and dec in degrees
+ d_ra := ra2 - ra;
+ d_dec := dec2 - dec;
+]]></ST>
+    </Implementation>
+    <LineIds Name="CO_NUTATE">
+      <LineId Id="11" Count="7" />
+      <LineId Id="21" Count="20" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="9" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

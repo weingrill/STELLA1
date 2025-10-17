@@ -304,10 +304,12 @@ ELSIF park THEN
 	goto := FALSE;
 	track := FALSE;
 	slew := FALSE;
+	gohome := FALSE;
 	IF ready AND stopped THEN
 		TCS_command := E_TCSCommand.park;
 	END_IF
 ELSIF gohome THEN
+	park := FALSE;
 	goto := FALSE;
 	track := FALSE;
 	slew := FALSE;
@@ -1119,8 +1121,10 @@ END_IF
       <LineId Id="8568" Count="6" />
       <LineId Id="8563" Count="1" />
       <LineId Id="8566" Count="1" />
+      <LineId Id="9811" Count="0" />
       <LineId Id="9651" Count="2" />
       <LineId Id="1513" Count="0" />
+      <LineId Id="9812" Count="0" />
       <LineId Id="1526" Count="0" />
       <LineId Id="4276" Count="0" />
       <LineId Id="6379" Count="0" />
