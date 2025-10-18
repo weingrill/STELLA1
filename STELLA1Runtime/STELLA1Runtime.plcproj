@@ -80,6 +80,9 @@
     <Compile Include="POUs\FunctionBlocks\CO_ABERRATION.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FunctionBlocks\CO_NUTATE.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FunctionBlocks\CO_REFRACT.TcPOU">
       <SubType>Code</SubType>
     </Compile>
