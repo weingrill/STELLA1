@@ -68,7 +68,7 @@ VAR
 END_VAR
 VAR CONSTANT
 	// current position of the calibration cam. Apply an offset here if necessary
-	calibration_position:	LREAL := 44.144; //44.139; //44.061; //43.806122; //42.1281; //43.000
+	calibration_position:	LREAL := 44.144 - 0.00516; //44.144; //44.139; //44.061; //43.806122; //42.1281; //43.000 | calibration_position = calibration_position - EOFF
 END_VAR
 VAR PERSISTENT
 	last_position:	LREAL := -1.0;

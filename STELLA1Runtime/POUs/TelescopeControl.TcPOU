@@ -44,6 +44,8 @@ see https://gitlab.aip.de/bmk10k/telescope_firmware/snippets/5
 	derotator_offset:	LREAL := 0.0;
 	// Nasmyth port 1 or 2
 	Nasmyth_port: 		USINT;
+	// reset pointing model
+	resetpointing:		BOOL;
 END_VAR
 VAR
 	// actual command from the TCS
@@ -246,6 +248,17 @@ END_IF
 azimuth_current := AzimuthElevationControl.act_position;
 elevation_current := ElevationControl.actual_position;
 derotator_current := DerotatorControl.actual_position;
+
+IF resetpointing THEN
+	AN_A := 0.0;
+	AN_E := 0.0;
+	AE_A := 0.0;
+	AE_E := 0.0;
+	BNP := 0.0;
+	TF := 0.0;
+	NPAE := 0.0;
+	resetpointing := FALSE;
+END_IF
 
 // calculate equatorial coordinates
 hor2eq(alt := elevation_current - PointingModelElevation(azimuth_calc, elevation_calc, elevation_offset, AN_E, AE_E, TF), 
@@ -701,8 +714,8 @@ CASE Stage OF
 		goto := 	FALSE;
 		slew := 	FALSE;
 		Focuscontrol.position := 53.6;
-		// disable filterwheel
-		FilterWheelControl.Enable := FALSE;
+		FilterWheelControl.filter_position := 0;
+		//FilterWheelControl.Enable := FALSE;
 		IF Error THEN // emergency park
 			HydraulicsControl.close_brake();
 			ElevationControl.enable := FALSE;
@@ -1084,6 +1097,7 @@ END_IF
       <LineId Id="3302" Count="1" />
       <LineId Id="7978" Count="0" />
       <LineId Id="8423" Count="0" />
+      <LineId Id="9973" Count="10" />
       <LineId Id="3520" Count="0" />
       <LineId Id="2011" Count="0" />
       <LineId Id="3521" Count="4" />
@@ -1350,7 +1364,7 @@ END_IF
       <LineId Id="122" Count="0" />
       <LineId Id="119" Count="2" />
       <LineId Id="123" Count="0" />
-      <LineId Id="125" Count="0" />
+      <LineId Id="281" Count="0" />
       <LineId Id="127" Count="0" />
       <LineId Id="225" Count="0" />
       <LineId Id="231" Count="0" />
