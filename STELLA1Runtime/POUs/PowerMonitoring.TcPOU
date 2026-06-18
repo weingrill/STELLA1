@@ -14,6 +14,8 @@ VAR
 	VoltageGuardError		AT%I*: BOOL;
 	CurrentGuardWarning		AT%I*: BOOL;
 	CurrentGuardError		AT%I*: BOOL;
+	NeutralCurrentGuardWarning		AT%I*: BOOL;
+	NeutralCurrentGuardError		AT%I*: BOOL;
 	Voltage					AT%I*: REAL;
 	Current					AT%I*: REAL;
 	ActivePower				AT%I*: REAL;
@@ -38,14 +40,14 @@ END_VAR
     <Implementation>
       <ST><![CDATA[phaseOK := L1L2Voltage > 360.0 AND L2L3Voltage > 360.0 AND L3L1Voltage > 360.0;
 
-IF NeutralLineCurrent > 0.1 THEN
-	NeutralCurrentEvent.Trigger := TRUE;
-	NeutralCurrentEvent.OnMessage := 	'Neutral Line Current WARNING!';
-	NeutralCurrentEvent.Level := ADSLOG_MSGTYPE_WARN;
-ELSIF NeutralLineCurrent > 0.3 THEN
+IF NeutralCurrentGuardError THEN
 	NeutralCurrentEvent.Trigger := TRUE;
 	NeutralCurrentEvent.OnMessage := 	'Neutral Line Current ERROR!';
 	NeutralCurrentEvent.Level := ADSLOG_MSGTYPE_ERROR;
+ELSIF NeutralCurrentGuardWarning THEN
+	NeutralCurrentEvent.Trigger := TRUE;
+	NeutralCurrentEvent.OnMessage := 	'Neutral Line Current WARNING!';
+	NeutralCurrentEvent.Level := ADSLOG_MSGTYPE_WARN;
 ELSE
 	NeutralCurrentEvent.Trigger := FALSE;
 END_IF
@@ -100,13 +102,10 @@ NeutralCurrentEvent(
     </Implementation>
     <LineIds Name="PowerMonitoring">
       <LineId Id="30" Count="0" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="110" Count="0" />
-      <LineId Id="112" Count="1" />
-      <LineId Id="115" Count="2" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="119" Count="1" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="165" Count="3" />
+      <LineId Id="173" Count="3" />
+      <LineId Id="169" Count="1" />
       <LineId Id="111" Count="0" />
       <LineId Id="124" Count="2" />
       <LineId Id="118" Count="0" />

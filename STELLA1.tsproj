@@ -2911,6 +2911,14 @@ DIN3 0.2]]></Comment>
 							<Name>GVL_Telescope.FocusAxisRef.NcToPlc</Name>
 							<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
+						<Var>
+							<Name>PowerMonitoring.NeutralCurrentGuardWarning</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerMonitoring.NeutralCurrentGuardError</Name>
+							<Type>BOOL</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
@@ -3407,10 +3415,10 @@ DOUT9 1.0]]></Comment>
 								<Entry Name="Voltage Sign Bit" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Overvoltage" Index="#x6000" Sub="#x02">
+								<Entry Name="PowerMonitoring.Overvoltage" Index="#x6000" Sub="#x02">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Overcurrent" Index="#x6000" Sub="#x03">
+								<Entry Name="PowerMonitoring.Overcurrent" Index="#x6000" Sub="#x03">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Inaccurate Voltage" Index="#x6000" Sub="#x04">
@@ -3419,16 +3427,16 @@ DOUT9 1.0]]></Comment>
 								<Entry Name="Inaccurate Current" Index="#x6000" Sub="#x05">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Voltage Guard Warning" Index="#x6000" Sub="#x06">
+								<Entry Name="PowerMonitoring.VoltageGuardWarning" Index="#x6000" Sub="#x06">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Voltage Guard Error" Index="#x6000" Sub="#x07">
+								<Entry Name="PowerMonitoring.VoltageGuardError" Index="#x6000" Sub="#x07">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Current Guard Warning" Index="#x6000" Sub="#x08">
+								<Entry Name="PowerMonitoring.CurrentGuardWarning" Index="#x6000" Sub="#x08">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Current Guard Error" Index="#x6000" Sub="#x09">
+								<Entry Name="PowerMonitoring.CurrentGuardError" Index="#x6000" Sub="#x09">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry>
@@ -3926,10 +3934,10 @@ DOUT9 1.0]]></Comment>
 								<Entry Name="Frequency Guard Error" Index="#xf600" Sub="#x04">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Neutral Current Guard Warning" Index="#xf600" Sub="#x05">
+								<Entry Name="PowerMonitoring.NeutralCurrentGuardWarning" Index="#xf600" Sub="#x05">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Neutral Current Guard Error" Index="#xf600" Sub="#x06">
+								<Entry Name="PowerMonitoring.NeutralCurrentGuardError" Index="#xf600" Sub="#x06">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Active Power Guard Warning" Index="#xf600" Sub="#x07">
@@ -10629,15 +10637,23 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.ActivePower" VarB="L3 Power^Active Power"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.ApparentPower" VarB="L3 Power^PowerMonitoring.ApparentPower"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.Current" VarB="L3 Basic^Current"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.CurrentGuardError" VarB="L1 Status^PowerMonitoring.CurrentGuardError"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.CurrentGuardWarning" VarB="L1 Status^PowerMonitoring.CurrentGuardWarning"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.Frequency" VarB="Total Basic^PowerMonitoring.Frequency"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.L1L2Voltage" VarB="Total L-L Voltage^PowerMonitoring.L1L2Voltage"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.L2L3Voltage" VarB="Total L-L Voltage^PowerMonitoring.L2L3Voltage"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.L3L1Voltage" VarB="Total L-L Voltage^PowerMonitoring.L3L1Voltage"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.NeutralCurrentGuardError" VarB="Total Status^PowerMonitoring.NeutralCurrentGuardError"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.NeutralCurrentGuardWarning" VarB="Total Status^PowerMonitoring.NeutralCurrentGuardWarning"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.NeutralLineCurrent" VarB="Total Basic^PowerMonitoring.NeutralLineCurrent"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.Overcurrent" VarB="L1 Status^PowerMonitoring.Overcurrent"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.Overvoltage" VarB="L1 Status^PowerMonitoring.Overvoltage"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.PowerFactor" VarB="Total Basic^PowerMonitoring.PowerFactor"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.PowerQualityFactor" VarB="Total Status^PowerMonitoring.PowerQualityFactor"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.ReactivePower" VarB="L3 Power^PowerMonitoring.ReactivePower"/>
 				<Link VarA="PlcTask Inputs^PowerMonitoring.Voltage" VarB="L3 Basic^Voltage"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.VoltageGuardError" VarB="L1 Status^PowerMonitoring.VoltageGuardError"/>
+				<Link VarA="PlcTask Inputs^PowerMonitoring.VoltageGuardWarning" VarB="L1 Status^PowerMonitoring.VoltageGuardWarning"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 30 (EK1200)^Safety Logic (EL6910)">
 				<Link VarA="PlcTask Inputs^GVL_Safety.Error" VarB="StandardInputs^TwinSafeGroup1.SafetyError_4"/>
